@@ -14,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class Intervention {
+	@JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +23,7 @@ public class Intervention {
     private String description;
     private Date datedecreation;
     private Date datederesolution;
-    private String priorite;
+    private String priorite; //zeyda
     private String commentaire;
     private Boolean archiver;
 

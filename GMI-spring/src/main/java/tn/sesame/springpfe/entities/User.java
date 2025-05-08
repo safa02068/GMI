@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 public class User {
 
+	@JsonIgnore
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private Long id;
@@ -29,7 +30,8 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Profil p ;
-
+ 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "projet_id")
     private Projet projet;

@@ -13,6 +13,7 @@ import java.util.Date;
 @Data
 
 public class Commentaire {
+	@JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

@@ -9,6 +9,5 @@ import java.util.List;
 public interface IProjetRepository extends JpaRepository<Projet, Long> {
 
     List<Projet> findByArchiverIsFalse();
-    List<Projet> findById(long id);
    
 }
