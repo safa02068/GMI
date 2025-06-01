@@ -10,11 +10,13 @@ import { PatientAdmissionsDischargesComponent } from './patient-admissions-disch
 import { WelcomeComponent } from './welcome/welcome.component';
 import { OverallVisitorsComponent } from './overall-visitors/overall-visitors.component';
 import { PatientsLast7DaysComponent } from './patients-last-7-days/patients-last-7-days.component';
+import { CommonModule } from '@angular/common';  // Assure-toi d'importer CommonModule
+
 
 @Component({
     selector: 'app-hospital',
     standalone: true,
-    imports: [WelcomeComponent, OverallVisitorsComponent, PatientsLast7DaysComponent, PatientAdmissionsDischargesComponent, EmergencyRoomVisitsComponent, CriticalPatientsComponent, BedOccupancyRateComponent, PatientAppointmentsComponent, ScheduleAppointmentComponent, PatientByAgeComponent, HospitalEarningsComponent],
+    imports: [WelcomeComponent, OverallVisitorsComponent, PatientsLast7DaysComponent, PatientAdmissionsDischargesComponent, EmergencyRoomVisitsComponent, CriticalPatientsComponent, BedOccupancyRateComponent, PatientAppointmentsComponent, ScheduleAppointmentComponent, PatientByAgeComponent, HospitalEarningsComponent,CommonModule],
     templateUrl: './hospital.component.html',
     styleUrl: './hospital.component.scss'
 })

@@ -22,78 +22,16 @@
                     <button
                         class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
                         type="button"
-                        (click)="toggleSection(0)"
-                        [ngClass]="{ 'open': isSectionOpen(0) }"
                     >
                         <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
                             dashboard
                         </i>
-                        <span class="title leading-none">
-                            Dashboard
-                        </span>
-                        <span class="rounded-full font-medium inline-block text-center w-[20px] h-[20px] text-[11px] leading-[20px] text-orange-500 bg-orange-50 ltr:ml-auto rtl:mr-auto rtl:ml-0">
-                            9
+                        <span class="title leading-none" routerLink="/dashboard/hospital" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                            Gestion des utilisateurs
                         </span>
                     </button>
-                    <div class="accordion-collapse" [ngClass]="{ 'open': isSectionOpen(0) }">
-                        <div class="pt-[4px]">
-                            <ul class="sidebar-sub-menu">
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        eCommerce
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/crm" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        CRM
-                                        <span class="text-[10px] font-medium py-[1px] px-[8px] ltr:ml-[8px] rtl:mr-[8px] text-success-500 bg-success-100 inline-block rounded-sm">
-                                            Hot
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/project-management" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Project Management
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/lms" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        LMS
-                                        <span class="text-[10px] font-medium py-[1px] px-[8px] ltr:ml-[8px] rtl:mr-[8px] text-orange-500 bg-orange-100 inline-block rounded-sm">
-                                            Top
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/helpdesk" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        HelpDesk
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/analytics" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Analytics
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/crypto" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Crypto
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/sales" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Sales
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/hospital" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Hospital
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
-                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
+                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap" *ngIf="isAdmin">
                     <button
                         class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
                         type="button"
@@ -149,17 +87,17 @@
                         </div>
                     </div>
                 </div> 
-                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
+                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap" *ngIf="!isAdmin">
                     <a routerLink="/dashboard/lms" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]">
                         <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
                             account_circle
                         </i>
                         <span class="title leading-none">
-                            Page Test
+                            Gestion des interventions
                         </span>
                     </a>
                 </div>
-                <span class="block relative font-medium uppercase text-gray-400 mb-[8px] text-xs [&:not(:first-child)]:mt-[22px]">
+                <span class="block relative font-medium uppercase text-gray-400 mb-[8px] text-xs [&:not(:first-child)]:mt-[22px]" *ngIf="!isAdmin">
                     Test
                 </span>
                 <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
@@ -168,11 +106,11 @@
                             account_circle
                         </i>
                         <span class="title leading-none">
-                            My Profile
+                            gestion des matériels
                         </span>
                     </a>
                 </div>
-                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
+                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap" *ngIf="!isAdmin">
                     <button
                         class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
                         type="button"
@@ -218,7 +156,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
+                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap" *ngIf="!isAdmin">
                     <button
                         class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
                         type="button"

@@ -13,14 +13,9 @@ import java.util.Date;
 @Data
 
 public class Commentaire {
-	@JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String commentaire;
     private Date date;
-
-    @JsonIgnore
-    @ManyToOne
-    private Intervention intervention;
 }

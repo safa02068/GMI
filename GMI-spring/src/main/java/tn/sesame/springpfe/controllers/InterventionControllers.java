@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.sesame.springpfe.entities.Commentaire;
 import tn.sesame.springpfe.entities.Intervention;
-import tn.sesame.springpfe.entities.Materiel;
 import tn.sesame.springpfe.entities.User;
 import tn.sesame.springpfe.repositories.IMaterielRepository;
 import tn.sesame.springpfe.repositories.IcommentaireRepository;
@@ -40,22 +39,11 @@ public class InterventionControllers {
     private User user;
 
     @PostMapping("/addintervention")
-    public ResponseEntity<Intervention> addinter(@RequestBody Intervention newIntervention, String email, Long id ) {
+    public ResponseEntity<Intervention> addinter(@RequestBody Intervention newIntervention) {
     try {
-    User user = userR.findByEmail(newIntervention.getEmail());
-    Materiel materiel = matR.findById(id).get();
-    newIntervention.setMateriel(materiel);
-    newIntervention.setDemandeur(user);
     newIntervention.setDatedecreation(new Date(System.currentTimeMillis()));;
-    newIntervention.setEtat("En Attente");
-    Intervention savedIntervention = intR.save(newIntervention);
-    Commentaire c = new Commentaire();	
-    c.setCommentaire(newIntervention.getCommentaire());
-    c.setIntervention(newIntervention);
-    c.setDate((new Date(System.currentTimeMillis())));
-
-    commentaireR.save(c);
-
+    newIntervention.setStatut("En Attente");
+    Intervention savedIntervention = intR.save(newIntervention);;
     return ResponseEntity.ok(savedIntervention);
     } catch (Exception e) {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -68,13 +56,13 @@ public class InterventionControllers {
         Intervention I = intR.findById(id).get();
 
         if(etat.equals("Resolue")) {
-            I.setEtat(etat);
+            I.setStatut(etat);
             I.setDatederesolution(new Date(System.currentTimeMillis()));
             intR.saveAndFlush(I);
             return "true";
 //
         }
-        I.setEtat(etat);
+        I.setStatut(etat);
         intR.saveAndFlush(I);
         return "true";
     }
@@ -82,28 +70,22 @@ public class InterventionControllers {
 
 
     @PostMapping("addcommentaire")
-    public String commentaire(Long id , String c) {
+    public String commentaire(Long id , @RequestBody Commentaire c) {
         Intervention I = intR.findById(id).get();
-        Commentaire com = new Commentaire();
-        com.setCommentaire(c);
-        com.setIntervention(I);
-        com.setDate((new Date(System.currentTimeMillis())));
-        commentaireR.save(com);
+        c.setDate((new Date(System.currentTimeMillis())));
+        I.setCommentaire(c);
+         intR.save(I);
         return "true";
     }
 
-    @GetMapping("affichercommentaire")
-    public List<Commentaire> listcomm(Long id){
-        Intervention I= intR.findById(id).get();
-        return commentaireR.findByIntervention(I);
-    }
+
 
 
     @PutMapping("/updateintervention")
-    public String updateinter(@RequestBody Intervention interv) {
+    public Intervention updateinter(@RequestBody Intervention interv) {
         Intervention existinginter = (Intervention) intR.findById(interv.getId()).get();
         if (existinginter == null) {
-            return "intervention non trouvé";
+            return null;
         } else {
             existinginter.setTitre(interv.getTitre());
             existinginter.setDescription(interv.getDescription());
@@ -111,10 +93,10 @@ public class InterventionControllers {
             existinginter.setDatedecreation(new Date(System.currentTimeMillis()));
             existinginter.setDatederesolution(interv.getDatederesolution());
             existinginter.setPriorite(interv.getPriorite());
-            existinginter.setEtat(interv.getEtat());
+            existinginter.setStatut(interv.getStatut());
 
             intR.save(existinginter);
-            return "intervention a modifier avec succès";
+            return existinginter;
         }
     }
 
@@ -149,11 +131,11 @@ public class InterventionControllers {
     }
 
 
-    @PutMapping("archiverintervention/{id}")
-    public String archiverIntervention(@PathVariable Long id) {
+    @DeleteMapping("/archiverintervention/{id}")
+    public Intervention archiverIntervention(@PathVariable Long id) {
         Intervention arch = intR.findById(id).get();
         arch.setArchiver(true);
         intR.save(arch);
-        return "Intervention  archivé !";
+        return arch;
     }
 }

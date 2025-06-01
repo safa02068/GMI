@@ -34,7 +34,7 @@ public class UserControllers {
     	User userexist = this.userR.findByEmail(user.getEmail());
     		if(userexist==null){
     			try {
-    				user.setP(Profil.valueOf(p.toUpperCase()));
+    				user.setP(Profil.valueOf(user.getP().name()));
     			}catch(IllegalArgumentException e ){
     				return "profil invalid";
     			}
@@ -47,9 +47,8 @@ public class UserControllers {
     			return  "false";
        }
     }
-    
-    
-@PreAuthorize("hasAuthority('ADMIN')")
+
+
 @GetMapping("all")
 public List<User> all(){
 return this.userR.findAll();
@@ -59,12 +58,12 @@ return this.userR.findAll();
 
 
 @Autowired
-MailService mailservice ; 
+MailService mailservice ;
 @PostMapping("renitialisermp")
 public String testmail(String email) throws NoSuchAlgorithmException, NoSuchPaddingException {
 	this.mailservice.renitialisermp(email);
-	return "true" ; 
-	
+	return "true" ;
+
 }
 
 
@@ -75,23 +74,20 @@ public String modifiermp(Long id , String password) {
 	String pass = encoder.encode(password);
 	u.setPassword(pass);
 	this.userR.save(u);
-	return "true" ; 
-	
+	return "true" ;
 }
 
 
-
-@PreAuthorize("hasAuthority('admin')")
-@DeleteMapping("/delete")
-@ApiOperation(value = "supprimer User ")
-public void deleteUser(long idUser)  {
-    IuserService utilisateurService = new UserService(); // Créez une instance de service
-    utilisateurService.deleteUser(idUser); // Appele de la méthode sur l'instance créée
+@Autowired
+UserService userService;
+@DeleteMapping("/delete/{idUser}")
+public void deleteUser(@PathVariable(name = "idUser") long idUser)  {
+    userService.deleteUser(idUser); // Appele de la méthode sur l'instance créée
     }
 
 
-        
-    
+
+
 //    //archive user
 //	@PreAuthorize("hasAuthority('ADMIN')")
 //    @PostMapping("/archiver")
@@ -102,15 +98,15 @@ public void deleteUser(long idUser)  {
 //        return "true";
 //    }
 
-    
-    
+
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("affichage")
     public List<User> affichage(){
         return this.userR.findByArchiverIsFalse();
     }
-    
-    
+
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("afficherbyemail")
     public User afficherbyemail(String email) {
@@ -118,25 +114,19 @@ public void deleteUser(long idUser)  {
 
     }
 
-    
-    
- 
+
+
+
     @PostMapping("modifier")
-    public String modifier(String nom , String prenom , String email,String poste,String tel,String adresse,String IBAN) {
-
-        User u = this.userR.findByEmail(email);
-        u.setNom(nom);
-        u.setPrenom(prenom);
-        u.setPoste(poste);
-        u.setTel(tel);
-        u.setEmail(email);
-        u.setAdresse(adresse);
-        u.setIBAN(IBAN);
-        this.userR.saveAndFlush(u);
+    public String modifier(@RequestBody User u) {
+        User existing = userR.findByEmail(u.getEmail());
+        existing.setNom(u.getNom());
+        existing.setPrenom(u.getPrenom());
+        existing.setPoste(u.getPoste());
+        existing.setTel(u.getTel());
+        existing.setAdresse(u.getAdresse());
+        existing.setIBAN(u.getIBAN());
+        userR.saveAndFlush(existing);
         return "true";
-
     }
-    
-
-  
 }

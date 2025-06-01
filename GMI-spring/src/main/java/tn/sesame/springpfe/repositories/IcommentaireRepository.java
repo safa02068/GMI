@@ -7,5 +7,5 @@ import tn.sesame.springpfe.entities.Intervention;
 import java.util.List;
 
 public interface IcommentaireRepository extends JpaRepository<Commentaire, Long> {
-    List<Commentaire> findByIntervention(Intervention i);
+
 }

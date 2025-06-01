@@ -253,7 +253,7 @@
                 <button type="button" class="flex items-center -mx-[5px] relative ltr:pr-[14px] rtl:pl-[14px] text-black dark:text-white" id="profileMenuBtn" (click)="toggleClass('profileMenuBtn')" [class.active]="buttonStates['profileMenuBtn']">
                     <img src="images/admin.png" class="w-[35px] h-[35px] md:w-[42px] md:h-[42px] rounded-full ltr:md:mr-[2px] ltr:lg:mr-[8px] rtl:md:ml-[2px] rtl:lg:ml-[8px] border-[2px] border-primary-200 inline-block" alt="admin-image">
                     <span class="block font-semibold text-[0] lg:text-base">
-                        Olivia
+                        {{getConnectedUser()}}
                     </span>
                     <i class="ri-arrow-down-s-line text-[15px] absolute ltr:-right-[3px] rtl:-left-[3px] top-1/2 -translate-y-1/2 mt-px"></i>
                 </button>

@@ -1,0 +1,47 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
+
+export interface Intervention {
+  id?: number;                  // optionnel lors de la création
+  datedecreation: Date;                   // date de l’intervention
+  description: string;          // description ou commentaire
+  statut: string;               // statut (ex: "en cours", "terminée", etc.)
+  type: string;                 // type (ex: "maintenance", "réparation", etc.)
+  materielId?: number;          // référence vers un matériel (optionnelle selon ton modèle)
+  technicien?: string;          // nom ou id du technicien (si applicable)
+}
+@Injectable({
+  providedIn: 'root'
+})
+export class InterventionService {
+
+  private apiUrl = 'http://localhost:8081/interventions'; // à adapter selon ton backend
+
+  constructor(private http: HttpClient) {}
+  getInterventions(): Observable<Intervention[]> {
+    const token = (localStorage.getItem('token') || '').replace(/^"|"$/g, '');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<Intervention[]>(`${this.apiUrl}/allintervention`, { headers });
+  }
+  // POST : ajouter une nouvelle intervention
+  addIntervention(intervention: Intervention): Observable<Intervention> {
+    const token = (localStorage.getItem('token') || '').replace(/^"|"$/g, '');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<Intervention>(`${this.apiUrl}/addintervention`, intervention, { headers });
+  }
+    // PUT : modifier une intervention existante
+    updateIntervention(id: number, intervention: Intervention): Observable<Intervention> {
+      const token = (localStorage.getItem('token') || '').replace(/^"|"$/g, '');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.put<Intervention>(`${this.apiUrl}/updateintervention`, intervention, { headers });
+    }
+  
+    // DELETE : supprimer une intervention par ID
+    deleteIntervention(id: number): Observable<void> {
+      const token = (localStorage.getItem('token') || '').replace(/^"|"$/g, '');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.delete<void>(`${this.apiUrl}/archiverintervention/${id}`, { headers });
+    }
+}
