@@ -18,17 +18,20 @@ public class Materiel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+	private String nom;
     private String model;
     private int stock ;
-    private String type; //zeyda
+    //private String type; //zeyda
     private float prix;
-    private String disponibilite; 
+   // private String disponibilite;//zeyda 
     private Date date_ajout;
     private Date date_suppression;
-    private boolean isDamaged;
+    @JsonIgnore
+    private boolean isDamaged; 
+    @JsonIgnore
     private boolean enMaintenance;
-    private boolean isManquant;
+   // private boolean isManquant; // zeyda
+    @JsonIgnore
     private boolean archiver;
     
     
@@ -37,6 +40,7 @@ public class Materiel {
     @JoinColumn(name = "projet_id")
     private Projet projet;
     
+    @JsonIgnore
     //permet de savoir si tous les utilisateurs du projet ont accès au matériel
     private boolean allProjectUsersAccess;
     

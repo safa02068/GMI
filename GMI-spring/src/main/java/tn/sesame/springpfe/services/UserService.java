@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class UserService implements  IuserService{
+	
     @Autowired
     private IuserRepository userRepository;
 
@@ -20,7 +21,7 @@ public class UserService implements  IuserService{
 
     @Override
     public void deleteUser(Long idUser) {
-        User user1 = userRepository.findById(idUser).orElse(null);
+        User user1 = userRepository.getOne(idUser);
         userRepository.delete(user1);
     }
 

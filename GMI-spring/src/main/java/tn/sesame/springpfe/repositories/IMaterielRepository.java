@@ -10,10 +10,10 @@ import java.util.List;
 public interface IMaterielRepository extends JpaRepository<Materiel, Long> {
     List<Materiel> findByArchiverIsFalse();
     
-    List<Materiel> findByIsManquantTrue();
-    List<Materiel> findByEnMaintenanceTrue();
-
-    List<Materiel> findByIsDamagedTrue();
+//    List<Materiel> findByIsManquantTrue();
+//    List<Materiel> findByEnMaintenanceTrue();
+//
+//    List<Materiel> findByIsDamagedTrue();
     List<Materiel> findByModel(String model);
 
     List<Materiel> findByProjetId(Long projetId);
@@ -24,14 +24,7 @@ public interface IMaterielRepository extends JpaRepository<Materiel, Long> {
     @Query("SELECT m FROM Materiel m WHERE m.projet.id IN (SELECT p.id FROM Projet p JOIN p.users u WHERE u.id = :userId) AND :userId IN (SELECT u.id FROM m.Utilisateurs u)")
     List<Materiel> findByProjetUsersIdAndUtilisateurs_Id(@Param("userId") Long userId);
 
-//    List<Object> prixmatriel();
 
-
-//    @Query(nativeQuery=true,value="select modele, COUNT(maintenance) from materiel where YEAR(dateachat)=:date GROUP BY modele")
-//    List<Object> matrielmaintenace (Long date);
-//
-//    @Query(nativeQuery=true,value="select modele, SUM(prix) from materiel GROUP BY modele")
-//    List<Object> prixmatriel ();
 
 
 

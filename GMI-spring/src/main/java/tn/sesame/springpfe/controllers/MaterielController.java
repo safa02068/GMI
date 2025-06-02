@@ -3,12 +3,15 @@ package tn.sesame.springpfe.controllers;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import tn.sesame.springpfe.entities.Materiel;
+import tn.sesame.springpfe.entities.MaterielManquant;
 import tn.sesame.springpfe.entities.Projet;
 import tn.sesame.springpfe.entities.User;
+import tn.sesame.springpfe.repositories.IMaterielManqRepository;
 import tn.sesame.springpfe.repositories.IMaterielRepository;
 import tn.sesame.springpfe.repositories.IProjetRepository;
 import tn.sesame.springpfe.repositories.IuserRepository;
@@ -30,7 +33,13 @@ public class MaterielController {
     @Autowired
     private IuserRepository userRepository;
 
+    
+    private MaterielManquant matM;
 
+    @Autowired 
+    private IMaterielManqRepository matMR;  
+    
+    
     @Transactional
     @PreAuthorize("hasAuthority('CHEF_PROJET')")
     @PostMapping("/addmateriel")
@@ -46,9 +55,9 @@ public class MaterielController {
     public Materiel updateMateriel(@PathVariable long id, @RequestBody Materiel materiel) {
     	Materiel mat = matR.findById(id).orElse(null);
         mat.setModel(materiel.getModel());
-        mat.setType(materiel.getType());
+        
         mat.setPrix(materiel.getPrix());
-        mat.setDisponibilite(materiel.getDisponibilite());
+        
         mat.setDate_ajout(materiel.getDate_ajout());
         mat.setDate_suppression(materiel.getDate_suppression());
         return matR.save(mat);
@@ -83,143 +92,114 @@ public class MaterielController {
         return matR.save(arch);
     }
     
-    
-    
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-    @GetMapping("/afficher-liste-manquant")
-    public List<Materiel> afficherMaterielManquant() {
-        return this.matR.findByIsManquantTrue();
+    //add materiel manquant 
+    @PreAuthorize("hasAuthority('TECHNICIEN')")
+    @PostMapping("/addmaterielmanquant")
+    public MaterielManquant addmaterielmanquant(@RequestBody MaterielManquant materielmanquant) {
+    	return this.matMR.save(materielmanquant);
     }
+    
+    
+    //afficher materiel manquant 
+    @PreAuthorize("hasAuthority('TECHNICIEN')")
+    @GetMapping("/affichermatirlmanquant")
+    public List<MaterielManquant>affichermatirlmanquant(){
+    	return this.matMR.findAll();
+    }
+    
+    
+//    @PreAuthorize("hasAuthority('CHEF_PROJET')")
+//    @GetMapping("/afficher-liste-manquant")
+//    public List<Materiel> afficherMaterielManquant() {
+//        return this.matR.findByIsManquantTrue();
+//    }
 
     
+    // delete materielmanquant
     
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-    @DeleteMapping("/supprimerManquant/{id}")
-    public String supprimerMaterielManquant(@PathVariable long id) {
-        Materiel materiel = matR.findById(id).orElse(null);
-        if (materiel == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Materiel non trouvé");
-        }
-        if (materiel.isManquant()) {
-            this.matR.delete(materiel);
-            return "Matériel manquant supprimé avec succès !";
-        }
-        else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ce matériel n'est pas marqué comme manquant");
-        }
+    @PreAuthorize("hasAuthority('TECHNICIEN')")
+    @DeleteMapping("/supprimermatmanquant")
+    public String supprimer(Long id) {
+    	MaterielManquant mat = this.matMR.findById(id).get();
+    	this.matMR.delete(mat);
+    	return "true" ; 
     }
     
     
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-    @PostMapping("etat")
+//    @PreAuthorize("hasAuthority('CHEF_PROJET')")
+//    @DeleteMapping("/supprimerManquant/{id}")
+//    public String supprimerMaterielManquant(@PathVariable long id) {
+//        Materiel materiel = matR.findById(id).orElse(null);
+//        if (materiel == null) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Materiel non trouvé");
+//        }
+//        if (materiel.isManquant()) {
+//            this.matR.delete(materiel);
+//            return "Matériel manquant supprimé avec succès !";
+//        }
+//        else {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ce matériel n'est pas marqué comme manquant");
+//        }
+//    }
+    
+    
+    @PreAuthorize("hasAuthority('TECHNICIEN')")
+    @PostMapping("etat_enmaintenance")
     public String status(Long id) {
         Materiel m = this.matR.findById(id).get();
         m.setEnMaintenance(true);
+        m.setDamaged(false);
+        this.matR.save(m);
+        return "true";
+    }
+    
+    @PreAuthorize("hasAuthority('TECHNICIEN')")
+    @PostMapping("etat_endommage")
+    public String status2(Long id) {
+        Materiel m = this.matR.findById(id).get();
+        m.setEnMaintenance(false);
+        m.setDamaged(true);
         this.matR.save(m);
         return "true";
     }
 
 
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-    @GetMapping("/afficher-liste-endommagé")
-    public List<Materiel> afficherMaterielEndommagé() {
-        return this.matR.findByIsDamagedTrue();
-    }
 
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-    @GetMapping("/afficher-liste-enmaintenance")
-    public List<Materiel> afficherMaterielMaintenance() {
-        return this.matR.findByEnMaintenanceTrue();
-    }
-
-
-    //hekom tester w ye5dmou
-
-//    @GetMapping("prixmatriel")
-//    public List<Object>prixmatriel(){
-//        return this.matR.prixmatriel();
-//    }
-
-//    @Transactional
 //    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-//    @PostMapping("/{projetId}/affecter-materiel/{materielId}")
-//    public Materiel affecterMateriel(@PathVariable long materielId, @PathVariable long projetId) {
-//        Materiel materiel = matR.findById(materielId)
-//            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Materiel non trouvé"));
-//        Projet projet = projetRepository.findById(projetId)
-//            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projet non trouvé"));
-//            
-//        materiel.setProjet(projet);
-//        return matR.save(materiel);
-//    }
-//    
-//    //permet de assigner si tous les utilisateurs du projet ont accès au matériel
-//    @Transactional
-//    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-//    @PutMapping("/set-controle-acces/{materielId}")
-//    public Materiel setControleAcces(
-//            @PathVariable long materielId,
-//            @RequestParam boolean allProjectUsersAccess) {
-//        Materiel materiel = matR.findById(materielId)
-//            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Materiel non trouvé"));
-//            
-//        materiel.setAllProjectUsersAccess(allProjectUsersAccess);
-//        if (allProjectUsersAccess) {
-//            materiel.setUtilisateurs(null); // on vide la liste des utilisateurs si tous les utilisateurs du projet ont accès au matériel
-//        }
-//        return matR.save(materiel);
-//    }
-//    
-//    //permet de savoir si tous les utilisateurs du projet ont accès au matériel
-//    @Transactional
-//    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-//    @PostMapping("/{materielId}/utilisateurs")
-//    public Materiel setUtilisateurs(
-//            @PathVariable long materielId,
-//            @RequestBody List<Long> userIds) {
-//        Materiel materiel = matR.findById(materielId)
-//            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Materiel non trouvé"));
-//            
-//        // Récupérer tous les utilisateurs du projet
-//        List<User> projectUsers = materiel.getProjet().getUsers();
-//        List<User> usersToAdd = userRepository.findAllById(userIds);
-//        
-//        // Vérifier si tous les utilisateurs appartiennent au projet
-//        boolean allUsersInProject = usersToAdd.stream()
-//            .allMatch(user -> projectUsers.stream()
-//                .anyMatch(projectUser -> projectUser.getId().equals(user.getId())));
-//                
-//        if (!allUsersInProject) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tous les utilisateurs doivent appartenir au projet qui possède ce matériel");
-//        }
-//        
-//        materiel.setUtilisateurs(usersToAdd);
-//        materiel.setAllProjectUsersAccess(false); // on désactive l'accès à tous les utilisateurs du projet
-//        return matR.save(materiel);
-//    }
-//    
-//    //permet de récupérer tous les matériels d'un projet
-//    @GetMapping("/project/{projetId}")
-//    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-//    public List<Materiel> getMaterielsByProjet(@PathVariable long projetId) {
-//        return matR.findByProjetId(projetId);
+//    @GetMapping("/afficher-liste-endommagé")
+//    public List<Materiel> afficherMaterielEndommagé() {
+//        return this.matR.findByIsDamagedTrue();
 //    }
 //
-//    //permet de récupérer tous les matériels accessibles à un utilisateur
-//    @GetMapping("/accessible/{userId}")
-//    public List<Materiel> getAccessibleMaterials(@PathVariable long userId) {
-//        User user = userRepository.findById(userId)
-//            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé"));
-//            
-//        // get tous les matériels d'un projet où l'utilisateur est dans la liste des utilisateurs du projet et où tous les utilisateurs du projet ont accès au matériel
-//        List<Materiel> allAccessMaterials = matR.findByProjetUsersIdAndAllProjectUsersAccessTrue(userId);
-//        
-//        // get tous les matériels d'un projet où l'utilisateur est dans la liste des utilisateurs du projet et où l'utilisateur est dans la liste des utilisateurs ayant accès au matériel
-//        List<Materiel> specificAccessMaterials = matR.findByProjetUsersIdAndUtilisateurs_Id(userId);
-//        
-//        // combine les deux listes, en supprimant les doublons
-//        allAccessMaterials.addAll(specificAccessMaterials);
-//        return allAccessMaterials;
+//    @PreAuthorize("hasAuthority('CHEF_PROJET')")
+//    @GetMapping("/afficher-liste-enmaintenance")
+//    public List<Materiel> afficherMaterielMaintenance() {
+//        return this.matR.findByEnMaintenanceTrue();
 //    }
+
+
+
+
+
+    @PreAuthorize("hasAuthority('CHEF_PROJET')")
+    @DeleteMapping("/deletemateriel/{id}")
+    public ResponseEntity<String> deleteMateriel(@PathVariable long id) {
+        try {
+            Materiel materiel = matR.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Matériel non trouvé"));
+            
+            // Vérifier si le matériel est associé à des interventions
+            if (!materiel.getInterventions().isEmpty()) {
+                return ResponseEntity.badRequest().body("Impossible de supprimer le matériel car il est associé à des interventions");
+            }
+            
+            matR.delete(materiel);
+            return ResponseEntity.ok("Matériel supprimé avec succès");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).body(e.getReason());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la suppression du matériel");
+        }
+    }
 
 }

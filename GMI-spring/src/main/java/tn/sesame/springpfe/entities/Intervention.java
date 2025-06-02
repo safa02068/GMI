@@ -23,7 +23,7 @@ public class Intervention {
     private String description;
     private Date datedecreation;
     private Date datederesolution;
-    private String priorite; //zeyda
+    //private String priorite; //zeyda
     private String commentaire;
     private Boolean archiver;
 

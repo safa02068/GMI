@@ -4,6 +4,7 @@ package tn.sesame.springpfe.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tn.sesame.springpfe.entities.Commentaire;
 import tn.sesame.springpfe.entities.Intervention;
@@ -39,6 +40,7 @@ public class InterventionControllers {
     
     private User user;
 
+    @PreAuthorize("hasAuthority('EMPLOYE')")
     @PostMapping("/addintervention")
     public ResponseEntity<Intervention> addinter(@RequestBody Intervention newIntervention, String email, Long id ) {
     try {
@@ -62,7 +64,7 @@ public class InterventionControllers {
     }
     }
 
-
+    @PreAuthorize("hasAuthority('TECHNICIEN')")
     @PostMapping("etat")
     public String etat(Long id,String etat){
         Intervention I = intR.findById(id).get();
@@ -80,7 +82,7 @@ public class InterventionControllers {
     }
 
 
-
+    @PreAuthorize("hasAuthority('EMPLOYE')")
     @PostMapping("addcommentaire")
     public String commentaire(Long id , String c) {
         Intervention I = intR.findById(id).get();
@@ -92,13 +94,14 @@ public class InterventionControllers {
         return "true";
     }
 
+    
     @GetMapping("affichercommentaire")
     public List<Commentaire> listcomm(Long id){
         Intervention I= intR.findById(id).get();
         return commentaireR.findByIntervention(I);
     }
 
-
+    @PreAuthorize("hasAuthority('EMPLOYE')")
     @PutMapping("/updateintervention")
     public String updateinter(@RequestBody Intervention interv) {
         Intervention existinginter = (Intervention) intR.findById(interv.getId()).get();
@@ -110,7 +113,7 @@ public class InterventionControllers {
             existinginter.setDemandeur(interv.getDemandeur());
             existinginter.setDatedecreation(new Date(System.currentTimeMillis()));
             existinginter.setDatederesolution(interv.getDatederesolution());
-            existinginter.setPriorite(interv.getPriorite());
+            
             existinginter.setEtat(interv.getEtat());
 
             intR.save(existinginter);
@@ -148,7 +151,7 @@ public class InterventionControllers {
         return intR.findById(id);
     }
 
-
+    @PreAuthorize("hasAuthority('TECHNICIEN')")
     @PutMapping("archiverintervention/{id}")
     public String archiverIntervention(@PathVariable Long id) {
         Intervention arch = intR.findById(id).get();

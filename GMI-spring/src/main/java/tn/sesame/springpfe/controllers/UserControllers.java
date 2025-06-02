@@ -26,9 +26,15 @@ public class UserControllers {
 
 	@Autowired
 	IuserRepository userR ;
+	
+	
+    @Autowired
+    UserService userService;
+
 
     @Autowired
     PasswordEncoder encoder ;
+    
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String Ajout(@RequestBody User user,String p) {
     	User userexist = this.userR.findByEmail(user.getEmail());
@@ -81,12 +87,11 @@ public String modifiermp(Long id , String password) {
 
 
 
-@PreAuthorize("hasAuthority('admin')")
+@PreAuthorize("hasAuthority('ADMIN')")
 @DeleteMapping("/delete")
 @ApiOperation(value = "supprimer User ")
 public void deleteUser(long idUser)  {
-    IuserService utilisateurService = new UserService(); // Créez une instance de service
-    utilisateurService.deleteUser(idUser); // Appele de la méthode sur l'instance créée
+    userService.deleteUser(idUser); // Appele de la méthode sur l'instance créée
     }
 
 

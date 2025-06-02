@@ -10,15 +10,15 @@
     <div class="mx-auto px-[12.5px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1255px]">
         <div class="grid lg:grid-cols-2 gap-[25px] items-center">
             <div class="xl:ltr:-mr-[25px] xl:rtl:-ml-[25px] 2xl:ltr:-mr-[45px] 2xl:rtl:-ml-[45px] rounded-[25px] order-2 lg:order-1">
-                <img src="images/image2.jpg" alt="sign-in-image" class="rounded-[25px] h-auto w-auto ">
+                <img src="images/usine.avif" alt="sign-in-image" class="rounded-[25px] h-auto w-auto" >
                <!-- image el kbira  -->
             </div>
             <div class="xl:ltr:pl-[90px] xl:rtl:pr-[90px] 2xl:ltr:pl-[120px] 2xl:rtl:pr-[120px] order-1 lg:order-2">
-                <img src="images/logo.png" alt="logo" class="inline-block dark:hidden h-16 w-auto">
+                <img src="images/logo.png" alt="logo" class="inline-block dark:hidden h-10 w-auto">
              
-<!--                 hethy logo
+<!--                 hethy logo 
  -->
-                <img src="images/logo.pngs" alt="logo" class="hidden dark:inline-block">
+               <!-- <img src="images/white-logo-big.svg" alt="logo" class="hidden dark:inline-block">-->
 
                 <div class="my-[17px] md:my-[25px]">
                     <h1 class="font-semibold text-[22px] md:text-xl lg:text-2xl mb-[5px] md:mb-[7px]">
@@ -38,7 +38,7 @@
                             type="text" 
                             formControlName="email"
                             class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500" 
-                            placeholder="example@trezo.com"
+                            placeholder="example@gmail.com"
                             [ngClass]="{'border-red-500': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
                         >
                         <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
