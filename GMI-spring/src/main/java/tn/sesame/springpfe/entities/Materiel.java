@@ -2,6 +2,8 @@ package tn.sesame.springpfe.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.Date;
@@ -14,23 +16,19 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class Materiel {
-	@JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	private String nom;
     private String model;
     private int stock ;
-    //private String type; //zeyda
     private float prix;
-   // private String disponibilite;//zeyda 
     private Date date_ajout;
     private Date date_suppression;
     @JsonIgnore
     private boolean isDamaged; 
     @JsonIgnore
     private boolean enMaintenance;
-   // private boolean isManquant; // zeyda
     @JsonIgnore
     private boolean archiver;
     
@@ -55,6 +53,6 @@ public class Materiel {
     
     @JsonIgnore
     @OneToMany
-    private List<Intervention> interventions;
+    private List<Intervention> interventions ;
 
 }

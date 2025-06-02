@@ -1,0 +1,24 @@
+Modifications Bader:
+
+Angular :
+- sidebar 
+- hostpital (patient-appointments)
+- my-profile
+- services
+- app.config.ts
+- app.module.ts
+- app.routes.ts
+
+Spring:
+- Controllers : - InterventionControllers.java
+		- MaterielController.java
+		- ProjetController.java
+		- UserControllers.java
+
+- Entities : 	- Commentaire.java
+		- Intervention.java
+		- Materiel.java
+		- Profil.java
+		- Projet.java
+		- User.java
+		

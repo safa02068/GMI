@@ -1,0 +1,51 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  button {
+    background-color: #a1b1c1;  /* Bleu clair */
+    color: white;  /* Texte en blanc */
+    border: none;  /* Pas de bordure */
+    padding: 10px 20px;  /* Padding pour donner un peu de marge autour du texte */
+    font-size: 10px;  /* Taille de la police */
+    border-radius: 5px;  /* Coins arrondis */
+    cursor: pointer;  /* Curseur en forme de main */
+    transition: background-color 0.3s ease, transform 0.2s ease;  /* Transition pour l'effet au survol et l'agrandissement */
+}
+
+button:hover {
+    background-color: #0056b3;  /* Bleu plus foncé au survol */
+    transform: scale(1.05);  /* Agrandissement léger du bouton au survol */
+}
+
+button:focus {
+    outline: none;  /* Enlever le contour par défaut au focus */
+}
+
+button:disabled {
+    cursor: not-allowed;  /* Curseur en forme de croix quand le bouton est désactivé */
+}
+
+  

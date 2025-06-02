@@ -24,7 +24,9 @@ export class HeaderComponent {
         // Initialize theme and direction on component load
         this.toggleService.initializeTheme();
     }
-
+    getConnectedUser() {
+    return localStorage.getItem('email');
+    }
     // Toggle theme between light and dark
     toggleTheme() {
         this.toggleService.toggleTheme();

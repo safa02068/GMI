@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common'; // Importation de CommonModule
 
 interface MenuItem {
     title: string;
@@ -11,13 +12,14 @@ interface MenuItem {
 @Component({
     selector: 'app-sidebar',
     standalone: true,
-    imports: [NgScrollbarModule, RouterLinkActive, RouterLink, NgClass],
+    imports: [NgScrollbarModule, RouterLinkActive, RouterLink, NgClass, CommonModule],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
 
 
+    isAdmin: boolean = false;
     // Accordion
     openSectionIndex: number = -1;
     openSectionIndex2: number = -1;
@@ -27,6 +29,12 @@ export class SidebarComponent {
             this.openSectionIndex = -1;
         } else {
             this.openSectionIndex = index;
+        }
+    }
+    getConnectedUserRole() 
+    {
+        if (localStorage.getItem('role') === "ADMIN") {
+            this.isAdmin = true;
         }
     }
     toggleSection2(index: number): void {

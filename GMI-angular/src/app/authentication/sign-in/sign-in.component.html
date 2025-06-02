@@ -15,18 +15,15 @@
             </div>
             <div class="xl:ltr:pl-[90px] xl:rtl:pr-[90px] 2xl:ltr:pl-[120px] 2xl:rtl:pr-[120px] order-1 lg:order-2">
                 <img src="images/logo.png" alt="logo" class="inline-block dark:hidden h-10 w-auto">
-             
-<!--                 hethy logo 
- -->
-               <!-- <img src="images/white-logo-big.svg" alt="logo" class="hidden dark:inline-block">-->
+                <img src="images/logo.png" alt="logo" class="hidden dark:inline-block h-10 w-auto"> <!-- Sombre -->
 
                 <div class="my-[17px] md:my-[25px]">
                     <h1 class="font-semibold text-[22px] md:text-xl lg:text-2xl mb-[5px] md:mb-[7px]">
-                        Bienvenu à E-TRACK
+                        Welcome to ELCO solution
                     </h1>
-                   <!--  <p class="font-medium lg:text-md text-[#445164] dark:text-gray-400">
+                    <p class="font-medium lg:text-md text-[#445164] dark:text-gray-400">
                         Sign In with social account or enter your details
-                    </p> -->
+                    </p>
                 </div>
       
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -84,7 +81,9 @@
                         </span>
                     </button>
                 </form>
-               
+                <p class="mt-[15px] md:mt-[20px]">
+                    Pas de compte ? <a routerLink="/authentication/sign-up" class="text-primary-500 transition-all font-semibold hover:underline">Créer un compte</a>
+                </p>
             </div>
         </div>
     </div>

@@ -1,77 +1,256 @@
-<!-- Breadcrumb -->
-<div class="mb-[25px] md:flex items-center justify-between">
-    <h5 class="mb-0">
-        My Profile
-    </h5>
-    <ol class="breadcrumb mt-[12px] md:mt-0">
-        <li class="breadcrumb-item inline-block relative text-sm mx-[13px] ltr:first:ml-0 rtl:first:mr-0 ltr:last:mr-0 rtl:last:ml-0">
-            <a routerLink="/dashboard" class="inline-block relative ltr:pl-[22px] rtl:pr-[22px] transition-all hover:text-primary-500">
-                <i class="material-symbols-outlined absolute ltr:left-0 rtl:right-0 !text-lg -mt-px text-primary-500 top-1/2 -translate-y-1/2">
-                    home
-                </i>
-                Dashboard
-            </a>
-        </li>
-        <li class="breadcrumb-item inline-block relative text-sm mx-[13px] ltr:first:ml-0 rtl:first:mr-0 ltr:last:mr-0 rtl:last:ml-0">
-            My Profile
-        </li>
-    </ol>
-</div>
-
-<!-- My Profile -->
-<div class="2xl:grid 2xl:grid-cols-2 gap-[25px]">
-    <div>
-
-        <!-- Welcome -->
-        <app-mp-welcome />
-
+<div class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
+    <div class="trezo-card-header mb-[20px] md:mb-[25px] sm:flex items-center justify-between">
+        <div class="trezo-card-title">
+            <h5 class="mb-0">Matériels</h5>
+        </div>
+        <div class="trezo-card-subtitle mt-[10px] sm:mt-0 flex flex-col sm:flex-row items-center gap-3">
+            <input type="text" [(ngModel)]="searchText" placeholder="Rechercher un matériel..." class="border border-gray-300 dark:border-[#172036] rounded-md px-3 py-2 w-full sm:w-auto dark:bg-[#0c1427] dark:text-white" />
+            <button type="button" class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-primary-500 hover:bg-primary-500 hover:text-white" (click)="openModaladd()">
+                <i class="ri-add-line text-xl"></i> Ajouter
+            </button>
+        </div>
     </div>
-    <div>
-        <div class="sm:grid sm:grid-cols-3 gap-[25px]">
-            <div>
 
-                <!-- Total Projects -->
-                <app-mp-total-projects />
-                
-            </div>
-            <div>
-
-                <!-- Total Orders -->
-                <app-mp-total-orders />
-
-            </div>
-            <div>
-
-                <!-- Total Revenue -->
-                <app-mp-total-revenue />
-
-            </div>
+    <div class="trezo-card-content">
+        <div class="table-responsive overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Stock</th>
+                        <th>Type</th>
+                        <th>Prix</th>
+                        <th>Disponibilité</th>
+                        <th>Date d'ajout</th>
+                        <th>Date de suppression</th>
+                        <th>Endommagé</th>
+                        <th>En maintenance</th>
+                        <th>Manquant</th>
+                        <th>Archivé</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-black dark:text-white">
+                    <tr *ngFor="let materiel of filteredMateriels">
+                        <td>{{ materiel.model }}</td>
+                        <td>{{ materiel.stock }}</td>
+                        <td>{{ materiel.type }}</td>
+                        <td>{{ materiel.prix }} TND</td>
+                        <td>{{ materiel.disponibilite }}</td>
+                        <td>{{ materiel.date_ajout | date }}</td>
+                        <td>{{ materiel.date_suppression | date }}</td>
+                        <td>{{ materiel.isDamaged ? 'Oui' : 'Non' }}</td>
+                        <td>{{ materiel.enMaintenance ? 'Oui' : 'Non' }}</td>
+                        <td>{{ materiel.isManquant ? 'Oui' : 'Non' }}</td>
+                        <td>{{ materiel.archiver ? 'Oui' : 'Non' }}</td>
+                        <td>
+                            <button class="text-blue-500 hover:text-blue-700" (click)="editMateriel(materiel)">
+                                <i class="ri-pencil-line"></i> Modifier
+                            </button>
+                            <button class="text-red-500 hover:text-red-700" (click)="confirmDelete(materiel)">
+                                <i class="ri-delete-bin-line"></i> Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-<div class="lg:grid lg:grid-cols-3 2xl:grid-cols-4 gap-[25px]">
-    <div class="lg:col-span-1">
 
-        <!-- Profile Intro -->
-        <app-mp-profile-intro />
+<!-- Modal d'ajout -->
+<div *ngIf="showModaladd" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close" (click)="closeModaladd()">&times;</span>
+        <h2>Ajouter un matériel</h2>
+        <form (ngSubmit)="addMateriel()">
+            <!-- Modèle -->
+            <div>
+                <label for="model">Modèle</label>
+                <input type="text" id="model" [(ngModel)]="newMateriel.model" name="model" placeholder="Modèle" required />
+            </div>
 
-        <!-- Profile Information -->
-        <app-mp-profile-information />
+            <!-- Stock -->
+            <div>
+                <label for="stock">Stock</label>
+                <input type="number" id="stock" [(ngModel)]="newMateriel.stock" name="stock" placeholder="Stock" required />
+            </div>
 
-        <!-- Additional Information -->
-        <app-mp-additional-information />
+            <!-- Type -->
+            <div>
+                <label for="type">Type</label>
+                <select id="type" [(ngModel)]="newMateriel.type" name="type" required>
+                    <option value="Individuelle">Individuelle</option>
+                    <option value="Personnel">Personnel</option>
+                </select>
+            </div>
 
+            <!-- Prix -->
+            <div>
+                <label for="prix">Prix</label>
+                <input type="number" id="prix" [(ngModel)]="newMateriel.prix" name="prix" placeholder="Prix" required />
+            </div>
+
+            <!-- Disponibilité -->
+            <div>
+                <label for="disponibilite">Disponibilité</label>
+                <input type="text" id="disponibilite" [(ngModel)]="newMateriel.disponibilite" name="disponibilite" placeholder="Disponibilité" required />
+            </div>
+
+            <!-- Date d'ajout -->
+            <div>
+                <label for="date_ajout">Date d'ajout</label>
+                <input type="date" id="date_ajout" [(ngModel)]="newMateriel.date_ajout" name="date_ajout" placeholder="Date d'ajout" required />
+            </div>
+
+            <!-- Date de suppression -->
+            <div>
+                <label for="date_suppression">Date de suppression</label>
+                <input type="date" id="date_suppression" [(ngModel)]="newMateriel.date_suppression" name="date_suppression" placeholder="Date de suppression" />
+            </div>
+
+            <!-- Endommagé -->
+            <div>
+                <label for="damaged">Endommagé</label>
+                <select id="damaged" [(ngModel)]="newMateriel.isDamaged" name="damaged" required>
+                    <option [value]="true">Oui</option>
+                    <option [value]="false">Non</option>
+                </select>
+            </div>
+
+            <!-- En maintenance -->
+            <div>
+                <label for="enMaintenance">En maintenance</label>
+                <select id="enMaintenance" [(ngModel)]="newMateriel.enMaintenance" name="enMaintenance" required>
+                    <option [value]="true">Oui</option>
+                    <option [value]="false">Non</option>
+                </select>
+            </div>
+
+            <!-- Manquant -->
+            <div>
+                <label for="manquant">Manquant</label>
+                <select id="manquant" [(ngModel)]="newMateriel.isManquant" name="manquant" required>
+                    <option [value]="true">Oui</option>
+                    <option [value]="false">Non</option>
+                </select>
+            </div>
+
+            <!-- Archivage -->
+            <div>
+                <label for="archiver">Archiver</label>
+                <select id="archiver" [(ngModel)]="newMateriel.archiver" name="archiver" required>
+                    <option [value]="true">Oui</option>
+                    <option [value]="false">Non</option>
+                </select>
+            </div>
+
+            <button type="submit">Ajouter</button>
+            <button type="button" (click)="closeModaladd()">Annuler</button>
+        </form>
     </div>
-    <div class="lg:col-span-2 2xl:col-span-3">
+</div>
 
-        <!-- Overview -->
-        <app-mp-overview />
+<!-- Modale d'édition -->
+<div *ngIf="isModalOpen" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h2>Modifier un matériel</h2>
+        <form (ngSubmit)="updateMateriel()">
+            <!-- Modèle -->
+            <div>
+                <label for="model">Modèle</label>
+                <input type="text" id="model" [(ngModel)]="selectedMateriel.model" name="model" placeholder="Modèle" required />
+            </div>
 
-        <!-- To Do List -->
-        <app-mp-to-do-list />
+            <!-- Stock -->
+            <div>
+                <label for="stock">Stock</label>
+                <input type="number" id="stock" [(ngModel)]="selectedMateriel.stock" name="stock" placeholder="Stock" required />
+            </div>
 
-        <!-- Recent Activity -->
-        <app-mp-recent-activity />
+            <!-- Type -->
+            <div>
+                <label for="type">Type</label>
+                <select id="type" [(ngModel)]="selectedMateriel.type" name="type" required>
+                    <option value="Individuelle">Individuelle</option>
+                    <option value="Personnel">Personnel</option>
+                </select>
+            </div>
 
+            <!-- Prix -->
+            <div>
+                <label for="prix">Prix</label>
+                <input type="number" id="prix" [(ngModel)]="selectedMateriel.prix" name="prix" placeholder="Prix" required />
+            </div>
+
+            <!-- Disponibilité -->
+            <div>
+                <label for="disponibilite">Disponibilité</label>
+                <input type="text" id="disponibilite" [(ngModel)]="selectedMateriel.disponibilite" name="disponibilite" placeholder="Disponibilité" required />
+            </div>
+
+            <!-- Date d'ajout -->
+            <div>
+                <label for="date_ajout">Date d'ajout</label>
+                <input type="date" id="date_ajout" [(ngModel)]="selectedMateriel.date_ajout" name="date_ajout" placeholder="Date d'ajout" required />
+            </div>
+
+            <!-- Date de suppression -->
+            <div>
+                <label for="date_suppression">Date de suppression</label>
+                <input type="date" id="date_suppression" [(ngModel)]="selectedMateriel.date_suppression" name="date_suppression" placeholder="Date de suppression" />
+            </div>
+
+            <!-- Endommagé -->
+            <div>
+                <label for="damaged">Endommagé</label>
+                <select id="damaged" [(ngModel)]="selectedMateriel.isDamaged" name="damaged" required>
+                    <option [ngValue]="true">Oui</option>
+                    <option [ngValue]="false">Non</option>
+                </select>
+            </div>
+
+            <!-- En maintenance -->
+            <div>
+                <label for="enMaintenance">En maintenance</label>
+                <select id="enMaintenance" [(ngModel)]="selectedMateriel.enMaintenance" name="enMaintenance" required>
+                    <option [ngValue]="true">Oui</option>
+                    <option [ngValue]="false">Non</option>
+                </select>
+            </div>
+
+            <!-- Manquant -->
+            <div>
+                <label for="manquant">Manquant</label>
+                <select id="manquant" [(ngModel)]="selectedMateriel.isManquant" name="manquant" required>
+                    <option [ngValue]="true">Oui</option>
+                    <option [ngValue]="false">Non</option>
+                </select>
+            </div>
+
+            <!-- Archivage -->
+            <div>
+                <label for="archiver">Archiver</label>
+                <select id="archiver" [(ngModel)]="selectedMateriel.archiver" name="archiver" required>
+                    <option [value]="true" >Oui</option>
+                    <option [value]="false">Non</option>
+                </select>
+            </div>
+
+            <button type="submit">Mettre à jour</button>
+            <button type="button" (click)="closeModal()">Annuler</button>
+        </form>
+    </div>
+</div>
+<!-- Modal de Confirmation de Suppression -->
+<div *ngIf="isDeleteConfirmOpen" class="modal-overlay" (click)="cancelDelete()">
+    <div class="modal-content bg-white dark:bg-[#0c1427] rounded p-6 w-[90%] md:w-[400px] m-auto mt-[10%]" (click)="$event.stopPropagation()">
+      <h2 class="text-lg font-semibold mb-4 text-center text-black dark:text-white">Confirmation</h2>
+      <p class="mb-6 text-center text-gray-700 dark:text-gray-300">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+      <div class="flex justify-center gap-4">
+        <button (click)="confirmDeleteUser()">Oui</button>
+        <button class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400" (click)="cancelDelete()">Non</button>
+      </div>
     </div>
 </div>

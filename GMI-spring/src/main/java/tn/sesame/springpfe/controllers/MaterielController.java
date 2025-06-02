@@ -41,7 +41,6 @@ public class MaterielController {
     
     
     @Transactional
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
     @PostMapping("/addmateriel")
     public Materiel ajout(@RequestBody Materiel materiel) {
         return this.matR.save(materiel);
@@ -50,7 +49,6 @@ public class MaterielController {
     
 
     @Transactional
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
     @PutMapping("/updatemateriel/{id}")
     public Materiel updateMateriel(@PathVariable long id, @RequestBody Materiel materiel) {
     	Materiel mat = matR.findById(id).orElse(null);
@@ -59,13 +57,13 @@ public class MaterielController {
         mat.setPrix(materiel.getPrix());
         
         mat.setDate_ajout(materiel.getDate_ajout());
+        mat.setDamaged(materiel.isDamaged());
         mat.setDate_suppression(materiel.getDate_suppression());
         return matR.save(mat);
     }
 
     
     @GetMapping("/affichierlistmateriel")
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
     public List<Materiel> affichierlist() {
         return this.matR.findByArchiverIsFalse();
     }

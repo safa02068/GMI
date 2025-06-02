@@ -1,0 +1,148 @@
+/* L'overlay pour le fond sombre derrière le modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);  /* Ombre sombre */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;  /* Assurer que le modal est au-dessus de tout */
+  }
+  
+  /* Contenu du modal */
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    max-height: 80%;  /* Limite la hauteur pour ne pas dépasser l'écran */
+    overflow-y: auto;  /* Ajoute une barre de défilement si nécessaire */
+  }
+  
+  /* Bouton de fermeture */
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* Champ de saisie de texte */
+  input[type="text"],
+  input[type="number"],
+  input[type="checkbox"],
+  select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 16px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    box-sizing: border-box;  /* Pour inclure le padding et la bordure dans la largeur */
+  }
+  
+  /* Bordure et couleur au focus */
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  select:focus {
+    outline: none;
+    background-color: #e8f5e9;
+    border-color: #4CAF50;
+  }
+  
+  /* Style spécifique pour le checkbox */
+  input[type="checkbox"] {
+    width: auto;
+    margin: 0 10px 0 0;
+  }
+  
+  /* Style du bouton */
+  button[type="submit"],
+  button[type="button"] {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Style du bouton au survol */
+  button[type="submit"]:hover,
+  button[type="button"]:hover {
+    background-color: #45a049;
+    color: white;
+  }
+  
+  /* Espacement et alignement du label */
+  label {
+    font-size: 16px;
+    margin: 10px 0;
+    display: block;
+  }
+  
+  /* Zone d'entrée pour les champs de saisie */
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+  }
+  
+  /* Espacement autour des champs */
+  form input,
+  form select {
+    margin-bottom: 12px;
+  }
+  
+  /* Espacement autour du bouton de soumission */
+  form button[type="submit"] {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  /* Espacement autour du bouton Annuler */
+  form button[type="button"] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Pour le champ de sélection (select) */
+  select {
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  /* Bordure et couleur au focus */
+  select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+  }
+  
+  /* Pour garantir que la pop-up ne dépasse pas de l'écran */
+  @media (max-width: 600px) {
+    .modal-content {
+      width: 90%;  /* Réduit la taille de la pop-up sur des écrans plus petits */
+      max-width: none;
+      padding: 15px;
+    }
+  
+    /* Ajuste le bouton "Annuler" pour qu'il soit centré sur des écrans plus petits */
+    form button[type="button"] {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+  }
+  
