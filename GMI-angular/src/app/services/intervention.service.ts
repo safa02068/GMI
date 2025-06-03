@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 export interface Intervention {
   id?: number;                  // optionnel lors de la création
@@ -17,7 +18,7 @@ export interface Intervention {
 })
 export class InterventionService {
 
-  private apiUrl = 'http://localhost:8081/interventions'; // à adapter selon ton backend
+  private readonly apiUrl = `${environment.apiUrl}/interventions`;
 
   constructor(private http: HttpClient) {}
   getInterventions(): Observable<Intervention[]> {

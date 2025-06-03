@@ -25,7 +25,10 @@ export class HeaderComponent {
         this.toggleService.initializeTheme();
     }
     getConnectedUser() {
-    return localStorage.getItem('email');
+        if (isPlatformBrowser(this.platformId)) {
+            return localStorage.getItem('email');
+        }
+        return null;
     }
     // Toggle theme between light and dark
     toggleTheme() {

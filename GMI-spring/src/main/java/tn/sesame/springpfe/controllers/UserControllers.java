@@ -21,7 +21,6 @@ import java.util.List;
 @RequestMapping("users")
 @RestController
 @CrossOrigin("*")
-
 public class UserControllers {
 
 	@Autowired
@@ -55,40 +54,41 @@ public class UserControllers {
     }
 
 
-@GetMapping("all")
-public List<User> all(){
-return this.userR.findAll();
-}
+    @PreAuthorize("hasAuthority('ADMIN')")
+	@GetMapping("all")
+	public List<User> all(){
+    	return this.userR.findAll();
+	}
 
 
 
 
-@Autowired
-MailService mailservice ;
-@PostMapping("renitialisermp")
-public String testmail(String email) throws NoSuchAlgorithmException, NoSuchPaddingException {
-	this.mailservice.renitialisermp(email);
-	return "true" ;
-
-}
-
-
-
-@PostMapping("modifiermp")
-public String modifiermp(Long id , String password) {
-	User u = this.userR.findById(id).get();
-	String pass = encoder.encode(password);
-	u.setPassword(pass);
-	this.userR.save(u);
-	return "true" ;
-}
+	@Autowired
+	MailService mailservice ;
+	@PostMapping("renitialisermp")
+	public String testmail(String email) throws NoSuchAlgorithmException, NoSuchPaddingException {
+		this.mailservice.renitialisermp(email);
+		return "true" ;
+	
+	}
 
 
-@PreAuthorize("hasAuthority('ADMIN')")
-@DeleteMapping("/delete/{idUser}")
-public void deleteUser(@PathVariable(name = "idUser") long idUser)  {
-    userService.deleteUser(idUser); // Appele de la méthode sur l'instance créée
-    }
+
+	@PostMapping("modifiermp")
+	public String modifiermp(Long id , String password) {
+		User u = this.userR.findById(id).get();
+		String pass = encoder.encode(password);
+		u.setPassword(pass);
+		this.userR.save(u);
+		return "true" ;
+	}
+
+
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@DeleteMapping("/delete/{idUser}")
+	public void deleteUser(@PathVariable(name = "idUser") long idUser)  {
+	    userService.deleteUser(idUser); // Appele de la méthode sur l'instance créée
+	}
 
 
 

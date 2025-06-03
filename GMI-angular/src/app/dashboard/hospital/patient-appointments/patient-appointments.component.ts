@@ -45,12 +45,15 @@ export class PatientAppointmentsComponent {
         this.getUserData();
     }
     get filteredUsers() {
+        if (!this.userData) {
+            return [];
+        }
         return this.userData.filter((user: User) =>
           user.nom.toLowerCase().includes(this.searchText.toLowerCase()) ||
           user.prenom.toLowerCase().includes(this.searchText.toLowerCase()) ||
           user.email.toLowerCase().includes(this.searchText.toLowerCase())
         );
-      }
+    }
 
 confirmDelete(user: any) {
   this.selectedUserToDelete = user;

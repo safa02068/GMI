@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 
 export interface Materiel {
@@ -17,7 +18,7 @@ export interface Materiel {
 })
 export class MaterielService {
 
-  private baseUrl = 'http://localhost:8081/materiel'; // à adapter selon ton backend
+  private readonly baseUrl = `${environment.apiUrl}/materiel`;
 
   constructor(private http: HttpClient) {}
 
