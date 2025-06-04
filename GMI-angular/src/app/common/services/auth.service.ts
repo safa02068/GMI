@@ -157,7 +157,7 @@ roles:response.profil
     }
     this.userSubject.next(user);
     if (this.isBrowser) {
-      localStorage.setItem('token', JSON.stringify(user.token));
+      localStorage.setItem('token', user.token);
       localStorage.setItem('email', user.email);
       localStorage.setItem('role', user.roles);
     }

@@ -10,57 +10,47 @@
             </button>
         </div>
     </div>
-    <div class="trezo-card-content">
-        <div class="table-responsive overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr>
-                        <th class="font-medium text-xs ltr:text-left rtl:text-right px-[14px] pb-[7px] whitespace-nowrap">Nom</th>
-                        <th class="font-medium text-xs ltr:text-right rtl:text-left px-[14px] pb-[7px] whitespace-nowrap">Prénom</th>
-                        <th class="font-medium text-xs ltr:text-right rtl:text-left px-[14px] pb-[7px] whitespace-nowrap">Email</th>
-                        <th class="font-medium text-xs ltr:text-right rtl:text-left px-[14px] pb-[7px] whitespace-nowrap">Poste</th>
-                        <th class="font-medium text-xs ltr:text-right rtl:text-left px-[14px] pb-[7px] whitespace-nowrap">Téléphone</th>
-                        <th class="font-medium text-xs ltr:text-right rtl:text-left px-[14px] pb-[7px] whitespace-nowrap">Adresse</th>
-                        <th class="font-medium text-xs ltr:text-right rtl:text-left px-[14px] pb-[7px] whitespace-nowrap">CIN</th>
-                        <th class="font-medium text-xs ltr:text-right rtl:text-left px-[14px] pb-[7px] whitespace-nowrap">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="text-black dark:text-white">
-                    <tr *ngFor="let user of filteredUsers">
-                        <td class="font-medium ltr:text-left rtl:text-right whitespace-nowrap px-[14px] py-[6px] border-b border-gray-100 dark:border-[#172036]">
-                            {{ user.nom }}
-                        </td>
-                        <td class="font-medium ltr:text-left rtl:text-right whitespace-nowrap px-[14px] py-[6px] border-b border-gray-100 dark:border-[#172036]">
-                            {{ user.prenom }}
-                        </td>
-                        <td class="font-medium text-gray-500 dark:text-gray-400 ltr:text-right rtl:text-left whitespace-nowrap px-[14px] py-[6px] border-b border-gray-100 dark:border-[#172036]">
-                            {{ user.email }}
-                        </td>
-                        <td class="font-medium text-gray-500 dark:text-gray-400 ltr:text-right rtl:text-left whitespace-nowrap px-[14px] py-[6px] border-b border-gray-100 dark:border-[#172036]">
-                            {{ user.poste }}
-                        </td>
-                        <td class="font-medium text-gray-500 dark:text-gray-400 ltr:text-right rtl:text-left whitespace-nowrap px-[14px] py-[6px] border-b border-gray-100 dark:border-[#172036]">
-                            {{ user.tel }}
-                        </td>
-                        <td class="font-medium text-gray-500 dark:text-gray-400 ltr:text-right rtl:text-left whitespace-nowrap px-[14px] py-[6px] border-b border-gray-100 dark:border-[#172036]">
-                            {{ user.adresse }}
-                        </td>
-                        <td class="font-medium text-gray-500 dark:text-gray-400 ltr:text-right rtl:text-left whitespace-nowrap px-[14px] py-[6px] border-b border-gray-100 dark:border-[#172036]">
-                            {{ user.cin }}
-                        </td>
-                        <td class="font-medium text-gray-500 dark:text-gray-400 ltr:text-right rtl:text-left whitespace-nowrap px-[14px] py-[6px] border-b border-gray-100 dark:border-[#172036]">
-                            <button class="text-blue-500 hover:text-blue-700" (click)="editUser(user)">
+
+
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Prenom</th>
+      <th scope="col">Email</th>
+      <th scope="col">Poste</th>
+      <th scope="col">Téléphone</th>
+      <th scope="col">Adresse</th>
+      <th scope="col">CIN</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of userData">
+      <td>{{u?.nom}}</td>
+      <td>{{u?.prenom}}</td>
+      <td>{{u?.email}}</td>
+      <td>{{u?.poste}}</td>
+      <td>{{u?.tel}}</td>
+      <td>{{u?.adresse}}</td>
+      <td>{{u?.cin}}</td>
+      <td class="font-medium text-gray-500 dark:text-gray-400 ltr:text-right rtl:text-left whitespace-nowrap px-[14px] py-[6px] border-b border-gray-100 dark:border-[#172036]">
+                            <button class="text-blue-500 hover:text-blue-700" (click)="editUser(u)">
                                 <i class="ri-pencil-line"></i> Modifier
                             </button>
-                            <button class="text-red-500 hover:text-red-700" (click)="confirmDelete(user)">
+                            <button class="text-red-500 hover:text-red-700" (click)="confirmDelete(u)">
                                 <i class="ri-delete-bin-line"></i> Supprimer
                             </button>
                         </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+
+    </tr>
+ 
+  </tbody>
+</table>
+  
 </div>
 
 <!-- Modal de Modification -->
@@ -117,19 +107,19 @@
         <input type="text" [(ngModel)]="newUser.prenom" name="prenom" placeholder="Prénom" required />
         <input type="email" [(ngModel)]="newUser.email" name="email" placeholder="Email" required />
         <input type="password" [(ngModel)]="newUser.password" name="password" placeholder="Mot de passe" required />
-        
-        <!-- Liste déroulante pour le rôle -->
-        <select [(ngModel)]="newUser.p" name="p" class="form-control mb-2">
-            <option value="ADMIN">ADMIN</option>
-            <option value="UTILISATEUR">UTILISATEUR</option>
+        <input type="text" [(ngModel)]="newUser.adresse" name="adresse" placeholder="Adresse" required />
+        <input type="number" [(ngModel)]="newUser.tel" name="tel" placeholder="Tel" required />
+        <input type="number" [(ngModel)]="newUser.cin" name="cin" placeholder="CIN" required />
+         <select [(ngModel)]="newUser.p" name="p" class="form-control mb-2">
+            <option value="CHEF_PROJET">CHEF_PROJET</option>
+            <option value="EMPLOYE">EMPLOYE</option>
+                        <option value="TECHNICIEN">TECHNICIEN</option>
+
         </select>
+       
 
         <!-- Liste déroulante pour un autre champ (ex: Actif ou Non) -->
-        <label>Actif :</label>
-        <select [(ngModel)]="newUser.isActive" name="isActive" class="form-control mb-2">
-            <option [ngValue]="true">Oui</option>
-            <option [ngValue]="false">Non</option>
-        </select>
+     
 
         <button type="submit" (click)="saveUser()">Ajouter</button>
         <button (click)="closeModaladd()">Annuler</button>

@@ -10,7 +10,7 @@
     "serve:ssr:trezo": "node dist/trezo/server/server.mjs"
   },
   "private": true,
- "dependencies": {
+  "dependencies": {
     "@angular/animations": "^18.2.0",
     "@angular/cdk": "^18.2.12",
     "@angular/common": "^18.2.0",
@@ -28,6 +28,7 @@
     "@fullcalendar/daygrid": "^6.1.17",
     "@iplab/ngx-file-upload": "^18.0.0",
     "apexcharts": "^3.54.1",
+    "bootstrap": "^5.3.6",
     "express": "^4.18.2",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",

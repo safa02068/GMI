@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -11,8 +11,12 @@ export class UserServiceService {
 
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/all`);
+  getData(){
+          let headersaaaa = new HttpHeaders();
+          headersaaaa = headersaaaa.set('Content-Type', 'application/json; charset=utf-8');
+          headersaaaa = headersaaaa.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
+          console.log(localStorage.getItem('token'))
+    return this.http.get(`${this.apiUrl}/all`,{headers:headersaaaa});
   }
 
   modifierUser(userData: any): Observable<any> {

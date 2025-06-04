@@ -36,15 +36,17 @@ export class PatientAppointmentsComponent {
         prenom: '',
         email: '',
         password: '',
-        p: 'UTILISATEUR',
-        isActive: true,
+        p: 'CHEF_PROJET',
+        adresse :'',
+        tel :'',
+        cin:''
       };
     constructor(private ws: UserServiceService) { }
 
     ngOnInit(): void {
         this.getUserData();
     }
-    get filteredUsers() {
+  /*  get filteredUsers() {
         if (!this.userData) {
             return [];
         }
@@ -53,7 +55,7 @@ export class PatientAppointmentsComponent {
           user.prenom.toLowerCase().includes(this.searchText.toLowerCase()) ||
           user.email.toLowerCase().includes(this.searchText.toLowerCase())
         );
-    }
+    }*/
 
 confirmDelete(user: any) {
   this.selectedUserToDelete = user;
@@ -85,9 +87,11 @@ confirmDeleteUser() {
         );
     }
     saveUser() {
-        // Logic to add user
+      console.log(this.newUser)
+        // Logic to add 
+        // user
         console.log('Ajouter un utilisateur');
-        this.ws.addUser(this.newUser).subscribe(
+       this.ws.addUser(this.newUser).subscribe(
           (response) => {
             console.log('User added successfully:', response);
             this.getUserData();  // Rafraîchir la liste des utilisateurs

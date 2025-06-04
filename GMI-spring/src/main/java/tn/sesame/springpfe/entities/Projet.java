@@ -1,6 +1,9 @@
 package tn.sesame.springpfe.entities;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 import java.util.Date;
@@ -23,7 +26,7 @@ public class Projet {
   
     @Column(nullable = false)
     private boolean archiver;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "projet")
     private List<User> users;
     

@@ -35,7 +35,7 @@ public class UserControllers {
     PasswordEncoder encoder ;
     
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String Ajout(@RequestBody User user,String p) {
+    public String Ajout(@RequestBody User user) {
     	User userexist = this.userR.findByEmail(user.getEmail());
     		if(userexist==null){
     			try {
@@ -48,10 +48,10 @@ public class UserControllers {
         this.userR.save(user);
         return "true";
     		}
-    		else{
+    		else
     			return  "false";
        }
-    }
+    
 
 
     @PreAuthorize("hasAuthority('ADMIN')")

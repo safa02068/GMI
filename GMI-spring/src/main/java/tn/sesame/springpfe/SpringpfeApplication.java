@@ -16,7 +16,7 @@ public class SpringpfeApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringpfeApplication.class, args);
     }
-
+/*
     @Bean
     CommandLineRunner run(UserService userService) {
         return args -> {
@@ -34,5 +34,5 @@ public class SpringpfeApplication {
             user.setArchiver(false);
             userService.add(user);
         };
-    }
+    }*/
 }
