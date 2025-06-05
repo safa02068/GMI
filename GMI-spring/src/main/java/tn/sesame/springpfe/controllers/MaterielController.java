@@ -43,6 +43,7 @@ public class MaterielController {
     @Transactional
     @PostMapping("/addmateriel")
     public Materiel ajout(@RequestBody Materiel materiel) {
+    	materiel.setArchiver(false);
         return this.matR.save(materiel);
     }
     
@@ -78,16 +79,16 @@ public class MaterielController {
     
     
     
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-    @PutMapping("/archiver/{id}")
-    public Materiel archiverMateriel(@PathVariable long id) {
-        System.out.println("Called archive endpoint with ID: " + id);
+   // @PreAuthorize("hasAuthority('CHEF_PROJET')")
+   @PostMapping("archiver")
+    public String archiverMateriel(Long id) {
+	   
+    	
         Materiel arch = matR.findById(id).orElse(null);
-        if (arch == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Materiel not found");
-        }
+      
         arch.setArchiver(true);
-        return matR.save(arch);
+        this.matR.save(arch);
+        return "true";
     }
     
     //add materiel manquant 
@@ -121,6 +122,22 @@ public class MaterielController {
     	MaterielManquant mat = this.matMR.findById(id).get();
     	this.matMR.delete(mat);
     	return "true" ; 
+    }
+    
+    
+    
+    @Autowired
+    IMaterielManqRepository imamanqurepos ; 
+    
+    @GetMapping("allmatrielmanquant")
+    public List<MaterielManquant>allmat(){
+    	return this.imamanqurepos.findAll() ; 
+    }
+    
+    @PostMapping("ajoutmatmanquant")
+    public String ajout(@RequestBody MaterielManquant matman ) {
+    	 this.imamanqurepos.save(matman); 
+    	 return "true" ; 
     }
     
     

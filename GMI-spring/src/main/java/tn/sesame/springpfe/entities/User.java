@@ -1,3 +1,4 @@
+
 package tn.sesame.springpfe.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
