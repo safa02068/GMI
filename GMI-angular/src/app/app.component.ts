@@ -11,7 +11,7 @@ import { RouterOutlet, Router, Event, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
 
-    title = 'Trezo - Angular 18 Tailwind CSS Admin Dashboard Template';
+    title = 'GMI';
 
     constructor(
         private router: Router,

@@ -51,9 +51,16 @@ export class AuthService {
     this.isBrowser = isPlatformBrowser(platformId);
     // Load user from localStorage on service initialization
     if (this.isBrowser) {
-      const user = localStorage.getItem('user');
-      if (user) {
-        this.userSubject.next(JSON.parse(user));
+      const token = localStorage.getItem('token');
+      const email = localStorage.getItem('email');
+      const role = localStorage.getItem('role');
+      if (token && email && role) {
+        const user: User = {
+          email: email,
+          token: token,
+          roles: role
+        };
+        this.userSubject.next(user);
       }
     }
   }
@@ -157,7 +164,7 @@ roles:response.profil
     }
     this.userSubject.next(user);
     if (this.isBrowser) {
-      localStorage.setItem('token', JSON.stringify(user.token));
+      localStorage.setItem('token', user.token);
       localStorage.setItem('email', user.email);
       localStorage.setItem('role', user.roles);
     }

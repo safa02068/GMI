@@ -18,7 +18,7 @@
                 <span class="block relative font-medium uppercase text-gray-400 mb-[8px] text-xs">
                     Main
                 </span>
-                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
+                <!-- <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
                     <button
                         class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
                         type="button"
@@ -39,24 +39,6 @@
                         <div class="pt-[4px]">
                             <ul class="sidebar-sub-menu">
                                 <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        eCommerce
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/crm" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        CRM
-                                        <span class="text-[10px] font-medium py-[1px] px-[8px] ltr:ml-[8px] rtl:mr-[8px] text-success-500 bg-success-100 inline-block rounded-sm">
-                                            Hot
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/project-management" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Project Management
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
                                     <a routerLink="/dashboard/lms" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
                                         LMS
                                         <span class="text-[10px] font-medium py-[1px] px-[8px] ltr:ml-[8px] rtl:mr-[8px] text-orange-500 bg-orange-100 inline-block rounded-sm">
@@ -65,97 +47,21 @@
                                     </a>
                                 </li>
                                 <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/helpdesk" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        HelpDesk
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/analytics" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Analytics
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/crypto" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Crypto
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/sales" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Sales
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/hospital" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Hospital
+                                    <a routerLink="/dashboard/gestion-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
+                                        Ges
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
-                    <button
-                        class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
-                        type="button"
-                        (click)="toggleSection(18)"
-                        [ngClass]="{ 'open': isSectionOpen(18) }"
-                    >
-                        <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
-                            lock_open
-                        </i>
-                        <span class="title leading-none">
-                            Authentication
-                        </span>
-                    </button>
-                    <div class="accordion-collapse" [ngClass]="{ 'open': isSectionOpen(18) }">
-                        <div class="pt-[4px]">
-                            <ul class="sidebar-sub-menu">
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/authentication" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Sign In
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/authentication/sign-up" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Sign Up
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/authentication/forgot-password" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Forgot Password
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/authentication/reset-password" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Reset Password
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/authentication/confirm-email" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Confirm Email
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/authentication/lock-screen" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Lock Screen
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/authentication/logout" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Logout
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> 
-                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
-                    <a routerLink="/dashboard/lms" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]">
+                    <a routerLink="/dashboard/gestion-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]">
                         <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
                             account_circle
                         </i>
                         <span class="title leading-none">
-                            Page Test
+                            Gestion Utilisateur
                         </span>
                     </a>
                 </div>
