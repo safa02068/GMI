@@ -36,10 +36,11 @@ export class PatientAppointmentsComponent {
         prenom: '',
         email: '',
         password: '',
-        p: 'CHEF_PROJET',
+        p: '',
         adresse :'',
         tel :'',
-        cin:''
+        cin:'',
+        iban:''
       };
     constructor(private ws: UserServiceService) { }
 

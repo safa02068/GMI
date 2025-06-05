@@ -15,16 +15,22 @@ export class UserServiceService {
           let headersaaaa = new HttpHeaders();
           headersaaaa = headersaaaa.set('Content-Type', 'application/json; charset=utf-8');
           headersaaaa = headersaaaa.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
-          console.log(localStorage.getItem('token'))
     return this.http.get(`${this.apiUrl}/all`,{headers:headersaaaa});
   }
 
   modifierUser(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/modifier`, userData);
+       let headersaaaa = new HttpHeaders();
+          headersaaaa = headersaaaa.set('Content-Type', 'application/json; charset=utf-8');
+          headersaaaa = headersaaaa.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
+    return this.http.post(`${this.apiUrl}/modifier`, userData,{headers:headersaaaa});
   }
 
   deleteUser(idUser: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/delete/${idUser}`);
+           let headersaaaa = new HttpHeaders();
+          headersaaaa = headersaaaa.set('Content-Type', 'application/json; charset=utf-8');
+          headersaaaa = headersaaaa.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
+
+    return this.http.delete(`${this.apiUrl}/delete/${idUser}`,{headers:headersaaaa});
   }
 
   addUser(user: any): Observable<any> {

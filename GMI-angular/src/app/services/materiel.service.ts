@@ -32,6 +32,7 @@ export class MaterielService {
   }
 
   addMateriel(materiel: Materiel): Observable<Materiel> {
+    console.log(materiel)
     const token = (localStorage.getItem('token') || '').replace(/^"|"$/g, '');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.post<Materiel>(`${this.baseUrl}/addmateriel`, materiel, {headers});
@@ -43,6 +44,17 @@ export class MaterielService {
     return this.http.put<Materiel>(`${this.baseUrl}/updatemateriel/${id}`, materiel, {headers});
   }
 
+archivermatriel(id:any){
+    
+    //// nesta3mlouha ki yebda service lazmpou connexion
+    const user = JSON.parse(localStorage.getItem('currentUser')|| '{}');
+    let headers = new HttpHeaders();
+    headers.set("Access-Control-Allow-Origin", "*")
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers = headers.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
+    //////////
+    return this.http.post(this.baseUrl+"/archiver?id="+id,null,{headers:headers})
+}
   deleteMateriel(id: number): Observable<void> {
     const token = (localStorage.getItem('token') || '').replace(/^"|"$/g, '');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

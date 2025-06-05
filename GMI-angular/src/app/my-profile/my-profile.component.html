@@ -11,27 +11,27 @@
         </div>
     </div>
 
-    <div class="trezo-card-content">
-        <div class="table-responsive overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr>
-                        <th>Modèle</th>
-                        <th>Stock</th>
-                        <th>Type</th>
-                        <th>Prix</th>
-                        <th>Disponibilité</th>
-                        <th>Date d'ajout</th>
-                        <th>Date de suppression</th>
-                        <th>Endommagé</th>
-                        <th>En maintenance</th>
-                        <th>Manquant</th>
-                        <th>Archivé</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="text-black dark:text-white">
-                    <tr *ngFor="let materiel of filteredMateriels">
+  
+</div>
+
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+    <th scope="col"> Modèle</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Disponibilité</th>
+                        <th scope="col">Date d'ajout</th>
+                        <th scope="col">Date de suppression</th>
+                        <th scope="col">Endommagé</th>
+                        <th scope="col">En maintenance</th>
+                        <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+       <tr *ngFor="let materiel of filteredMateriels">
                         <td>{{ materiel.model }}</td>
                         <td>{{ materiel.stock }}</td>
                         <td>{{ materiel.type }}</td>
@@ -39,10 +39,9 @@
                         <td>{{ materiel.disponibilite }}</td>
                         <td>{{ materiel.date_ajout | date }}</td>
                         <td>{{ materiel.date_suppression | date }}</td>
-                        <td>{{ materiel.isDamaged ? 'Oui' : 'Non' }}</td>
+                        <td>{{ materiel.damaged ? 'Oui' : 'Non' }}</td>
                         <td>{{ materiel.enMaintenance ? 'Oui' : 'Non' }}</td>
-                        <td>{{ materiel.isManquant ? 'Oui' : 'Non' }}</td>
-                        <td>{{ materiel.archiver ? 'Oui' : 'Non' }}</td>
+                        <td *ngIf="!materiel.archiver"><button type="button" class="btn btn-secondary" (click)="archiverMateriel(materiel.id)">Archiver</button></td>
                         <td>
                             <button class="text-blue-500 hover:text-blue-700" (click)="editMateriel(materiel)">
                                 <i class="ri-pencil-line"></i> Modifier
@@ -52,11 +51,9 @@
                             </button>
                         </td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+
+  </tbody>
+</table>
 
 <!-- Modal d'ajout -->
 <div *ngIf="showModaladd" class="modal-overlay">
@@ -112,40 +109,28 @@
             <!-- Endommagé -->
             <div>
                 <label for="damaged">Endommagé</label>
-                <select id="damaged" [(ngModel)]="newMateriel.isDamaged" name="damaged" required>
+                <select id="damaged" [(ngModel)]="newMateriel.damaged" name="damaged" required>
                     <option [value]="true">Oui</option>
                     <option [value]="false">Non</option>
                 </select>
             </div>
 
             <!-- En maintenance -->
-            <div>
-                <label for="enMaintenance">En maintenance</label>
-                <select id="enMaintenance" [(ngModel)]="newMateriel.enMaintenance" name="enMaintenance" required>
-                    <option [value]="true">Oui</option>
-                    <option [value]="false">Non</option>
-                </select>
-            </div>
+    <div>
+  <label for="enMaintenance">En maintenance</label>
+  <select id="enMaintenance"
+          [(ngModel)]="newMateriel.enMaintenance"
+          name="enMaintenance"
+          required>
+    <option [ngValue]="true">Oui</option>
+    <option [ngValue]="false">Non</option>
+  </select>
+</div>
 
-            <!-- Manquant -->
-            <div>
-                <label for="manquant">Manquant</label>
-                <select id="manquant" [(ngModel)]="newMateriel.isManquant" name="manquant" required>
-                    <option [value]="true">Oui</option>
-                    <option [value]="false">Non</option>
-                </select>
-            </div>
 
-            <!-- Archivage -->
-            <div>
-                <label for="archiver">Archiver</label>
-                <select id="archiver" [(ngModel)]="newMateriel.archiver" name="archiver" required>
-                    <option [value]="true">Oui</option>
-                    <option [value]="false">Non</option>
-                </select>
-            </div>
 
-            <button type="submit">Ajouter</button>
+
+              <button type="submit">Ajouter</button>
             <button type="button" (click)="closeModaladd()">Annuler</button>
         </form>
     </div>
@@ -205,7 +190,7 @@
             <!-- Endommagé -->
             <div>
                 <label for="damaged">Endommagé</label>
-                <select id="damaged" [(ngModel)]="selectedMateriel.isDamaged" name="damaged" required>
+                <select id="damaged" [(ngModel)]="selectedMateriel.damaged" name="damaged" required>
                     <option [ngValue]="true">Oui</option>
                     <option [ngValue]="false">Non</option>
                 </select>
@@ -221,13 +206,7 @@
             </div>
 
             <!-- Manquant -->
-            <div>
-                <label for="manquant">Manquant</label>
-                <select id="manquant" [(ngModel)]="selectedMateriel.isManquant" name="manquant" required>
-                    <option [ngValue]="true">Oui</option>
-                    <option [ngValue]="false">Non</option>
-                </select>
-            </div>
+          
 
             <!-- Archivage -->
             <div>

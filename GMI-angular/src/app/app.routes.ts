@@ -29,6 +29,7 @@ import { PrivacyPolicyComponent } from './settings/privacy-policy/privacy-policy
 import { TermsConditionsComponent } from './settings/terms-conditions/terms-conditions.component';
 import { AuthGuard } from './common/guards/auth.guard';
 import { RoleGuard } from './common/guards/role.guard';
+import { MatrielsManquantComponent } from './matriels-manquant/matriels-manquant.component';
 
 export const routes: Routes = [
     {
@@ -53,6 +54,8 @@ export const routes: Routes = [
             {path: 'hospital', component: HospitalComponent},
             {path: 'internal-error', component: InternalErrorComponent},
             {path: 'my-profile', component: MyProfileComponent},
+            {path: 'matriel-manquants', component: MatrielsManquantComponent},
+
             {
                 path: 'settings',
                 component: SettingsComponent,
