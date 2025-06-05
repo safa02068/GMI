@@ -137,4 +137,22 @@ confirmDeleteUser() {
       closeModaladd() {
         this.showModaladd = false;
       }
+
+     
+    }
+
+export class ModalComponent {
+
+    // Modal Trigger
+    classApplied = false;
+    toggleClass() {
+        this.classApplied = !this.classApplied;
+    }
+    classApplied2 = false;
+    toggleClass2() {
+        this.classApplied2 = !this.classApplied2;
+    }
+
 }
+
+
