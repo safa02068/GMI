@@ -1,9 +1,7 @@
 package tn.sesame.springpfe.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Id;
 import java.util.Date;
@@ -14,7 +12,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class Intervention {
-	@JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,18 +20,19 @@ public class Intervention {
     private String description;
     private Date datedecreation;
     private Date datederesolution;
-    //private String priorite; //zeyda
-    private String commentaire;
     private Boolean archiver;
+    private String type;
 
-    private String etat;
+    private String statut;
     //boolean archiver = false;
 
-    @JsonIgnore
     @ManyToOne
     Materiel materiel;
 
-    @JsonIgnore
+
     @ManyToOne
     private User demandeur;
+
+    @ManyToOne
+    private Commentaire commentaire;
 }

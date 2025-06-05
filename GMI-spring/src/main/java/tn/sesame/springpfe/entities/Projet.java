@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class Projet {
-	@JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -26,12 +26,10 @@ public class Projet {
   
     @Column(nullable = false)
     private boolean archiver;
-   
     @JsonIgnore
     @OneToMany(mappedBy = "projet")
     private List<User> users;
     
-    @JsonIgnore
     @OneToMany(mappedBy = "projet")
     private List<Materiel> materiels;
     

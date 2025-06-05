@@ -71,6 +71,7 @@ public class ProjetController {
         return projetR.save(arch);
     }
     
+    
     //tester déja
     @PreAuthorize("hasAuthority('CHEF_PROJET')")
     @GetMapping("/afficherlist")
