@@ -1,11 +1,12 @@
-<div class="sidebar-area bg-white dark:bg-[#0c1427] fixed overflow-hidden z-[7] top-0 h-screen transition-all rounded-r-md">
-    <div class="logo bg-white dark:bg-[#0c1427] border-b border-gray-100 dark:border-[#172036] px-[25px] pt-[19px] pb-[15px] absolute z-[2] right-0 top-0 left-0">
-        <a routerLink="/dashboard" class="transition-none relative flex items-center">
-            <img src="images/logo-icon.svg" alt="logo-icon">
-            <span class="font-bold text-black dark:text-white relative ltr:ml-[8px] rtl:mr-[8px] top-px text-xl">
+<div class="sidebar-area bg-gradient-to-r from-[#c7e3fc] to-[#ebf0f5] dark:bg-gradient-to-r dark:from-[#0c1427] dark:via-[#0c1427] dark:to-[#0c1427]  fixed overflow-hidden z-[7] top-0 h-screen transition-all rounded-r-md">
+    <div class="logo bg-gradient-to-r from-[#c7e3fc] to-[#ebf0f5] dark:bg-gradient-to-r dark:from-[#0c1427] dark:via-[#0c1427] dark:to-[#0c1427] border-b border-gray-100 dark:border-[#172036] px-[25px] pt-[19px] pb-[15px] absolute z-[2] right-0 top-0 left-0">
+        <a routerLink="/dashboard" class="transition-none relative flex items-center justify-center">
+            <img src="images/logo.png" alt="logo-icon" class="w-36 h-12">
+           <!--  <span class="font-bold text-black dark:text-white relative ltr:ml-[8px] rtl:mr-[8px] top-px text-xl">
                 Trezo
-            </span>
+            </span> -->
         </a>
+       
         <button type="button" class="burger-menu inline-block absolute z-[3] top-[24px] ltr:right-[25px] rtl:left-[25px] transition-all hover:text-primary-500" id="hide-sidebar-toggle2">
             <i class="material-symbols-outlined">
                 close
@@ -56,7 +57,7 @@
                     </div>
                 </div> -->
                 <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
-                    <a routerLink="/dashboard/gestion-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]">
+                    <a routerLink="/dashboard/gestion-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative text-left dark:hover:bg-[#15203c] hover:bg-[#ebf0f5]">
                         <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
                             account_circle
                         </i>
@@ -69,7 +70,7 @@
                     Test
                 </span>
                 <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
-                    <a routerLink="/dashboard/my-profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]">
+                    <a routerLink="/dashboard/my-profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative text-left dark:hover:bg-[#15203c] hover:bg-[#ebf0f5]">
                         <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
                             account_circle
                         </i>
@@ -185,7 +186,7 @@
                     </div>
                 </div>
                 <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
-                    <a routerLink="/authentication/logout" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]">
+                    <a routerLink="/authentication/logout" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c] ">
                         <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
                             logout
                         </i>

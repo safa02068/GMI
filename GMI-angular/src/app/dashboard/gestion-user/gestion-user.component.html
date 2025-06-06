@@ -1,13 +1,13 @@
 <div class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
   <div class="trezo-card-header mb-[20px] md:mb-[25px] sm:flex items-center justify-between">
-    <div class="trezo-card-title">
-      <h5 class="mb-0">Utilisateurs</h5>
+    <div class="trezo-card-title flex items-center gap-2">
+        <h3 class="mb-0 text-[#516359]">Utilisateurs</h3> 
     </div>
     <div class="trezo-card-subtitle mt-[10px] sm:mt-0 flex flex-col sm:flex-row items-center gap-3">
       <input type="text" [(ngModel)]="searchText" placeholder="Rechercher un utilisateur..."
         class="border border-gray-300 dark:border-[#172036] rounded-md px-3 py-2 w-full sm:w-auto dark:bg-[#0c1427] dark:text-white" />
       <button type="button"
-        class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-primary-500 hover:bg-primary-500 hover:text-white"
+        class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-[#516359] hover:bg-[#516359] hover:text-white"
         (click)="openModaladd()">
         <i class="ri-add-line text-xl"></i> Ajouter
       </button>
@@ -19,35 +19,35 @@
       <thead class="text-black dark:text-white">
         <tr>
           <th
-            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap">
+            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
             Nom
           </th>
           <th
-            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap">
+            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
             Prenom
           </th>
           <th
-            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap">
+            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
             Email
           </th>
           <th
-            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap">
+            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
             Role
           </th>
           <th
-            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap">
+            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
             Téléphone
           </th>
           <th
-            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap">
+            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
             Adresse
           </th>
           <th
-            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap">
+            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
             CIN
           </th>
           <th
-            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap">
+            class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
             Action
           </th>
         </tr>
@@ -132,9 +132,9 @@
     <p class="mb-6 text-center text-gray-700 dark:text-gray-300">Êtes-vous sûr de vouloir supprimer cet utilisateur ?
     </p>
     <div class="flex justify-center gap-4">
-      <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      <button class="bg-[#f44336] text-white px-4 py-2 rounded hover:bg-[#d32f2f]"
         (click)="confirmDeleteUser()">Oui</button>
-      <button class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400" (click)="cancelDelete()">Non</button>
+      <button class="bg-[#548B56] text-white px-4 py-2 rounded hover:bg-[#41743f]" (click)="cancelDelete()">Non</button>
     </div>
   </div>
 </div>
@@ -143,7 +143,7 @@
 <div *ngIf="showModaladd" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
   <div class="bg-white dark:bg-[#0c1427] w-full max-w-2xl p-[25px] rounded-md shadow-lg">
     <div class="flex items-center justify-between mb-[20px]">
-      <h2 class="text-xl font-semibold">Ajouter un utilisateur</h2>
+      <h2 class="text-xl font-semibold text-[#516359]">Ajouter un utilisateur</h2>
       <button (click)="closeModaladd()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
     </div>
     <form (ngSubmit)="saveUser()" class="space-y-4">
@@ -170,8 +170,12 @@
       </div>
 
       <div class="flex justify-end space-x-2 pt-4">
-        <button type="submit"
+       <!--  <button type="submit"
           class="py-[10px] px-[30px] bg-primary-500 text-white transition-all hover:bg-primary-400 rounded-md border border-primary-500 hover:border-primary-400">
+          Ajouter
+        </button> -->
+        <button type="submit"
+          class="py-[10px] px-[30px] bg-[#516359] text-white transition-all hover:bg-[#43563e] rounded-md border border-[#516359] hover:border-[#43563e]">
           Ajouter
         </button>
         <button type="button" (click)="closeModaladd()"
@@ -189,7 +193,7 @@
   <div class="bg-white dark:bg-[#0c1427] w-full max-w-2xl p-[25px] rounded-md shadow-lg"
     (click)="$event.stopPropagation()">
     <div class="flex items-center justify-between mb-[20px]">
-      <h2 class="text-xl font-semibold">Modifier l'utilisateur</h2>
+      <h2 class="text-xl font-semibold text-[#516359]">Modifier l'utilisateur</h2>
       <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
     </div>
 
@@ -222,8 +226,8 @@
 
       <div class="flex justify-end space-x-2 pt-4">
         <button type="submit"
-          class="py-[10px] px-[30px] bg-primary-500 text-white transition-all hover:bg-primary-400 rounded-md border border-primary-500 hover:border-primary-400">
-          Sauvegarder
+          class="py-[10px] px-[30px] bg-[#516359] text-white transition-all hover:bg-[#43563e] rounded-md border border-[#516359] hover:border-[#43563e]">
+          Modifier
         </button>
         <button type="button" (click)="closeModal()"
           class="py-[10px] px-[30px] bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md border border-gray-300">
