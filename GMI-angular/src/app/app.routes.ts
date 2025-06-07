@@ -30,6 +30,8 @@ import { TermsConditionsComponent } from './settings/terms-conditions/terms-cond
 import { AuthGuard } from './common/guards/auth.guard';
 import { RoleGuard } from './common/guards/role.guard';
 import { GestionUserComponent } from './dashboard/gestion-user/gestion-user.component';
+import { GestionMaterielComponent } from './dashboard/gestion-materiel/gestion-materiel.component';
+import { GestionInterventionComponent } from './dashboard/gestion-intervention/gestion-intervention.component';
 
 
 
@@ -48,15 +50,9 @@ export const routes: Routes = [
         children: [
             {path: '', component: EcommerceComponent},
             {path: 'gestion-user', component: GestionUserComponent},
-            // {path: 'crm', component: CrmComponent},
-            // {path: 'project-management', component: ProjectManagementComponent},
-            // {path: 'lms', component: LmsComponent},
-            // {path: 'helpdesk', component: HelpdeskComponent},
-            // {path: 'analytics', component: AnalyticsComponent},
-            // {path: 'crypto', component: CryptoComponent},
-            // {path: 'sales', component: SalesComponent},
-            // {path: 'hospital', component: HospitalComponent},
-            // {path: 'internal-error', component: InternalErrorComponent},
+            {path: 'gestion-materiel', component: GestionMaterielComponent},
+            {path: 'gestion-intervention', component: GestionInterventionComponent},
+            
             {path: 'my-profile', component: MyProfileComponent},
             {
                 path: 'settings',
