@@ -1,134 +1,142 @@
 <div class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
     <div class="trezo-card-header mb-[20px] md:mb-[25px] sm:flex items-center justify-between">
-        <div class="trezo-card-title">
-            <h5 class="mb-0">Projet</h5>
+        <div class="trezo-card-title flex items-center gap-2">
+            <h3 class="mb-0 text-[#516359]">Projets</h3>
         </div>
         <div class="trezo-card-subtitle mt-[10px] sm:mt-0 flex flex-col sm:flex-row items-center gap-3">
             <button *ngIf="this.profil=='CHEF_PROJET'" type="button" 
-            class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-primary-500 hover:bg-primary-500 hover:text-white" (click)="openModaladd()">
+                class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-[#516359] hover:bg-[#516359] hover:text-white" 
+                (click)="openModaladd()">
                 <i class="ri-add-line text-xl"></i> Ajouter
             </button>
         </div>
     </div>
 
-  
+    <div class="table-responsive overflow-x-auto">
+        <table class="w-full without-border">
+            <thead class="text-black dark:text-white">
+                <tr>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Nom
+                    </th>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Description
+                    </th>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Date Debut
+                    </th>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Date Fin
+                    </th>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-black dark:text-white">
+                <tr *ngFor="let p of allprojet">
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <span class="text-gray-500 dark:text-gray-400">{{p?.nom}}</span>
+                    </td>
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <span class="text-gray-500 dark:text-gray-400">{{p?.description}}</span>
+                    </td>
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <span class="text-gray-500 dark:text-gray-400">{{p?.date_debut | date:'MM/dd/yyyy HH:mm'}}</span>
+                    </td>
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <span class="text-gray-500 dark:text-gray-400">{{p?.date_fin | date:'MM/dd/yyyy HH:mm'}}</span>
+                    </td>
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[17px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <div class="flex items-center gap-[9px]">
+                            <button id="customTooltip" type="button" data-text="Affecter User"
+                                class="text-gray-500 dark:text-gray-400 leading-none custom-tooltip" (click)="openModalafecteruser()">
+                                <i class="material-symbols-outlined !text-md">person_add</i>
+                            </button>
+                            <button id="customTooltip" type="button" data-text="Archiver"
+                                class="text-danger-500 leading-none custom-tooltip" (click)="confirmDelete(p)">
+                                <i class="material-symbols-outlined !text-md">archive</i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
-
-<table class="table">
-  <thead class="thead-light">
-    <tr>
-    <th scope="col"> Nom</th>
-
-    <th scope="col"> Description</th>
-    <th scope="col"> Date Debut</th>
-    <th scope="col"> Date Fin</th>
-
-    <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr *ngFor ="let p of allprojet">
-        <td>{{p?.nom}}</td>
-        <td>{{p?.description}}</td>
-        <td>{{p?.date_debut}}</td>
-        <td>{{p?.date_fin}}</td>
-  <td>  
-                       
-
-                            <button class="text-red-500 hover:text-red-700"  (click)="openModalafecteruser()">
-                                <i class="ri-delete-bin-line"></i> Affecter User
-                            </button>
-
-    <button class="text-red-500 hover:text-red-700" (click)="confirmDelete(p)">
-                                <i class="ri-delete-bin-line"></i> Archiver
-                            </button>
-
-                           
-                        </td>
-
-
-      </tr>
-
-  </tbody>
-</table>
-<div *ngIf="showModaladd" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close" (click)="closeModaladd()">&times;</span>
-        <h2>Ajouter un Projet</h2>
-        <form (ngSubmit)="addProject()">
-            <!-- Modèle -->
-            <div>
-                <label for="model">Nom</label>
-                <input type="text" id="model" [(ngModel)]="newprojet.nom" name="nom" placeholder="Nom" required />
-            </div>
-                <div>
-                <label for="model">Description</label>
-                <input type="text" id="model" [(ngModel)]="newprojet.description" name="description" placeholder="Description" required />
+<!-- Modal d'ajout d'un Projet -->
+<div *ngIf="showModaladd" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white dark:bg-[#0c1427] w-full max-w-2xl p-[25px] rounded-md shadow-lg">
+        <div class="flex items-center justify-between mb-[20px]">
+            <h2 class="text-xl font-semibold text-[#516359]">Ajouter un projet</h2>
+            <button (click)="closeModaladd()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+        </div>
+        <form (ngSubmit)="addProject()" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" [(ngModel)]="newprojet.nom" name="nom" placeholder="Nom" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <input type="text" [(ngModel)]="newprojet.description" name="description" placeholder="Description" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <input type="date" [(ngModel)]="newprojet.date_debut" name="date_debut" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <input type="date" [(ngModel)]="newprojet.date_fin" name="date_fin" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
             </div>
 
-                <div>
-                <label for="model">Date Debut</label>
-                <input type="date" id="model" [(ngModel)]="newprojet.date_debut" name="date_debut" placeholder="Modele" required />
+            <div class="flex justify-end space-x-2 pt-4">
+                <button type="submit"
+                    class="py-[10px] px-[30px] bg-[#516359] text-white transition-all hover:bg-[#43563e] rounded-md border border-[#516359] hover:border-[#43563e]">
+                    Ajouter
+                </button>
+                <button type="button" (click)="closeModaladd()"
+                    class="py-[10px] px-[30px] bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md border border-gray-300">
+                    Annuler
+                </button>
             </div>
-    <div>
-                <label for="model">Date Fin</label>
-                <input type="date" id="model" [(ngModel)]="newprojet.date_fin" name="date_fin" placeholder="Date Fin" required />
-            </div>
-
-         
-
-            <!-- En maintenance -->
-    <div>
- 
-</div>
-
-
-
-
-              <button type="submit">Ajouter</button>
-            <button type="button" (click)="closeModaladd()">Annuler</button>
         </form>
     </div>
 </div>
 
+<!-- Modal d'affectation d'utilisateur -->
+<div *ngIf="showModalaffectuser" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white dark:bg-[#0c1427] w-full max-w-2xl p-[25px] rounded-md shadow-lg">
+        <div class="flex items-center justify-between mb-[20px]">
+            <h2 class="text-xl font-semibold text-[#516359]">Affecter un utilisateur</h2>
+            <button (click)="closeModalaffect()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+        </div>
+        <form [formGroup]="projetform" class="space-y-4">
+            <div class="grid grid-cols-1 gap-4">
+                <select formControlName="nom" name="nom" required
+                    class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
+                    <option *ngFor="let u of alluser" [value]="u.id">{{ u.nom }}</option>
+                </select>
+            </div>
 
-
-<div *ngIf="showModalaffectuser" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close" (click)="closeModalaffect()">&times;</span>
-        <h2>Affetcter User</h2>
-        <form [formGroup]="projetform">
-            <!-- Modèle -->
-            <div>
-                <label for="model">Nom</label>
-  <select formControlName="nom" name="nom" required>
-                    <option *ngFor="let u of alluser" value="u.id">{{ u.nom }}</option>
-                </select>            </div>
-         
-
-         
-
-            <!-- En maintenance -->
-    <div>
- 
-</div>
-
-
-
-
-              <button type="submit">Ajouter</button>
-            <button type="button" (click)="closeModaladd()">Annuler</button>
+            <div class="flex justify-end space-x-2 pt-4">
+                <button type="submit"
+                    class="py-[10px] px-[30px] bg-[#516359] text-white transition-all hover:bg-[#43563e] rounded-md border border-[#516359] hover:border-[#43563e]">
+                    Affecter
+                </button>
+                <button type="button" (click)="closeModalaffect()"
+                    class="py-[10px] px-[30px] bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md border border-gray-300">
+                    Annuler
+                </button>
+            </div>
         </form>
     </div>
 </div>
-<div *ngIf="isDeleteConfirmOpen" class="modal-overlay" (click)="cancelDelete()">
-    <div class="modal-content bg-white dark:bg-[#0c1427] rounded p-6 w-[90%] md:w-[400px] m-auto mt-[10%]" (click)="$event.stopPropagation()">
-      <h2 class="text-lg font-semibold mb-4 text-center text-black dark:text-white">Confirmation</h2>
-      <p class="mb-6 text-center text-gray-700 dark:text-gray-300">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
-      <div class="flex justify-center gap-4">
-        <button (click)="confirmDeleteUser()">Oui</button>
-        <button class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400" (click)="cancelDelete()">Non</button>
-      </div>
+
+<!-- Modal de Confirmation de Suppression -->
+<div *ngIf="isDeleteConfirmOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="modal-content bg-white dark:bg-[#0c1427] rounded p-6 w-[90%] md:w-[400px] m-auto"
+        (click)="$event.stopPropagation()">
+        <h2 class="text-lg font-semibold mb-4 text-center text-black dark:text-white">Confirmation</h2>
+        <p class="mb-6 text-center text-gray-700 dark:text-gray-300">Êtes-vous sûr de vouloir archiver ce projet ?</p>
+        <div class="flex justify-center gap-4">
+            <button class="bg-[#f44336] text-white px-4 py-2 rounded hover:bg-[#d32f2f]"
+                (click)="confirmDeleteUser()">Oui</button>
+            <button class="bg-[#548B56] text-white px-4 py-2 rounded hover:bg-[#41743f]" (click)="cancelDelete()">Non</button>
+        </div>
     </div>
 </div>

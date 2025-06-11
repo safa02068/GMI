@@ -1,125 +1,136 @@
-
 <div class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
     <div class="trezo-card-header mb-[20px] md:mb-[25px] sm:flex items-center justify-between">
-        <div class="trezo-card-title">
-            <h5 class="mb-0">Matériels Manquants</h5>
+        <div class="trezo-card-title flex items-center gap-2">
+            <h3 class="mb-0 text-[#516359]">Matériels Manquants</h3>
         </div>
         <div class="trezo-card-subtitle mt-[10px] sm:mt-0 flex flex-col sm:flex-row items-center gap-3">
             <button type="button" 
-            class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-primary-500 hover:bg-primary-500 hover:text-white" (click)="openModaladd()">
+                class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-[#516359] hover:bg-[#516359] hover:text-white" 
+                (click)="openModaladd()">
                 <i class="ri-add-line text-xl"></i> Ajouter
             </button>
         </div>
     </div>
 
-  
+    <div class="table-responsive overflow-x-auto">
+        <table class="w-full without-border">
+            <thead class="text-black dark:text-white">
+                <tr>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Nom
+                    </th>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Modèle
+                    </th>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Stock
+                    </th>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-black dark:text-white">
+                <tr *ngFor="let materiel of allmatmanquant">
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <span class="text-gray-500 dark:text-gray-400">{{ materiel.nom }}</span>
+                    </td>
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <span class="text-gray-500 dark:text-gray-400">{{ materiel.modele }}</span>
+                    </td>
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <span class="text-gray-500 dark:text-gray-400">{{ materiel.stock }}</span>
+                    </td>
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[17px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <div class="flex items-center gap-[9px]">
+                            <button id="customTooltip" type="button" data-text="Modifier"
+                                class="text-gray-500 dark:text-gray-400 leading-none custom-tooltip" (click)="editMateriel(materiel)">
+                                <i class="material-symbols-outlined !text-md">edit</i>
+                            </button>
+                            <button id="customTooltip" type="button" data-text="Supprimer"
+                                class="text-danger-500 leading-none custom-tooltip" (click)="confirmDelete(materiel)">
+                                <i class="material-symbols-outlined !text-md">delete</i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
-
-<table class="table">
-  <thead class="thead-light">
-    <tr>
-    <th scope="col"> Nom</th>
-
-    <th scope="col"> Modele</th>
-    <th scope="col"> Stock</th>
-    <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-       <tr *ngFor ="let materiel of allmatmanquant">
-                        <td>{{ materiel.nom }}</td>
-
-                        <td>{{ materiel.modele }}</td>
-                        <td>{{ materiel.stock }}</td>
-                        <td>  
-                       <button class="text-blue-500 hover:text-blue-700" (click)="editMateriel(materiel)">
-                                <i class="ri-pencil-line"></i> Modifier
-                            </button>
-                            <button class="text-red-500 hover:text-red-700" (click)="confirmDelete(materiel)">
-                                <i class="ri-delete-bin-line"></i> Supprimer
-                            </button>
-                        </td>
-                    </tr>
-
-  </tbody>
-</table>
-<div *ngIf="showModaladd" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close" (click)="closeModaladd()">&times;</span>
-        <h2>Ajouter un matériel Manquant</h2>
-        <form (ngSubmit)="addMaterielman()">
-            <!-- Modèle -->
-            <div>
-                <label for="model">Nom</label>
-                <input type="text" id="model" [(ngModel)]="newMaterielmanq.nom" name="nom" placeholder="Nom" required />
+<!-- Modal d'ajout d'un Matériel -->
+<div *ngIf="showModaladd" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white dark:bg-[#0c1427] w-full max-w-2xl p-[25px] rounded-md shadow-lg">
+        <div class="flex items-center justify-between mb-[20px]">
+            <h2 class="text-xl font-semibold text-[#516359]">Ajouter un matériel manquant</h2>
+            <button (click)="closeModaladd()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+        </div>
+        <form (ngSubmit)="addMaterielman()" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" [(ngModel)]="newMaterielmanq.nom" name="nom" placeholder="Nom" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <input type="text" [(ngModel)]="newMaterielmanq.modele" name="modele" placeholder="Modèle" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <input type="number" [(ngModel)]="newMaterielmanq.stock" name="stock" placeholder="Stock" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
             </div>
 
-                <div>
-                <label for="model">Modele</label>
-                <input type="text" id="model" [(ngModel)]="newMaterielmanq.modele" name="modele" placeholder="Modele" required />
+            <div class="flex justify-end space-x-2 pt-4">
+                <button type="submit"
+                    class="py-[10px] px-[30px] bg-[#516359] text-white transition-all hover:bg-[#43563e] rounded-md border border-[#516359] hover:border-[#43563e]">
+                    Ajouter
+                </button>
+                <button type="button" (click)="closeModaladd()"
+                    class="py-[10px] px-[30px] bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md border border-gray-300">
+                    Annuler
+                </button>
             </div>
-    <div>
-                <label for="model">Stock</label>
-                <input type="number" id="model" [(ngModel)]="newMaterielmanq.stock" name="stock" placeholder="Stock" required />
-            </div>
-
-         
-
-            <!-- En maintenance -->
-    <div>
- 
-</div>
-
-
-
-
-              <button type="submit">Ajouter</button>
-            <button type="button" (click)="closeModaladd()">Annuler</button>
         </form>
     </div>
 </div>
 
-<div *ngIf="isModalOpen" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close" (click)="closeModal()">&times;</span>
-        <h2>Modifier un matériel</h2>
-        <form (ngSubmit)="updateMateriel()">
-            
-                  <div>
-                <label for="model">Modèle</label>
-                <input type="text" id="model" [(ngModel)]="selectedMateriel.nom" name="nom" placeholder="Nom" required />
+<!-- Modal de Modification -->
+<div *ngIf="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white dark:bg-[#0c1427] w-full max-w-2xl p-[25px] rounded-md shadow-lg">
+        <div class="flex items-center justify-between mb-[20px]">
+            <h2 class="text-xl font-semibold text-[#516359]">Modifier le matériel</h2>
+            <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+        </div>
+        <form (ngSubmit)="updateMateriel()" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" [(ngModel)]="selectedMateriel.nom" name="nom" placeholder="Nom" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <input type="text" [(ngModel)]="selectedMateriel.modele" name="model" placeholder="Modèle" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <input type="number" [(ngModel)]="selectedMateriel.stock" name="stock" placeholder="Stock" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
             </div>
 
-            <!-- Modèle -->
-            <div>
-                <label for="model">Modèle</label>
-                <input type="text" id="model" [(ngModel)]="selectedMateriel.modele" name="model" placeholder="Modèle" required />
+            <div class="flex justify-end space-x-2 pt-4">
+                <button type="submit"
+                    class="py-[10px] px-[30px] bg-[#516359] text-white transition-all hover:bg-[#43563e] rounded-md border border-[#516359] hover:border-[#43563e]">
+                    Modifier
+                </button>
+                <button type="button" (click)="closeModal()"
+                    class="py-[10px] px-[30px] bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md border border-gray-300">
+                    Annuler
+                </button>
             </div>
-
-            <!-- Stock -->
-            <div>
-                <label for="stock">Stock</label>
-                <input type="number" id="stock" [(ngModel)]="selectedMateriel.stock" name="stock" placeholder="Stock" required />
-            </div>
-
-            <!-- Type -->
-          
-
-      
-            <button type="submit">Mettre à jour</button>
-            <button type="button" (click)="closeModal()">Annuler</button>
         </form>
     </div>
 </div>
+
 <!-- Modal de Confirmation de Suppression -->
-<div *ngIf="isDeleteConfirmOpen" class="modal-overlay" (click)="cancelDelete()">
-    <div class="modal-content bg-white dark:bg-[#0c1427] rounded p-6 w-[90%] md:w-[400px] m-auto mt-[10%]" (click)="$event.stopPropagation()">
-      <h2 class="text-lg font-semibold mb-4 text-center text-black dark:text-white">Confirmation</h2>
-      <p class="mb-6 text-center text-gray-700 dark:text-gray-300">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
-      <div class="flex justify-center gap-4">
-        <button (click)="confirmDeleteUser()">Oui</button>
-        <button class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400" (click)="cancelDelete()">Non</button>
-      </div>
+<div *ngIf="isDeleteConfirmOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="modal-content bg-white dark:bg-[#0c1427] rounded p-6 w-[90%] md:w-[400px] m-auto"
+        (click)="$event.stopPropagation()">
+        <h2 class="text-lg font-semibold mb-4 text-center text-black dark:text-white">Confirmation</h2>
+        <p class="mb-6 text-center text-gray-700 dark:text-gray-300">Êtes-vous sûr de vouloir supprimer ce matériel ?</p>
+        <div class="flex justify-center gap-4">
+            <button class="bg-[#f44336] text-white px-4 py-2 rounded hover:bg-[#d32f2f]"
+                (click)="confirmDeleteUser()">Oui</button>
+            <button class="bg-[#548B56] text-white px-4 py-2 rounded hover:bg-[#41743f]" (click)="cancelDelete()">Non</button>
+        </div>
     </div>
 </div>
