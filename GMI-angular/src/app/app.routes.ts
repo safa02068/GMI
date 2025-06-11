@@ -32,7 +32,8 @@ import { RoleGuard } from './common/guards/role.guard';
 import { GestionUserComponent } from './dashboard/gestion-user/gestion-user.component';
 import { GestionMaterielComponent } from './dashboard/gestion-materiel/gestion-materiel.component';
 import { GestionInterventionComponent } from './dashboard/gestion-intervention/gestion-intervention.component';
-
+import { MatrielsManquantComponent } from './matriels-manquant/matriels-manquant.component';
+import { ProjetComponent } from './projet/projet.component';
 
 
 export const routes: Routes = [
@@ -52,7 +53,10 @@ export const routes: Routes = [
             {path: 'gestion-user', component: GestionUserComponent},
             {path: 'gestion-materiel', component: GestionMaterielComponent},
             {path: 'gestion-intervention', component: GestionInterventionComponent},
-            
+            {path: 'materiel-manquant', component: MatrielsManquantComponent},
+            {path: 'gestion-projet', component: ProjetComponent},
+
+
             {path: 'my-profile', component: MyProfileComponent},
             {
                 path: 'settings',

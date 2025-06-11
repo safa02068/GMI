@@ -20,7 +20,7 @@ interface Intervention {
     demandeur: any;
     materiel: any; // Added materiel property
 }
-
+ 
 @Component({
   selector: 'app-gestion-intervention',
   standalone: true,
@@ -40,9 +40,9 @@ export class GestionInterventionComponent {
     isDeleteConfirmOpen: boolean = false;
     interventionToDelete?: Intervention;
     selectedUserToDelete: any = null;
-  
     // Modale ajout
     showModalAdd: boolean = false;
+
     newIntervention: Intervention = {
       type: '',
       datedecreation: new Date(),

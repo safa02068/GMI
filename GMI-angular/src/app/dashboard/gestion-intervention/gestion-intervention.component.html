@@ -79,11 +79,8 @@
                     <option value="Support">Support</option>
                 </select>
 
-                <select [(ngModel)]="newIntervention.priorite" name="priorite" required class="form-select border rounded-md p-2 w-full">
-                    <option value="Basse">Basse</option>
-                    <option value="Moyenne">Moyenne</option>
-                    <option value="Haute">Haute</option>
-                </select>
+                <input type="date" [(ngModel)]="newIntervention.datedecreation" name="date" placeholder="date intervention" required class="form-input border rounded-md p-2 w-full" />
+
 
                 <select [(ngModel)]="newIntervention.statut" name="statut" required class="form-select border rounded-md p-2 w-full">
                     <option value="Prévue">Prévue</option>
@@ -96,11 +93,11 @@
                     <textarea [(ngModel)]="newIntervention.description" name="description" placeholder="Détails de l'intervention" class="form-input border rounded-md p-2 w-full h-24"></textarea>
                 </div>
 
-                <select [(ngModel)]="newIntervention.demandeur" name="demandeur" required class="form-select border rounded-md p-2 w-full">
+                <select [(ngModel)]="newIntervention.demandeur" name="demandeur"  required class="form-select border rounded-md p-2 w-full">
                     <option *ngFor="let utilisateur of userList" [ngValue]="utilisateur">{{ utilisateur.nom }} {{ utilisateur.prenom }}</option>
                 </select>
 
-                <select [(ngModel)]="newIntervention.materiel" name="materiel" required class="form-select border rounded-md p-2 w-full">
+                <select [(ngModel)]="newIntervention.materiel" name="materiel"  required class="form-select border rounded-md p-2 w-full">
                     <option *ngFor="let materiel of MatList" [ngValue]="materiel">{{ materiel.model }}</option>
                 </select>
             </div>

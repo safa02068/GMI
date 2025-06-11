@@ -1,0 +1,134 @@
+<div class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
+    <div class="trezo-card-header mb-[20px] md:mb-[25px] sm:flex items-center justify-between">
+        <div class="trezo-card-title">
+            <h5 class="mb-0">Projet</h5>
+        </div>
+        <div class="trezo-card-subtitle mt-[10px] sm:mt-0 flex flex-col sm:flex-row items-center gap-3">
+            <button *ngIf="this.profil=='CHEF_PROJET'" type="button" 
+            class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-primary-500 hover:bg-primary-500 hover:text-white" (click)="openModaladd()">
+                <i class="ri-add-line text-xl"></i> Ajouter
+            </button>
+        </div>
+    </div>
+
+  
+</div>
+
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+    <th scope="col"> Nom</th>
+
+    <th scope="col"> Description</th>
+    <th scope="col"> Date Debut</th>
+    <th scope="col"> Date Fin</th>
+
+    <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor ="let p of allprojet">
+        <td>{{p?.nom}}</td>
+        <td>{{p?.description}}</td>
+        <td>{{p?.date_debut}}</td>
+        <td>{{p?.date_fin}}</td>
+  <td>  
+                       
+
+                            <button class="text-red-500 hover:text-red-700"  (click)="openModalafecteruser()">
+                                <i class="ri-delete-bin-line"></i> Affecter User
+                            </button>
+
+    <button class="text-red-500 hover:text-red-700" (click)="confirmDelete(p)">
+                                <i class="ri-delete-bin-line"></i> Archiver
+                            </button>
+
+                           
+                        </td>
+
+
+      </tr>
+
+  </tbody>
+</table>
+<div *ngIf="showModaladd" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close" (click)="closeModaladd()">&times;</span>
+        <h2>Ajouter un Projet</h2>
+        <form (ngSubmit)="addProject()">
+            <!-- Modèle -->
+            <div>
+                <label for="model">Nom</label>
+                <input type="text" id="model" [(ngModel)]="newprojet.nom" name="nom" placeholder="Nom" required />
+            </div>
+                <div>
+                <label for="model">Description</label>
+                <input type="text" id="model" [(ngModel)]="newprojet.description" name="description" placeholder="Description" required />
+            </div>
+
+                <div>
+                <label for="model">Date Debut</label>
+                <input type="date" id="model" [(ngModel)]="newprojet.date_debut" name="date_debut" placeholder="Modele" required />
+            </div>
+    <div>
+                <label for="model">Date Fin</label>
+                <input type="date" id="model" [(ngModel)]="newprojet.date_fin" name="date_fin" placeholder="Date Fin" required />
+            </div>
+
+         
+
+            <!-- En maintenance -->
+    <div>
+ 
+</div>
+
+
+
+
+              <button type="submit">Ajouter</button>
+            <button type="button" (click)="closeModaladd()">Annuler</button>
+        </form>
+    </div>
+</div>
+
+
+
+<div *ngIf="showModalaffectuser" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close" (click)="closeModalaffect()">&times;</span>
+        <h2>Affetcter User</h2>
+        <form [formGroup]="projetform">
+            <!-- Modèle -->
+            <div>
+                <label for="model">Nom</label>
+  <select formControlName="nom" name="nom" required>
+                    <option *ngFor="let u of alluser" value="u.id">{{ u.nom }}</option>
+                </select>            </div>
+         
+
+         
+
+            <!-- En maintenance -->
+    <div>
+ 
+</div>
+
+
+
+
+              <button type="submit">Ajouter</button>
+            <button type="button" (click)="closeModaladd()">Annuler</button>
+        </form>
+    </div>
+</div>
+<div *ngIf="isDeleteConfirmOpen" class="modal-overlay" (click)="cancelDelete()">
+    <div class="modal-content bg-white dark:bg-[#0c1427] rounded p-6 w-[90%] md:w-[400px] m-auto mt-[10%]" (click)="$event.stopPropagation()">
+      <h2 class="text-lg font-semibold mb-4 text-center text-black dark:text-white">Confirmation</h2>
+      <p class="mb-6 text-center text-gray-700 dark:text-gray-300">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+      <div class="flex justify-center gap-4">
+        <button (click)="confirmDeleteUser()">Oui</button>
+        <button class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400" (click)="cancelDelete()">Non</button>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+
+<div class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
+    <div class="trezo-card-header mb-[20px] md:mb-[25px] sm:flex items-center justify-between">
+        <div class="trezo-card-title">
+            <h5 class="mb-0">Matériels Manquants</h5>
+        </div>
+        <div class="trezo-card-subtitle mt-[10px] sm:mt-0 flex flex-col sm:flex-row items-center gap-3">
+            <button type="button" 
+            class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-primary-500 hover:bg-primary-500 hover:text-white" (click)="openModaladd()">
+                <i class="ri-add-line text-xl"></i> Ajouter
+            </button>
+        </div>
+    </div>
+
+  
+</div>
+
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+    <th scope="col"> Nom</th>
+
+    <th scope="col"> Modele</th>
+    <th scope="col"> Stock</th>
+    <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+       <tr *ngFor ="let materiel of allmatmanquant">
+                        <td>{{ materiel.nom }}</td>
+
+                        <td>{{ materiel.modele }}</td>
+                        <td>{{ materiel.stock }}</td>
+                        <td>  
+                       <button class="text-blue-500 hover:text-blue-700" (click)="editMateriel(materiel)">
+                                <i class="ri-pencil-line"></i> Modifier
+                            </button>
+                            <button class="text-red-500 hover:text-red-700" (click)="confirmDelete(materiel)">
+                                <i class="ri-delete-bin-line"></i> Supprimer
+                            </button>
+                        </td>
+                    </tr>
+
+  </tbody>
+</table>
+<div *ngIf="showModaladd" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close" (click)="closeModaladd()">&times;</span>
+        <h2>Ajouter un matériel Manquant</h2>
+        <form (ngSubmit)="addMaterielman()">
+            <!-- Modèle -->
+            <div>
+                <label for="model">Nom</label>
+                <input type="text" id="model" [(ngModel)]="newMaterielmanq.nom" name="nom" placeholder="Nom" required />
+            </div>
+
+                <div>
+                <label for="model">Modele</label>
+                <input type="text" id="model" [(ngModel)]="newMaterielmanq.modele" name="modele" placeholder="Modele" required />
+            </div>
+    <div>
+                <label for="model">Stock</label>
+                <input type="number" id="model" [(ngModel)]="newMaterielmanq.stock" name="stock" placeholder="Stock" required />
+            </div>
+
+         
+
+            <!-- En maintenance -->
+    <div>
+ 
+</div>
+
+
+
+
+              <button type="submit">Ajouter</button>
+            <button type="button" (click)="closeModaladd()">Annuler</button>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="isModalOpen" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h2>Modifier un matériel</h2>
+        <form (ngSubmit)="updateMateriel()">
+            
+                  <div>
+                <label for="model">Modèle</label>
+                <input type="text" id="model" [(ngModel)]="selectedMateriel.nom" name="nom" placeholder="Nom" required />
+            </div>
+
+            <!-- Modèle -->
+            <div>
+                <label for="model">Modèle</label>
+                <input type="text" id="model" [(ngModel)]="selectedMateriel.modele" name="model" placeholder="Modèle" required />
+            </div>
+
+            <!-- Stock -->
+            <div>
+                <label for="stock">Stock</label>
+                <input type="number" id="stock" [(ngModel)]="selectedMateriel.stock" name="stock" placeholder="Stock" required />
+            </div>
+
+            <!-- Type -->
+          
+
+      
+            <button type="submit">Mettre à jour</button>
+            <button type="button" (click)="closeModal()">Annuler</button>
+        </form>
+    </div>
+</div>
+<!-- Modal de Confirmation de Suppression -->
+<div *ngIf="isDeleteConfirmOpen" class="modal-overlay" (click)="cancelDelete()">
+    <div class="modal-content bg-white dark:bg-[#0c1427] rounded p-6 w-[90%] md:w-[400px] m-auto mt-[10%]" (click)="$event.stopPropagation()">
+      <h2 class="text-lg font-semibold mb-4 text-center text-black dark:text-white">Confirmation</h2>
+      <p class="mb-6 text-center text-gray-700 dark:text-gray-300">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+      <div class="flex justify-center gap-4">
+        <button (click)="confirmDeleteUser()">Oui</button>
+        <button class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400" (click)="cancelDelete()">Non</button>
+      </div>
+    </div>
+</div>
