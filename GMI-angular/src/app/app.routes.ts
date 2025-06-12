@@ -34,6 +34,7 @@ import { GestionMaterielComponent } from './dashboard/gestion-materiel/gestion-m
 import { GestionInterventionComponent } from './dashboard/gestion-intervention/gestion-intervention.component';
 import { MatrielsManquantComponent } from './matriels-manquant/matriels-manquant.component';
 import { ProjetComponent } from './projet/projet.component';
+import { GmiDashboardComponent } from './dashboard/gmi/gmi.component';
 
 
 export const routes: Routes = [
@@ -49,14 +50,13 @@ export const routes: Routes = [
         //canActivate :[AuthGuard,RoleGuard],
         //data:{roles :['ADMIN']},
         children: [
-            {path: '', component: EcommerceComponent},
+            {path: '', component: GmiDashboardComponent},
             {path: 'gestion-user', component: GestionUserComponent},
             {path: 'gestion-materiel', component: GestionMaterielComponent},
             {path: 'gestion-intervention', component: GestionInterventionComponent},
             {path: 'materiel-manquant', component: MatrielsManquantComponent},
             {path: 'gestion-projet', component: ProjetComponent},
-
-
+            
             {path: 'my-profile', component: MyProfileComponent},
             {
                 path: 'settings',
