@@ -18,11 +18,11 @@ interface User {
 }
 
 @Component({
-  selector: 'app-gestion-user',
-  standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule],
-  templateUrl: './gestion-user.component.html',
-  styleUrls: ['./gestion-user.component.scss']
+    selector: 'app-gestion-user',
+    standalone: true,
+    imports: [RouterLink, FormsModule, CommonModule],
+    templateUrl: './gestion-user.component.html',
+    styleUrls: ['./gestion-user.component.scss']
 })
 export class GestionUserComponent implements OnInit {
     userData: User[] = [];
@@ -32,7 +32,7 @@ export class GestionUserComponent implements OnInit {
     isDeleteConfirmOpen = false;
     showModaladd = false;
     searchText = '';
-    
+
     newUser: User = {
         nom: '',
         prenom: '',
@@ -44,7 +44,7 @@ export class GestionUserComponent implements OnInit {
         cin: ''
     };
 
-    constructor(private ws: UserService) {}
+    constructor(private ws: UserService) { }
 
     ngOnInit(): void {
         this.getUserData();
@@ -54,10 +54,17 @@ export class GestionUserComponent implements OnInit {
         if (!this.userData) {
             return [];
         }
+
+        const search = this.searchText?.toLowerCase().trim();
+
+        if (!search) {
+            return this.userData; // Si recherche vide → retourne toute la liste
+        }
+
         return this.userData.filter((user: User) =>
-            user.nom?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-            user.prenom?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-            user.email?.toLowerCase().includes(this.searchText.toLowerCase())
+            user.nom?.toLowerCase().includes(search) ||
+            user.prenom?.toLowerCase().includes(search) ||
+            user.email?.toLowerCase().includes(search)
         );
     }
 
@@ -95,7 +102,7 @@ export class GestionUserComponent implements OnInit {
         if (!this.newUser.nom || !this.newUser.prenom || !this.newUser.email || !this.newUser.password) {
             return;
         }
-        
+
         this.ws.addUser(this.newUser).subscribe(
             (response) => {
                 console.log('User added successfully:', response);
@@ -118,7 +125,7 @@ export class GestionUserComponent implements OnInit {
             }
         );
     }
-    
+
     editUser(user: User) {
         this.selectedUser = { ...user };
         this.isModalOpen = true;
@@ -133,7 +140,7 @@ export class GestionUserComponent implements OnInit {
             }
         );
     }
-    
+
     closeModal() {
         this.isModalOpen = false;
     }
@@ -152,7 +159,7 @@ export class GestionUserComponent implements OnInit {
     openModaladd() {
         this.showModaladd = true;
     }
-    
+
     closeModaladd() {
         this.showModaladd = false;
     }
