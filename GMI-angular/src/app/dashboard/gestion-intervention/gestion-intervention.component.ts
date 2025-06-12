@@ -11,12 +11,12 @@ import { InterventionService } from '../../services/interventions.service';
 interface Intervention {
     id?: number; // Added id property
     type: string;
-    datedecreation: Date;
     titre: string;
-    priorite: string;
-    statut: string;
+    email: string;
     client: string;
     description: string;
+    datederesolution:Date ; 
+    commentaire:string ,
     demandeur: any;
     materiel: any; // Added materiel property
 }
@@ -40,17 +40,17 @@ export class GestionInterventionComponent {
     isDeleteConfirmOpen: boolean = false;
     interventionToDelete?: Intervention;
     selectedUserToDelete: any = null;
+  
     // Modale ajout
     showModalAdd: boolean = false;
-
     newIntervention: Intervention = {
       type: '',
-      datedecreation: new Date(),
+      datederesolution: new Date(),
       titre: '',
-      statut: '',
       client: '',
       description: '',
-      priorite: '',
+      email: '',
+      commentaire:'',
       demandeur: {},
       materiel: {}
     };
@@ -80,6 +80,7 @@ export class GestionInterventionComponent {
   fetchInterventions(): void {
     this.interventionService.getInterventions().subscribe((data) => {
       this.interventions = data;
+      console.log(this.interventions)
       this.filteredInterventions = data;
     });
   }
@@ -91,12 +92,12 @@ export class GestionInterventionComponent {
     this.showModalAdd = true;
     this.newIntervention = {
       type: '',
-      datedecreation: new Date(),
+      datederesolution :new Date(),
       titre: '',
-      priorite: '', // Added priorite property
-      statut: '',
+      email: '', // Added priorite property
       client: '',
       description: '',
+      commentaire:'',
       demandeur: null,
       materiel: null
     };
@@ -107,11 +108,21 @@ export class GestionInterventionComponent {
   }
 
   addIntervention(): void {
-    this.interventionService.addIntervention(this.newIntervention).subscribe(() => {
-      this.fetchInterventions();
+
+
+let intervention = {
+  "titre":this.newIntervention.titre,
+  "description":this.newIntervention.description,
+  "datederesolution":this.newIntervention.datederesolution ,
+  "type": this.newIntervention.type,
+  "commentaire":this.newIntervention.commentaire
+}
+
+   this.interventionService.ajoutintervention(intervention,this.newIntervention.materiel.id,localStorage.getItem("email")).subscribe(() => {
+   this.fetchInterventions();
       this.closeModalAdd();
     });
-  }
+}
 
   // Modification
   editIntervention(intervention: Intervention): void {
@@ -128,6 +139,7 @@ export class GestionInterventionComponent {
 
   updateIntervention(): void {
     if (this.selectedIntervention.id !== undefined) {
+      console.log(this.selectedIntervention.id )
       this.interventionService.updateIntervention(this.selectedIntervention.id, this.selectedIntervention)
         .subscribe(() => {
           this.fetchInterventions();
@@ -173,8 +185,7 @@ export class GestionInterventionComponent {
     this.filteredInterventions = this.interventions.filter((i: Intervention) =>
       i.type.toLowerCase().includes(query) ||
       i.titre.toLowerCase().includes(query) ||
-      i.client.toLowerCase().includes(query) ||
-      i.statut.toLowerCase().includes(query)
+      i.client.toLowerCase().includes(query) 
     );
   }
 
@@ -187,12 +198,13 @@ export class GestionInterventionComponent {
         this.showModalEdit = false;
         this.selectedIntervention = {
           type: '',
-          datedecreation: new Date(),
+          datederesolution: new Date(),
           titre: '',
-          priorite: '',
-          statut: '',
+          email: '',
           client: '',
           description: '',
+          
+          commentaire:'',
           demandeur: {},
           materiel: {}
         }; // Réinitialiser l'intervention sélectionnée

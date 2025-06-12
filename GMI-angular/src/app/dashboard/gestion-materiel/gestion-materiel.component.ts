@@ -8,18 +8,15 @@ export interface Materiel {
     id?: number; // optionnel si auto-généré côté backend
     model: string;
     stock: number;
-    type: string;
     prix: number;
-    disponibilite: string;
     archiver: boolean;
     date_ajout: Date | string;
     nom: string; // Added missing property
     marque: string; // Added missing property
     etat: string; // Added missing property
     date_suppression?: Date | null; // Added missing property
-    isDamaged?: boolean; // Added missing property
+    damaged?: boolean; // Added missing property
     enMaintenance?: boolean; // Added missing property
-    isManquant?: boolean; // Added missing property
     interventions?: any[]; // Added missing property for interventions
   }
 
@@ -34,6 +31,7 @@ export class GestionMaterielComponent {
 
     materiels:any;
     isDeleteConfirmOpen: boolean = false;
+
     filteredMateriels:any;
     searchText: string = '';
   
@@ -46,14 +44,11 @@ export class GestionMaterielComponent {
     newMateriel: Materiel = {
         model: '',
         stock: 0,
-        type: '',              // "individuelle" ou "personnel"
         prix: 0,
-        disponibilite: '',
         date_ajout: new Date(), // Date d'ajout par défaut à la date actuelle
         date_suppression: null,  // Date de suppression, initialisé à null
-        isDamaged: false,       // Si endommagé
+        damaged: false,       // Si endommagé
         enMaintenance: false,    // Si en maintenance
-        isManquant: false,      // Si manquant
         archiver: false,        // Statut d'archivage
         interventions: [],       // Liste vide d'interventions par défaut
         nom: '',                 // Nom par défaut
@@ -92,10 +87,27 @@ export class GestionMaterielComponent {
           console.error('Selected Materiel ID is undefined');
         }
       }
+
+
+
+  archiverMateriel(id:any) {
+        // Appeler le service pour mettre à jour le matériel
+        if (id !== undefined) {
+          this.materielService.archivermatriel(id).subscribe(() => {
+            this.fetchMateriels(); // Récupérer la liste des matériels mise à jour
+            this.closeModal(); // Fermer la modale
+          });
+        } else {
+          console.error('Selected Materiel ID is undefined');
+        }
+      }
+
     fetchMateriels(): void {
         this.materielService.getMateriels().subscribe((data) => {
           this.materiels = data;
-          this.filteredMateriels = data; // Initialiser filteredMateriels avec tous les materiels
+          this.filteredMateriels = data;
+          console.log(this.filteredMateriels)
+           // Initialiser filteredMateriels avec tous les materiels
         }
         );
 
@@ -106,9 +118,7 @@ export class GestionMaterielComponent {
       this.newMateriel = {
         model: '',
         stock: 0,
-        type: '',
         prix: 0,
-        disponibilite: '',
         archiver: false,
         date_ajout: new Date(),
         nom: '',
@@ -122,6 +132,7 @@ export class GestionMaterielComponent {
     }
   
     addMateriel(): void {
+      console.log(this.newMateriel)
       this.materielService.addMateriel(this.newMateriel).subscribe(() => {
         this.fetchMateriels();
         this.closeModaladd();
@@ -147,8 +158,7 @@ export class GestionMaterielComponent {
       if (!this.materielToDelete) return;
       if (this.materielToDelete?.id !== undefined) {
         this.materielService.deleteMateriel(this.materielToDelete.id).subscribe(() => {
-          this.fetchMateriels();
-          this.cancelDelete();
+       window.location.reload()
         });
       }
     }   
@@ -161,7 +171,7 @@ export class GestionMaterielComponent {
     const query = this.searchText.toLowerCase();
     this.filteredMateriels = this.materiels.filter((m: Materiel) =>
       m.model.toLowerCase().includes(query) ||
-      m.type.toLowerCase().includes(query)
+      m.model.toLowerCase().includes(query)
     );
     }
   

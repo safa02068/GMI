@@ -15,7 +15,7 @@
     <div class="table-responsive overflow-x-auto">
         <table class="w-full without-border">
             <thead class="text-black dark:text-white">
-                <tr>
+    <tr>
                     <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
                         Nom
                     </th>
@@ -31,8 +31,8 @@
                     <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
                         Actions
                     </th>
-                </tr>
-            </thead>
+    </tr>
+  </thead>
             <tbody class="text-black dark:text-white">
                 <tr *ngFor="let p of allprojet">
                     <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
@@ -58,12 +58,12 @@
                                 <i class="material-symbols-outlined !text-md">archive</i>
                             </button>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+                        </td>
+      </tr>
+  </tbody>
+</table>
+            </div>
+            </div>
 
 <!-- Modal d'ajout d'un Projet -->
 <div *ngIf="showModaladd" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -111,7 +111,7 @@
                     class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
                     <option *ngFor="let u of alluser" [value]="u.id">{{ u.nom }}</option>
                 </select>
-            </div>
+</div>
 
             <div class="flex justify-end space-x-2 pt-4">
                 <button type="submit"
@@ -131,12 +131,12 @@
 <div *ngIf="isDeleteConfirmOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
     <div class="modal-content bg-white dark:bg-[#0c1427] rounded p-6 w-[90%] md:w-[400px] m-auto"
         (click)="$event.stopPropagation()">
-        <h2 class="text-lg font-semibold mb-4 text-center text-black dark:text-white">Confirmation</h2>
+      <h2 class="text-lg font-semibold mb-4 text-center text-black dark:text-white">Confirmation</h2>
         <p class="mb-6 text-center text-gray-700 dark:text-gray-300">Êtes-vous sûr de vouloir archiver ce projet ?</p>
-        <div class="flex justify-center gap-4">
+      <div class="flex justify-center gap-4">
             <button class="bg-[#f44336] text-white px-4 py-2 rounded hover:bg-[#d32f2f]"
                 (click)="confirmDeleteUser()">Oui</button>
             <button class="bg-[#548B56] text-white px-4 py-2 rounded hover:bg-[#41743f]" (click)="cancelDelete()">Non</button>
-        </div>
+      </div>
     </div>
 </div>
