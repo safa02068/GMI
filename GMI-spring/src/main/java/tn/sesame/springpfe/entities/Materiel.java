@@ -10,8 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -25,11 +23,11 @@ public class Materiel {
     private float prix;
     private Date date_ajout;
     private Date date_suppression;
-    @JsonIgnore
+    
     private boolean isDamaged; 
-    @JsonIgnore
+    
     private boolean enMaintenance;
-    @JsonIgnore
+    
     private boolean archiver;
     
     

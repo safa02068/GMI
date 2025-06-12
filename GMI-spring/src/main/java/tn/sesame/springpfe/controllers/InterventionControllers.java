@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tn.sesame.springpfe.entities.Commentaire;
 import tn.sesame.springpfe.entities.Intervention;
+import tn.sesame.springpfe.entities.Materiel;
 import tn.sesame.springpfe.entities.User;
 import tn.sesame.springpfe.repositories.IMaterielRepository;
 import tn.sesame.springpfe.repositories.IcommentaireRepository;
@@ -38,13 +39,22 @@ public class InterventionControllers {
 	private Intervention inter;
     
     private User user;
-
-    @PreAuthorize("hasAuthority('EMPLOYE')")
+@Autowired
+IMaterielRepository imrepos ; 
+@Autowired
+IuserRepository userrepos ;
+    
+  //  @PreAuthorize("hasAuthority('EMPLOYE')")
     @PostMapping("/addintervention")
-    public ResponseEntity<Intervention> addinter(@RequestBody Intervention newIntervention) {
+    public ResponseEntity<Intervention> addinter(@RequestBody Intervention newIntervention , Long idmat, String email) {
     try {
+    	Materiel m = this.imrepos.findById(idmat).get(); 
+    	User u = this.userR.findByEmail(email);
     newIntervention.setDatedecreation(new Date(System.currentTimeMillis()));;
     newIntervention.setStatut("En Attente");
+    newIntervention.setMateriel(m);
+    newIntervention.setDemandeur(u);
+    newIntervention.setArchiver(false);
     Intervention savedIntervention = intR.save(newIntervention);;
     return ResponseEntity.ok(savedIntervention);
     } catch (Exception e) {
@@ -75,19 +85,19 @@ public class InterventionControllers {
     public String commentaire(Long id , @RequestBody Commentaire c) {
         Intervention I = intR.findById(id).get();
         c.setDate((new Date(System.currentTimeMillis())));
-        I.setCommentaire(c);
+    //    I.setCommentaire(c);
          intR.save(I);
         return "true";
     }
 
-    
+    /*
     @GetMapping("affichercommentaire")
     public Commentaire listcomm(Long id){
         Intervention I= intR.findById(id).orElse(null);
         return I.getCommentaire();
     }
-
-    @PreAuthorize("hasAuthority('EMPLOYE')")
+*/
+//    @PreAuthorize("hasAuthority('EMPLOYE')")
     @PutMapping("/updateintervention")
     public Intervention updateinter(@RequestBody Intervention interv) {
         Intervention existinginter = (Intervention) intR.findById(interv.getId()).get();
@@ -97,9 +107,10 @@ public class InterventionControllers {
             existinginter.setTitre(interv.getTitre());
             existinginter.setDescription(interv.getDescription());
             existinginter.setDemandeur(interv.getDemandeur());
+            existinginter.setCommentaire(interv.getCommentaire());
             existinginter.setDatedecreation(new Date(System.currentTimeMillis()));
             existinginter.setDatederesolution(interv.getDatederesolution());
-            
+            existinginter.setType(interv.getType());
             //existinginter.setEtat(interv.getEtat());
 
             intR.save(existinginter);
@@ -107,13 +118,6 @@ public class InterventionControllers {
         }
     }
 
-
-    @GetMapping("listintervbyuser")
-    public List<Intervention>list(String email){
-    User u = userR.findByEmail(email);
-    System.out.println(u.getEmail());
-    return intR.findByEmail(email);
-    }
 
 
     //afficher les détails de chaque intervention
@@ -127,7 +131,7 @@ public class InterventionControllers {
 
     @GetMapping("/allintervention")
     public List<Intervention> all() {
-        return intR.findAll();
+        return intR.findByArchiverIsFalse();
     }
 
 

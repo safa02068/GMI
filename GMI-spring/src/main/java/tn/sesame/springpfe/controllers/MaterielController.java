@@ -43,6 +43,7 @@ public class MaterielController {
     @Transactional
     @PostMapping("/addmateriel")
     public Materiel ajout(@RequestBody Materiel materiel) {
+    	materiel.setArchiver(false);
         return this.matR.save(materiel);
     }
     
@@ -53,11 +54,13 @@ public class MaterielController {
     public Materiel updateMateriel(@PathVariable long id, @RequestBody Materiel materiel) {
     	Materiel mat = matR.findById(id).orElse(null);
         mat.setModel(materiel.getModel());
-        
+        mat.setNom(materiel.getNom());
         mat.setPrix(materiel.getPrix());
-        
+        mat.setEnMaintenance(materiel.isEnMaintenance());
         mat.setDate_ajout(materiel.getDate_ajout());
         mat.setDamaged(materiel.isDamaged());
+        mat.setStock(materiel.getStock());
+        
         mat.setDate_suppression(materiel.getDate_suppression());
         return matR.save(mat);
     }
@@ -78,16 +81,16 @@ public class MaterielController {
     
     
     
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-    @PutMapping("/archiver/{id}")
-    public Materiel archiverMateriel(@PathVariable long id) {
-        System.out.println("Called archive endpoint with ID: " + id);
+   // @PreAuthorize("hasAuthority('CHEF_PROJET')")
+   @PostMapping("archiver")
+    public String archiverMateriel(Long id) {
+	   
+    	
         Materiel arch = matR.findById(id).orElse(null);
-        if (arch == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Materiel not found");
-        }
+      
         arch.setArchiver(true);
-        return matR.save(arch);
+        this.matR.save(arch);
+        return "true";
     }
     
     //add materiel manquant 
@@ -121,6 +124,22 @@ public class MaterielController {
     	MaterielManquant mat = this.matMR.findById(id).get();
     	this.matMR.delete(mat);
     	return "true" ; 
+    }
+    
+    
+    
+    @Autowired
+    IMaterielManqRepository imamanqurepos ; 
+    
+    @GetMapping("allmatrielmanquant")
+    public List<MaterielManquant>allmat(){
+    	return this.imamanqurepos.findAll() ; 
+    }
+    
+    @PostMapping("ajoutmatmanquant")
+    public String ajout(@RequestBody MaterielManquant matman ) {
+    	 this.imamanqurepos.save(matman); 
+    	 return "true" ; 
     }
     
     
@@ -175,28 +194,47 @@ public class MaterielController {
 //        return this.matR.findByEnMaintenanceTrue();
 //    }
 
+@PutMapping("updatematrielmanquant")
+
+public String update(Long id , @RequestBody MaterielManquant mat) {
+	System.out.println(id+"/////");
+	System.out.println(mat.getModele()+"*****");
+	MaterielManquant m = this.matMR.findById(id).get();
+	m.setModele(mat.getModele());
+	m.setStock(mat.getStock());
+	m.setNom(mat.getNom());
+	this.imamanqurepos.save(m);
+	return "true" ;
+}
+@DeleteMapping("deletematrielmanquant")
+
+public String delete(Long id)  {
+	MaterielManquant m = this.matMR.findById(id).get();
+	this.imamanqurepos.delete(m);
+	return "true" ;
+}
 
 
 
 
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
+    //@PreAuthorize("hasAuthority('CHEF_PROJET')")
     @DeleteMapping("/deletemateriel/{id}")
-    public ResponseEntity<String> deleteMateriel(@PathVariable long id) {
+    public String deleteMateriel(@PathVariable long id) {
         try {
             Materiel materiel = matR.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Matériel non trouvé"));
             
             // Vérifier si le matériel est associé à des interventions
             if (!materiel.getInterventions().isEmpty()) {
-                return ResponseEntity.badRequest().body("Impossible de supprimer le matériel car il est associé à des interventions");
+                return "Impossible de supprimer le matériel car il est associé à des interventions";
             }
             
             matR.delete(materiel);
-            return ResponseEntity.ok("Matériel supprimé avec succès");
+            return "Matériel supprimé avec succès";
         } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatus()).body(e.getReason());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la suppression du matériel");
+        	return "false" ;
+        	} catch (Exception e) {
+            return "Erreur lors de la suppression du matériel";
         }
     }
 

@@ -23,11 +23,12 @@ import lombok.Setter;
 @NoArgsConstructor 
 @Data
 public class MaterielManquant {
-	@JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	private String nom;
+	private String modele;
+	private int stock;
 	
 
 }

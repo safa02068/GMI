@@ -58,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/add").permitAll()
                 .antMatchers("/users/renitialisermp").permitAll()
                 .antMatchers("/users/modifiermp").permitAll()
+                .antMatchers("/materiel/archiver").permitAll()
 
                 
                  .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()

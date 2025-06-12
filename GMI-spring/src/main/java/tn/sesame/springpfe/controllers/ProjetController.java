@@ -40,7 +40,7 @@ public class ProjetController {
     private Projet projet ;  
 
     //tester déjà
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
+    //@PreAuthorize("hasAuthority('CHEF_PROJET')")
     @PostMapping("/addprojet")
     public Projet ajout(@RequestBody Projet projet) {
         projet.setArchiver(false);
@@ -63,9 +63,9 @@ public class ProjetController {
     
     
     //tester déjà
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-    @PutMapping("archiverprojet/{id}")
-    public Projet archiverProjet(@PathVariable Long id) {
+   // @PreAuthorize("hasAuthority('CHEF_PROJET')")
+    @PutMapping("archiverprojet")
+    public Projet archiverProjet( Long id) {
         Projet arch = projetR.findById(id).get();
         arch.setArchiver(true);
         return projetR.save(arch);
@@ -73,10 +73,10 @@ public class ProjetController {
     
     
     //tester déja
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
+    //@PreAuthorize("hasAuthority('CHEF_PROJET')")
     @GetMapping("/afficherlist")
    public List<Projet> prolist(){
-       return this.projetR.findAll();
+       return this.projetR.findByArchiverIsFalse();
    }
 
   //tester déjà

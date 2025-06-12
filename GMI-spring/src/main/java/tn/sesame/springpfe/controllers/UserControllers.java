@@ -125,13 +125,14 @@ public class UserControllers {
     @PostMapping("modifier")
     public String modifier(@RequestBody User u) {
         User existing = userR.findByEmail(u.getEmail());
-        existing.setNom(u.getNom());
+        System.out.println(u.getNom());
+     /*   existing.setNom(u.getNom());
         existing.setPrenom(u.getPrenom());
         existing.setPoste(u.getPoste());
         existing.setTel(u.getTel());
         existing.setAdresse(u.getAdresse());
-        existing.setIBAN(u.getIBAN());
-        userR.saveAndFlush(existing);
+        existing.setIBAN(u.getIBAN());*/
+        existing= userR.saveAndFlush(u);
         return "true";
     }
 }
