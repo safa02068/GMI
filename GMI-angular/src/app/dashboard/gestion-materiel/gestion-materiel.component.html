@@ -19,6 +19,9 @@
             <thead class="text-black dark:text-white">
                 <tr>
                     <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
+                        Nom
+                    </th>
+                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
                         Modèle
                     </th>
                     <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
@@ -31,15 +34,15 @@
                         Date d'ajout
                     </th>
                     <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
-                        Date de suppression
-                    </th>
-                    <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 bg-primary-50 dark:bg-[#15203c] whitespace-nowrap bg-[#EFF3F7]">
                         Actions
                     </th>
                 </tr>
             </thead>
             <tbody class="text-black dark:text-white">
                 <tr *ngFor="let materiel of filteredMateriels">
+                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
+                        <span class="text-gray-500 dark:text-gray-400">{{ materiel.nom }}</span>
+                    </td>
                     <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
                         <span class="text-gray-500 dark:text-gray-400">{{ materiel.model }}</span>
                     </td>
@@ -51,9 +54,6 @@
                     </td>
                     <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
                         <span class="text-gray-500 dark:text-gray-400">{{ materiel.date_ajout | date:'MM/dd/yyyy HH:mm' }}</span>
-                    </td>
-                    <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
-                        <span class="text-gray-500 dark:text-gray-400">{{ materiel.date_suppression | date:'MM/dd/yyyy HH:mm' }}</span>
                     </td>
                     <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[17px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
                         <div class="flex items-center gap-[9px]">
@@ -86,6 +86,8 @@
         </div>
         <form (ngSubmit)="addMateriel()" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" [(ngModel)]="newMateriel.nom" name="nom" placeholder="Nom" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
                 <input type="text" [(ngModel)]="newMateriel.model" name="model" placeholder="Modèle" required
                     class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
                 <input type="number" [(ngModel)]="newMateriel.stock" name="stock" placeholder="Stock" required
@@ -93,8 +95,6 @@
                 <input type="number" [(ngModel)]="newMateriel.prix" name="prix" placeholder="Prix" required
                     class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
                 <input type="date" [(ngModel)]="newMateriel.date_ajout" name="date_ajout" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="date" [(ngModel)]="newMateriel.date_suppression" name="date_suppression"
                     class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
             </div>
 
@@ -121,6 +121,8 @@
         </div>
         <form (ngSubmit)="updateMateriel()" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" [(ngModel)]="selectedMateriel.nom" name="nom" placeholder="Nom" required
+                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
                 <input type="text" [(ngModel)]="selectedMateriel.model" name="model" placeholder="Modèle" required
                     class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
                 <input type="number" [(ngModel)]="selectedMateriel.stock" name="stock" placeholder="Stock" required
@@ -129,13 +131,6 @@
                     class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
                 <input type="date" [(ngModel)]="selectedMateriel.date_ajout" name="date_ajout" required
                     class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="date" [(ngModel)]="selectedMateriel.date_suppression" name="date_suppression"
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <select [(ngModel)]="selectedMateriel.archiver" name="archiver" required
-                    class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
-                    <option [value]="true">Oui</option>
-                    <option [value]="false">Non</option>
-                </select>
             </div>
 
             <div class="flex justify-end space-x-2 pt-4">
