@@ -39,7 +39,7 @@ export class GestionMaterielComponent {
     isModalOpen: boolean = false;
     selectedMateriel: Materiel = {} as Materiel;
   
-    // Pour la modale d’ajout
+    // Pour la modale d'ajout
     showModaladd: boolean = false;
     newMateriel: Materiel = {
         model: '',
@@ -168,11 +168,20 @@ export class GestionMaterielComponent {
     }
   
     filterMateriels(): void {
-    const query = this.searchText.toLowerCase();
-    this.filteredMateriels = this.materiels.filter((m: Materiel) =>
-      m.model.toLowerCase().includes(query) ||
-      m.model.toLowerCase().includes(query)
-    );
+      if (!this.materiels) return;
+      
+      const query = this.searchText.toLowerCase();
+      this.filteredMateriels = this.materiels.filter((m: Materiel) =>
+        (m.nom?.toLowerCase().includes(query) || '') ||
+        (m.model?.toLowerCase().includes(query) || '') ||
+        (m.marque?.toLowerCase().includes(query) || '') ||
+        (m.etat?.toLowerCase().includes(query) || '') ||
+        (m.stock?.toString().includes(query) || '') ||
+        (m.prix?.toString().includes(query) || '')
+      );
     }
   
+    onSearchChange(): void {
+      this.filterMateriels();
+    }
 }

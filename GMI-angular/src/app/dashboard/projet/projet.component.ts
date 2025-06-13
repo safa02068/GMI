@@ -28,6 +28,8 @@ export class ProjetComponent {
   isModalOpen: boolean = false;
   isDeleteConfirmOpen: boolean = false;
   materielToDelete?: Projet;
+  searchText: string = '';
+  filteredProjets: any;
 
 
   newprojet: Projet = {
@@ -51,6 +53,7 @@ export class ProjetComponent {
 
     this.service.allprojet().subscribe((res) => {
       this.allprojet = res;
+      this.filteredProjets = res;
     })
     
     this.serviceuser.getData().subscribe((res) => {
@@ -62,7 +65,19 @@ export class ProjetComponent {
     })
   }
 
+  filterProjets(): void {
+    if (!this.allprojet) return;
+    
+    const query = this.searchText.toLowerCase();
+    this.filteredProjets = this.allprojet.filter((p: Projet) =>
+      (p.nom?.toLowerCase().includes(query) || '') ||
+      (p.description?.toLowerCase().includes(query) || '')
+    );
+  }
 
+  onSearchChange(): void {
+    this.filterProjets();
+  }
 
   confirmDeleteUser() {
     this.confirmDeleteMateriel();

@@ -18,6 +18,8 @@ export interface MaterielManquant {
 })
 export class MatrielsManquantComponent {
 allmatmanquant:any  ; 
+  filteredMateriels: any;
+  searchText: string = '';
   showModaladd: boolean = false;
       isModalOpen: boolean = false;
     selectedMateriel: MaterielManquant = {} as MaterielManquant;
@@ -62,6 +64,7 @@ this.getall()
   getall(){
     this.service.allmatrielmanquant().subscribe((res)=>{
     this.allmatmanquant = res ;
+    this.filteredMateriels = res;
     console.log(this.allmatmanquant)
   })
 
@@ -105,5 +108,20 @@ confirmDelete(materiel: MaterielManquant): void {
         this.getall();
         this.closeModaladd();
       });
+    }
+
+    filterMateriels(): void {
+      if (!this.allmatmanquant) return;
+      
+      const query = this.searchText.toLowerCase();
+      this.filteredMateriels = this.allmatmanquant.filter((m: MaterielManquant) =>
+        (m.nom?.toLowerCase().includes(query) || '') ||
+        (m.modele?.toLowerCase().includes(query) || '') ||
+        (m.stock?.toString().includes(query) || '')
+      );
+    }
+
+    onSearchChange(): void {
+      this.filterMateriels();
     }
 }

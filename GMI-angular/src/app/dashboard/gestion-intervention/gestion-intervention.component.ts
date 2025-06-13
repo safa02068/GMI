@@ -181,33 +181,38 @@ let intervention = {
   }
 
   filterInterventions(): void {
+    if (!this.interventions) return;
+    
     const query = this.searchText.toLowerCase();
     this.filteredInterventions = this.interventions.filter((i: Intervention) =>
-      i.type.toLowerCase().includes(query) ||
-      i.titre.toLowerCase().includes(query) ||
-      i.client.toLowerCase().includes(query) 
+      (i.type?.toLowerCase().includes(query) || '') ||
+      (i.titre?.toLowerCase().includes(query) || '') ||
+      (i.client?.toLowerCase().includes(query) || '') ||
+      (i.description?.toLowerCase().includes(query) || '') ||
+      (i.commentaire?.toLowerCase().includes(query) || '') ||
+      (i.demandeur?.email?.toLowerCase().includes(query) || '') ||
+      (i.materiel?.nom?.toLowerCase().includes(query) || '')
     );
   }
 
+  onSearchChange(): void {
+    this.filterInterventions();
+  }
 
-
-
-    
-      // Fermer le modal de modification
-      closeModalEdit() {
-        this.showModalEdit = false;
-        this.selectedIntervention = {
-          type: '',
-          datederesolution: new Date(),
-          titre: '',
-          email: '',
-          client: '',
-          description: '',
-          
-          commentaire:'',
-          demandeur: {},
-          materiel: {}
-        }; // Réinitialiser l'intervention sélectionnée
-      }
-    
+  // Fermer le modal de modification
+  closeModalEdit() {
+    this.showModalEdit = false;
+    this.selectedIntervention = {
+      type: '',
+      datederesolution: new Date(),
+      titre: '',
+      email: '',
+      client: '',
+      description: '',
+      
+      commentaire:'',
+      demandeur: {},
+      materiel: {}
+    }; // Réinitialiser l'intervention sélectionnée
+  }
 }

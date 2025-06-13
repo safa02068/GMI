@@ -4,12 +4,15 @@
             <h3 class="mb-0 text-[#516359]">Projets</h3>
         </div>
         <div class="trezo-card-subtitle mt-[10px] sm:mt-0 flex flex-col sm:flex-row items-center gap-3">
+            <input type="text" [(ngModel)]="searchText" (ngModelChange)="onSearchChange()" placeholder="Rechercher un projet..." 
+            class="border border-gray-300 dark:border-[#172036] rounded-md px-3 py-2 w-full sm:w-auto dark:bg-[#0c1427] dark:text-white" />
             <button *ngIf="this.profil=='CHEF_PROJET'" type="button" 
                 class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-[#516359] hover:bg-[#516359] hover:text-white" 
                 (click)="openModaladd()">
                 <i class="ri-add-line text-xl"></i> Ajouter
             </button>
         </div>
+       
     </div>
 
     <div class="table-responsive overflow-x-auto">
@@ -34,7 +37,7 @@
     </tr>
   </thead>
             <tbody class="text-black dark:text-white">
-                <tr *ngFor="let p of allprojet">
+                <tr *ngFor="let p of filteredProjets">
                     <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
                         <span class="text-gray-500 dark:text-gray-400">{{p?.nom}}</span>
                     </td>
@@ -140,3 +143,4 @@
       </div>
     </div>
 </div>
+
