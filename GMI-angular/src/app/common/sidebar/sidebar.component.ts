@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 
 interface MenuItem {
     title: string;
@@ -11,12 +11,33 @@ interface MenuItem {
 @Component({
     selector: 'app-sidebar',
     standalone: true,
-    imports: [NgScrollbarModule, RouterLinkActive, RouterLink, NgClass],
+    imports: [NgScrollbarModule, RouterLinkActive, RouterLink, NgClass, NgIf],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+    userRole: string = '';
 
+    ngOnInit() {
+        this.userRole = localStorage.getItem('role') || '';
+    }
+
+    // Role checking methods
+    isAdmin(): boolean {
+        return this.userRole === 'ADMIN';
+    }
+
+    isTechnicien(): boolean {
+        return this.userRole === 'TECHNICIEN';
+    }
+
+    isEmploye(): boolean {
+        return this.userRole === 'EMPLOYE';
+    }
+
+    isChefProjet(): boolean {
+        return this.userRole === 'CHEF_PROJET';
+    }
 
     // Accordion
     openSectionIndex: number = -1;
@@ -52,5 +73,4 @@ export class SidebarComponent {
     isSectionOpen3(index: number): boolean {
         return this.openSectionIndex3 === index;
     }
-
 }
