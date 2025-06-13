@@ -1,7 +1,16 @@
-import { Component, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, Renderer2, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { ToggleService } from './toggle.service';
+import { UserService } from '../../services/user.service';
+
+interface User {
+  nom: string;
+  prenom: string;
+  poste: string;
+  p: string;
+  email: string;
+}
 
 @Component({
     selector: 'app-header',
@@ -10,19 +19,32 @@ import { ToggleService } from './toggle.service';
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
-
+export class HeaderComponent implements OnInit {
     isSidebarVisible = true;  // Track sidebar visibility
+    user: User | null = null;
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
         public toggleService: ToggleService,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private userService: UserService
     ) {}
 
     ngOnInit(): void {
         // Initialize theme and direction on component load
         this.toggleService.initializeTheme();
+        this.loadUserProfile();
+    }
+
+    loadUserProfile() {
+        this.userService.getMyProfile().subscribe({
+            next: (response: any) => {
+                this.user = response;
+            },
+            error: (error) => {
+                console.error('Error loading user profile:', error);
+            }
+        });
     }
 
     // Toggle theme between light and dark

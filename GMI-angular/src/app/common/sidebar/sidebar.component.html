@@ -2,11 +2,7 @@
     <div class="logo bg-gradient-to-r from-[#c7e3fc] to-[#ebf0f5] dark:bg-gradient-to-r dark:from-[#0c1427] dark:via-[#0c1427] dark:to-[#0c1427] border-b border-gray-100 dark:border-[#172036] px-[25px] pt-[19px] pb-[15px] absolute z-[2] right-0 top-0 left-0">
         <a routerLink="/dashboard" class="transition-none relative flex items-center justify-center">
             <img src="images/logo.png" alt="logo-icon" class="w-36 h-12">
-           <!--  <span class="font-bold text-black dark:text-white relative ltr:ml-[8px] rtl:mr-[8px] top-px text-xl">
-                Trezo
-            </span> -->
         </a>
-       
         <button type="button" class="burger-menu inline-block absolute z-[3] top-[24px] ltr:right-[25px] rtl:left-[25px] transition-all hover:text-primary-500" id="hide-sidebar-toggle2">
             <i class="material-symbols-outlined">
                 close
@@ -98,7 +94,7 @@
                     Test
                 </span>
                 <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
-                    <a routerLink="/dashboard/my-profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative text-left dark:hover:bg-[#15203c] hover:bg-[#ebf0f5]">
+                    <a routerLink="/dashboard/profil" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative text-left dark:hover:bg-[#15203c] hover:bg-[#ebf0f5]">
                         <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
                             account_circle
                         </i>
@@ -106,112 +102,6 @@
                             My Profile
                         </span>
                     </a>
-                </div>
-                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
-                    <button
-                        class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
-                        type="button"
-                        (click)="toggleSection(21)"
-                        [ngClass]="{ 'open': isSectionOpen(21) }"
-                    >
-                        <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
-                            settings
-                        </i>
-                        <span class="title leading-none">
-                            Settings
-                        </span>
-                    </button>
-                    <div class="accordion-collapse" [ngClass]="{ 'open': isSectionOpen(21) }">
-                        <div class="pt-[4px]">
-                            <ul class="sidebar-sub-menu">
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/settings" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Account Settings
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/settings/change-password" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Change Password
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/settings/connections" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Connections
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/settings/privacy-policy" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Privacy Policy
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="/dashboard/settings/terms-conditions" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Terms & Conditions   
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
-                    <button
-                        class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
-                        type="button"
-                        (click)="toggleSection(22)"
-                        [ngClass]="{ 'open': isSectionOpen(22) }"
-                    >
-                        <i class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px">
-                            unfold_more
-                        </i>
-                        <span class="title leading-none">
-                            Multi Level Menu
-                        </span>
-                    </button>
-                    <div class="accordion-collapse" [ngClass]="{ 'open': isSectionOpen(22) }">
-                        <div class="pt-[4px]">
-                            <ul class="sidebar-sub-menu">
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="." class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        First
-                                    </a>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <button
-                                        type="button"
-                                        class="sidemenu-link toggle rounded-md flex items-center relative transition-all font-medium text-gray-500 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]"
-                                        (click)="toggleSection2(0)"
-                                        [ngClass]="{ 'open': isSectionOpen2(0) }"
-                                    >
-                                        Second
-                                        <span class="rounded-full font-medium inline-block text-center w-[20px] h-[20px] text-[11px] leading-[20px] text-orange-500 bg-orange-50 ltr:ml-auto rtl:mr-auto rtl:ml-0">
-                                            2
-                                        </span>
-                                    </button>
-                                    <div class="accordion-collapse" [ngClass]="{ 'open': isSectionOpen2(0) }">
-                                        <div class="pt-[6px] ltr:pl-[20px] rtl:pr-[20px]">
-                                            <ul class="sidebar-sub-menu">
-                                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                                    <a routerLink="." class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                                        Second 1
-                                                    </a>
-                                                </li>
-                                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                                    <a routerLink="." class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                                        Second 2
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="sidemenu-item mb-[4px] last:mb-0">
-                                    <a routerLink="." class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]">
-                                        Third
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
                 <div class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap">
                     <a routerLink="/authentication/logout" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c] ">

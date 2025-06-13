@@ -1,0 +1,135 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="trezo-card">
+        <div class="trezo-card-content">
+            <!-- Profile -->
+            <div class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] rounded-md">
+                <div class="trezo-card-content">
+                    <div class="relative rounded-t-md">
+                        <img src="images/profile-cover.jpg" alt="cover-image" class="rounded-t-md" />
+                    </div>
+                    <div class="px-[20px] md:px-[30px] pb-[20px] md:pb-[45px] mt-[20px] md:-mt-[60px]">
+                        <div class="md:flex items-end justify-between">
+                            <div class="md:flex items-end">
+                                <div class="ltr:md:ml-[30px] rtl:md:mr-[30px] mt-[12px] md:mt-0">
+                                    <span
+                                        class="block text-lg md:text-[20px] lg:text-xl text-black dark:text-white font-bold">
+                                        {{ fullName }}
+                                    </span>
+                                    <span class="block xl:text-md font-medium mt-[2px] md:mt-0">
+                                        {{ profileForm.get('email')?.value }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sm:grid sm:grid-cols-1 sm:gap-[25px]">
+                <div class="sm:grid sm:grid-cols-2 sm:gap-[25px]">
+                    <div class="mb-[20px] sm:mb-0">
+                        <label class="mb-[10px] text-black dark:text-white font-medium block">
+                            CIN
+                        </label>
+                        <input type="text"
+                            class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
+                            [readonly]="!isEditing" formControlName="cin"
+                            [class.is-invalid]="profileForm.get('cin')?.invalid && profileForm.get('cin')?.touched">
+                        <div class="invalid-feedback" *ngIf="profileForm.get('cin')?.errors?.['required']">
+                            CIN est requis
+                        </div>
+                        <div class="invalid-feedback" *ngIf="profileForm.get('cin')?.errors?.['invalidCin']">
+                            Le CIN doit contenir exactement 8 chiffres
+                        </div>
+                    </div>
+                    <div class="sm:grid sm:grid-cols-2 sm:gap-[25px]">
+                        <div class="mb-[20px] sm:mb-0">
+                            <label class="mb-[10px] text-black dark:text-white font-medium block">
+                                Prénom
+                            </label>
+                            <input type="text" formControlName="prenom" [readonly]="!isEditing"
+                                class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500" />
+                        </div>
+                        <div class="mb-[20px] sm:mb-0">
+                            <label class="mb-[10px] text-black dark:text-white font-medium block">
+                                Nom
+                            </label>
+                            <input type="text" formControlName="nom" [readonly]="!isEditing"
+                                class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500" />
+                        </div>
+                    </div>
+                    <div class="mb-[20px] sm:mb-0">
+                        <label class="mb-[10px] text-black dark:text-white font-medium block">
+                            Email
+                        </label>
+                        <input type="email" formControlName="email" readonly
+                            class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500" />
+                    </div>
+                    <div class="mb-[20px] sm:mb-0">
+                        <label class="mb-[10px] text-black dark:text-white font-medium block">
+                            Téléphone
+                        </label>
+                        <input type="tel" formControlName="tel" [readonly]="!isEditing"
+                            class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500" />
+                    </div>
+                    <div class="mb-[20px] sm:mb-0">
+                        <label class="mb-[10px] text-black dark:text-white font-medium block">
+                            Poste
+                        </label>
+                        <input type="text" formControlName="p" readonly
+                            class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500" />
+                    </div>
+                    <div class="mb-[20px] sm:mb-0">
+                        <label class="mb-[10px] text-black dark:text-white font-medium block">
+                            Adresse
+                        </label>
+                        <input type="text" formControlName="adresse" [readonly]="!isEditing"
+                            class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-[20px] md:mt-[25px]">
+                <button type="button" (click)="toggleEdit()" *ngIf="!isEditing"
+                    class="font-medium inline-block transition-all rounded-md md:text-md ltr:mr-[19px] rtl:ml-[19px] py-[10px] md:py-[12px] px-[20px] md:px-[22px] bg-primary-500 text-white hover:bg-primary-400">
+                    <span class="inline-block relative ltr:pl-[29px] rtl:pr-[29px]">
+                        <i class="material-symbols-outlined ltr:left-0 rtl:right-0 absolute top-1/2 -translate-y-1/2">
+                            edit
+                        </i>
+                        Modifier le profil
+                    </span>
+                </button>
+                <div *ngIf="isEditing" class="flex">
+                    <button type="button" (click)="toggleEdit()"
+                        class="font-medium inline-block transition-all rounded-md md:text-md ltr:mr-[19px] rtl:ml-[19px] py-[10px] md:py-[12px] px-[20px] md:px-[22px] bg-danger-500 text-white hover:bg-danger-400">
+                        <span class="inline-block relative ltr:pl-[29px] rtl:pr-[29px]">
+                            <i
+                                class="material-symbols-outlined ltr:left-0 rtl:right-0 absolute top-1/2 -translate-y-1/2">
+                                close
+                            </i>
+                            Annuler
+                        </span>
+                    </button>
+                    <button type="submit" [disabled]="!profileForm.valid || isLoading"
+                        class="font-medium inline-block transition-all rounded-md md:text-md py-[10px] md:py-[12px] px-[20px] md:px-[22px] bg-primary-500 text-white hover:bg-primary-400">
+                        <span class="inline-block relative ltr:pl-[29px] rtl:pr-[29px]">
+                            <i
+                                class="material-symbols-outlined ltr:left-0 rtl:right-0 absolute top-1/2 -translate-y-1/2">
+                                check
+                            </i>
+                            {{ isLoading ? "Enregistrement..." : "Enregistrer" }}
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Alert message-->
+<div *ngIf="alertShow" [ngClass]="{
+    'bg-success-500': alertType === 'success',
+    'bg-danger-500': alertType === 'error'
+}" class="fixed top-4 right-4 p-4 rounded-md text-white">
+    {{ alertMessage }}
+</div>

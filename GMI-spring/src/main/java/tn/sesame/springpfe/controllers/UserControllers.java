@@ -3,8 +3,11 @@ package tn.sesame.springpfe.controllers;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import tn.sesame.springpfe.entities.Profil;
@@ -116,7 +119,20 @@ public class UserControllers {
     @GetMapping("afficherbyemail")
     public User afficherbyemail(String email) {
         return this.userR.findByEmail(email);
+    }
 
+    @GetMapping("my-profile")
+    public ResponseEntity<?> getMyProfile() {
+        try {
+            String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+            User user = this.userR.findByEmail(currentUserEmail);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching profile: " + e.getMessage());
+        }
     }
 
 
@@ -134,5 +150,32 @@ public class UserControllers {
         existing.setIBAN(u.getIBAN());*/
         existing= userR.saveAndFlush(u);
         return "true";
+    }
+
+    @PostMapping("update-profile")
+    public ResponseEntity<?> updateProfile(@RequestBody User updatedUser) {
+        try {
+            // Get the current user's email from the security context
+            String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+            
+            // Find the user by email
+            User existingUser = userR.findByEmail(currentUserEmail);
+            if (existingUser == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            // Update only allowed fields
+            existingUser.setNom(updatedUser.getNom());
+            existingUser.setPrenom(updatedUser.getPrenom());
+            existingUser.setTel(updatedUser.getTel());
+            existingUser.setAdresse(updatedUser.getAdresse());
+            existingUser.setCIN(updatedUser.getCIN());
+
+            // Save the updated user
+            User savedUser = userR.save(existingUser);
+            return ResponseEntity.ok(savedUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating profile: " + e.getMessage());
+        }
     }
 }

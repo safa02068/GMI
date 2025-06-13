@@ -7,7 +7,8 @@ import { MetricCard } from '../../../models/dashboard.models';
   selector: 'app-metric-cards',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './metric-cards.component.html'
+  templateUrl: './metric-cards.component.html',
+  styleUrls: ['./metric-cards.component.scss']
 })
 export class MetricCardsComponent implements OnInit {
   projetsEffectues: MetricCard | null = null;
