@@ -6,21 +6,18 @@
                     <!-- Profile -->
                     <div class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] rounded-md">
                         <div class="trezo-card-content">
-                            <div class="relative rounded-t-md w-full h-full">
-                                <img src="images/profile-cover.jpg" alt="cover-image" class="rounded-t-md w-full h-full object-cover" />
+                            <div class="relative rounded-t-md">
+                                <img src="images/test1.jpg" alt="cover-image" class="rounded-t-md w-full h-48" />
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent h-24"></div>
                             </div>
-                            <div class="px-[20px] md:px-[30px] pb-[20px] md:pb-[45px] mt-[20px] md:-mt-[60px]">
-                                <div class="md:flex items-end justify-between">
-                                    <div class="md:flex items-end">
-                                        <div class="ltr:md:ml-[30px] rtl:md:mr-[30px] mt-[12px] md:mt-0">
-                                            <span
-                                                class="block text-lg md:text-[20px] lg:text-xl text-black dark:text-white font-bold">
-                                                {{ fullName }}
-                                            </span>
-                                            <span class="block xl:text-md font-medium mt-[2px] md:mt-0">
-                                                {{ profileForm.get('email')?.value }}
-                                            </span>
-                                        </div>
+                            <div class="px-[20px] md:px-[30px] pb-[20px] md:pb-[45px] relative z-10 bg-white dark:bg-[#0c1427]">
+                                <div class="flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-6">
+                                    <div class="relative -mt-16 md:-mt-20">
+                                        <img src="images/user.png" alt="profile-image" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white dark:border-[#0c1427]" />
+                                    </div>
+                                    <div class="text-center md:text-left">
+                                        <h3 class="text-xl md:text-2xl font-semibold text-black dark:text-white mb-1">{{ fullName }}</h3>
+                                        <p class="text-gray-600 dark:text-gray-400">{{ profileForm.get('email')?.value }}</p>
                                     </div>
                                 </div>
                             </div>
