@@ -8,32 +8,8 @@ import { ChartData } from '../../../models/dashboard.models';
   selector: 'app-interventions-par-type',
   standalone: true,
   imports: [CommonModule, NgApexchartsModule],
-  template: `
-    <div class="rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-      <div>
-        <h3 class="text-xl font-semibold text-black dark:text-white">
-          Interventions par Type
-        </h3>
-      </div>
-
-      <div class="mb-2">
-        <div id="interventionsParType">
-          <apx-chart
-            #chart
-            [series]="chartOptions.series"
-            [chart]="chartOptions.chart"
-            [labels]="chartOptions.labels"
-            [colors]="chartOptions.colors"
-            [plotOptions]="chartOptions.plotOptions"
-            [legend]="chartOptions.legend"
-            [dataLabels]="chartOptions.dataLabels"
-            [responsive]="chartOptions.responsive"
-          >
-          </apx-chart>
-        </div>
-      </div>
-    </div>
-  `
+  templateUrl: './interventions-par-type.component.html',
+  styleUrls: ['./interventions-par-type.component.scss']
 })
 export class InterventionsParTypeComponent implements OnInit {
   @ViewChild('chart') chart!: ChartComponent;

@@ -8,34 +8,8 @@ import { ChartData } from '../../../models/dashboard.models';
   selector: 'app-materiels-par-date',
   standalone: true,
   imports: [CommonModule, NgApexchartsModule],
-  template: `
-    <div class="rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-      <div>
-        <h3 class="text-xl font-semibold text-black dark:text-white">
-          Matériels par Date
-        </h3>
-      </div>
-
-      <div class="mb-2">
-        <div id="materielsParDate">
-          <apx-chart
-            #chart
-            [series]="chartOptions.series"
-            [chart]="chartOptions.chart"
-            [xaxis]="chartOptions.xaxis"
-            [yaxis]="chartOptions.yaxis"
-            [dataLabels]="chartOptions.dataLabels"
-            [grid]="chartOptions.grid"
-            [stroke]="chartOptions.stroke"
-            [legend]="chartOptions.legend"
-            [responsive]="chartOptions.responsive"
-            [noData]="chartOptions.noData"
-          >
-          </apx-chart>
-        </div>
-      </div>
-    </div>
-  `
+  templateUrl: './materiels-par-date.component.html',
+  styleUrls: ['./materiels-par-date.component.scss']
 })
 export class MaterielsParDateComponent implements OnInit {
   @ViewChild('chart') chart!: ChartComponent;

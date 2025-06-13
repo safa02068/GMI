@@ -8,33 +8,8 @@ import { ChartData } from '../../../models/dashboard.models';
   selector: 'app-distribution-materiels',
   standalone: true,
   imports: [CommonModule, NgApexchartsModule],
-  template: `
-    <div class="rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-      <div>
-        <h3 class="text-xl font-semibold text-black dark:text-white">
-          Distribution des Matériels
-        </h3>
-      </div>
-
-      <div class="mb-2">
-        <div id="distributionMateriels">
-          <apx-chart
-            #chart
-            [series]="chartOptions.series"
-            [chart]="chartOptions.chart"
-            [labels]="chartOptions.labels"
-            [colors]="chartOptions.colors"
-            [plotOptions]="chartOptions.plotOptions"
-            [legend]="chartOptions.legend"
-            [dataLabels]="chartOptions.dataLabels"
-            [responsive]="chartOptions.responsive"
-            [noData]="chartOptions.noData"
-          >
-          </apx-chart>
-        </div>
-      </div>
-    </div>
-  `
+  templateUrl: './distribution-materiels.component.html',
+  styleUrls: ['./distribution-materiels.component.scss']
 })
 export class DistributionMaterielsComponent implements OnInit {
   @ViewChild('chart') chart!: ChartComponent;

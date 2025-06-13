@@ -62,8 +62,8 @@ export class ProjetComponent {
 
     this.service.allprojet().subscribe((res) => {
       this.allprojet = res;
-
     })
+    
     this.serviceuser.getData().subscribe((res) => {
       this.alluser = res;
     })
