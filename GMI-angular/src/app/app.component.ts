@@ -28,18 +28,26 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (isPlatformBrowser(this.platformId)) {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                this.router.navigate(['/authentication/sign-in']);
-            }
+        // if (isPlatformBrowser(this.platformId)) {
+        //     const currentUrl = this.router.url;
 
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) {
-                const user = JSON.parse(currentUser);
-                localStorage.setItem('role', user.poste);
-            }
-        }
+        //     // Add exception for reset-password route
+        //     if (currentUrl.startsWith('/authentication/reset-password')) {
+        //         return; // Skip token check
+        //     }
+
+        //     const token = localStorage.getItem('token');
+        //     if (!token) {
+        //         this.router.navigate(['/authentication/sign-in']);
+        //     }
+
+        //     const currentUser = localStorage.getItem('currentUser');
+        //     if (currentUser) {
+        //         const user = JSON.parse(currentUser);
+        //         localStorage.setItem('role', user.poste);
+        //     }
+        // }
     }
+
 
 }

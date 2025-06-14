@@ -22,6 +22,7 @@ import tn.sesame.springpfe.services.UserService;
 import javax.crypto.NoSuchPaddingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("users")
 @RestController
@@ -87,10 +88,16 @@ public class UserControllers {
 	@Autowired
 	MailService mailservice ;
 	@PostMapping("renitialisermp")
-	public String testmail(String email) throws NoSuchAlgorithmException, NoSuchPaddingException {
-		this.mailservice.renitialisermp(email);
-		return "true" ;
-	
+	public ResponseEntity<?> testmail(@RequestParam(required = false) String email) throws NoSuchAlgorithmException, NoSuchPaddingException {
+		if (email == null || email.trim().isEmpty()) {
+			return ResponseEntity.badRequest().body("Email parameter is required");
+		}
+		Map<String, Boolean> response = this.mailservice.renitialisermp(email);
+		if (response.get("response")) {
+			return ResponseEntity.ok("Password reset email sent successfully");
+		} else {
+			return ResponseEntity.badRequest().body("Failed to send password reset email. User may not exist.");
+		}
 	}
 
 
