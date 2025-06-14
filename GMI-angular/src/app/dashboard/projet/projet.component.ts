@@ -95,7 +95,7 @@ export class ProjetComponent implements OnInit {
 
     this.serviceuser.getData().subscribe((res) => {
       this.alluser = res as any[];
-      this.filteredUsers = this.alluser.filter(user => user.poste === 'EMPLOYE');
+      this.filteredUsers = this.alluser.filter(user => user.p === 'EMPLOYE');
     });
 
     this.servicemat.getMateriels().subscribe((res)=>{
