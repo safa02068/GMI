@@ -77,4 +77,34 @@ export class UserService {
   getUser(): User | null {
     return this.userSubject.value;
   }
+
+  allbyprojet(id:any){
+      
+    let headers = new HttpHeaders();
+    headers.set("Access-Control-Allow-Origin", "*")
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers = headers.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
+    console.log(localStorage.getItem('token'))
+    return this.http.get(this.apiUrl+"/allbyprojet?id="+id,{headers:headers})
+}
+
+afficherbyemail(){
+    
+    let headers = new HttpHeaders();
+    headers.set("Access-Control-Allow-Origin", "*")
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers = headers.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
+    console.log(localStorage.getItem('token'))
+    return this.http.get(this.apiUrl+"/afficherbyemail?email="+localStorage.getItem("email"),{headers:headers})
+}
+
+  desaffecter(id:any){
+    
+    let headers = new HttpHeaders();
+    headers.set("Access-Control-Allow-Origin", "*")
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers = headers.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
+    console.log(localStorage.getItem('token'))
+    return this.http.put(this.apiUrl+"/desaffecter?id="+id,{headers:headers})
+}
 }

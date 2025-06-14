@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
+import { ToggleService } from '../header/toggle.service';
+import { AuthService } from '../../common/services/auth.service';
+import { isPlatformBrowser } from '@angular/common';
 
 interface MenuItem {
     title: string;
@@ -18,8 +21,20 @@ interface MenuItem {
 export class SidebarComponent implements OnInit {
     userRole: string = '';
 
+    constructor(
+        public toggleService: ToggleService,
+        private authService: AuthService,
+        @Inject(PLATFORM_ID) private platformId: Object
+    ) {}
+
     ngOnInit() {
         this.userRole = localStorage.getItem('role') || '';
+        // Initialize theme and direction on component load
+        this.toggleService.initializeTheme();
+    }
+
+    logout() {
+        this.authService.logout();
     }
 
     // Role checking methods

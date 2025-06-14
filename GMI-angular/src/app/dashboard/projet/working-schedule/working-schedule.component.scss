@@ -1,0 +1,15 @@
+.working-schedule-card {
+    .trezo-card-content {
+        .calendar {
+            .days {
+                .current-day {
+                    @apply bg-primary-500 text-white;
+                }
+            }
+        }
+    }
+}
+.current-day {
+  background-color: #3b82f6;
+  color: white;
+}

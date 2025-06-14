@@ -4,6 +4,7 @@ package tn.sesame.springpfe.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import tn.sesame.springpfe.entities.Projet;
 import tn.sesame.springpfe.entities.User;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public interface IuserRepository extends JpaRepository<User, Long> {
 	
     User findByEmail(String email);
     List<User> findByArchiverIsFalse();
+	List<User> findByProjet(Projet p);
 
 }

@@ -60,7 +60,35 @@ archiver(id:any){
     //////////
     return this.http.put(this.baseUrl+"/archiverprojet?id="+id,null,{headers:headers})
 }
+affceteruser(idp: any, idu: any) {
+  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  let headers = new HttpHeaders()
+    .set('Content-Type', 'application/json; charset=utf-8')
+    .set('Authorization', 'Bearer ' + localStorage.getItem('token'));
 
+  return this.http.post(this.baseUrl + "/affecteruser?projectId=" + idp + "&userId=" + idu,
+    null,
+    {
+      headers: headers,
+      responseType: 'text'
+    }
+  );
+}
+ 
+affectermateriel(idm: any, projetId: any) {
+  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  let headers = new HttpHeaders()
+    .set('Content-Type', 'application/json; charset=utf-8')
+    .set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+  return this.http.post(this.baseUrl + "/affectermateriel?materielId=" + idm + "&projetId=" + projetId,
+    null,
+    {
+      headers: headers,
+      responseType: 'text'
+    }
+  );
+}
 modif(objectdomaine:any){
   return this.http.put(this.baseUrl+"domaine/modifier",objectdomaine,{})
 }

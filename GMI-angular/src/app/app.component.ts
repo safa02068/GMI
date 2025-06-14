@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { RouterOutlet, Router, Event, NavigationEnd } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -9,13 +10,14 @@ import { RouterOutlet, Router, Event, NavigationEnd } from '@angular/router';
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     title = 'GMI';
 
     constructor(
         private router: Router,
-        private viewportScroller: ViewportScroller
+        private viewportScroller: ViewportScroller,
+        @Inject(PLATFORM_ID) private platformId: Object
     ) {
         this.router.events.subscribe((event: Event) => {
             if (event instanceof NavigationEnd) {
@@ -23,6 +25,21 @@ export class AppComponent {
                 this.viewportScroller.scrollToPosition([0, 0]);
             }
         });
+    }
+
+    ngOnInit(): void {
+        if (isPlatformBrowser(this.platformId)) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                this.router.navigate(['/authentication/sign-in']);
+            }
+
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                localStorage.setItem('role', user.poste);
+            }
+        }
     }
 
 }

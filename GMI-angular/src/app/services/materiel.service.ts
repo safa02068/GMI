@@ -54,13 +54,38 @@ export class MaterielService {
     return this.http.post(this.baseUrl + "/archiver?id=" + id, null, { headers: headers })
   }
 
+
+  afficherbyprojet(id: any) {
+    //// nesta3mlouha ki yebda service lazmpou connexion
+    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    let headers = new HttpHeaders();
+    headers.set("Access-Control-Allow-Origin", "*")
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers = headers.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
+    //////////
+    console.log(id)
+    return this.http.get(this.baseUrl + "/afficherbyprojet?idP=" + id, { headers: headers })
+  }
+
+
+
+  desafecter(id: any) {
+    //// nesta3mlouha ki yebda service lazmpou connexion
+    let headers = new HttpHeaders();
+    headers.set("Access-Control-Allow-Origin", "*")
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers = headers.set("Authorization", 'Bearer ' + localStorage.getItem('token'));
+    console.log(localStorage.getItem('token'))
+    return this.http.post(this.baseUrl + "/desafecter?id=" + id, { headers: headers })
+  }
+
   deleteMateriel(id: number) {
     const token = (localStorage.getItem('token') || '').replace(/^"|"$/g, '');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     return this.http.delete(`${this.baseUrl}/deletemateriel/${id}`, {
       headers,
-      responseType: 'text' as 'json'  // 👈 correction ici
+      responseType: 'text' as 'json' 
     });
   }
 }

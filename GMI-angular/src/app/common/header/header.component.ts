@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { ToggleService } from './toggle.service';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../common/services/auth.service';
 
 interface User {
   nom: string;
@@ -22,12 +23,20 @@ interface User {
 export class HeaderComponent implements OnInit {
     isSidebarVisible = true;  // Track sidebar visibility
     user: User | null = null;
+    buttonStates: { [key: string]: boolean } = {
+        connectedAppsMenuBtn: false,
+        languageMenuButton: false,
+        notificationsMenuBtn: false,
+        profileMenuBtn: false,
+        settingsMenuBtn: false
+    };
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
         public toggleService: ToggleService,
         private renderer: Renderer2,
-        private userService: UserService
+        private userService: UserService,
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -68,23 +77,8 @@ export class HeaderComponent implements OnInit {
         }
     }
 
-    // Toogle Class
-    buttonStates: { [key: string]: boolean } = {
-        connectedAppsMenuBtn: false,
-        languageMenuButton: false,
-        notificationsMenuBtn: false,
-        profileMenuBtn: false,
-        settingsMenuBtn: false
-    };
     toggleClass(buttonId: string) {
-        // Check if the clicked button is already active
-        const isCurrentlyActive = this.buttonStates[buttonId];
-        // Set all buttons to inactive
-        for (const key in this.buttonStates) {
-            this.buttonStates[key] = false;
-        }
-        // Toggle the clicked button based on its previous state
-        this.buttonStates[buttonId] = !isCurrentlyActive;
+        this.buttonStates[buttonId] = !this.buttonStates[buttonId];
     }
 
     // Fullscreen
@@ -152,4 +146,7 @@ export class HeaderComponent implements OnInit {
         }
     }
 
+    logout() {
+        this.authService.logout();
+    }
 }

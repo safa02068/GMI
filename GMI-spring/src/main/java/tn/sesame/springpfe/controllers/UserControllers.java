@@ -11,7 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import tn.sesame.springpfe.entities.Profil;
+import tn.sesame.springpfe.entities.Projet;
 import tn.sesame.springpfe.entities.User;
+import tn.sesame.springpfe.repositories.IProjetRepository;
 import tn.sesame.springpfe.repositories.IuserRepository;
 import tn.sesame.springpfe.services.IuserService;
 import tn.sesame.springpfe.services.MailService;
@@ -37,6 +39,22 @@ public class UserControllers {
     @Autowired
     PasswordEncoder encoder ;
     
+    @Autowired
+    IProjetRepository projrepo ;
+    	@GetMapping("allbyprojet")
+    	public List<User> allbyprojet(Long id){
+    		Projet p =this.projrepo.findById(id).get();
+    		return this.userR.findByProjet(p);
+    	}
+
+    @PutMapping("desaffecter")
+    public String desafecter(Long id) {
+    	User u = this.userR.findById(id).get();
+    	u.setProjet(null);
+    	this.userR.saveAndFlush(u);
+    	return "true"; 
+    }
+    
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String Ajout(@RequestBody User user) {
     	User userexist = this.userR.findByEmail(user.getEmail());
@@ -57,7 +75,7 @@ public class UserControllers {
     
 
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("all")
 	public List<User> all(){
     	return this.userR.findAll();
@@ -115,7 +133,7 @@ public class UserControllers {
     }
 
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("afficherbyemail")
     public User afficherbyemail(String email) {
         return this.userR.findByEmail(email);

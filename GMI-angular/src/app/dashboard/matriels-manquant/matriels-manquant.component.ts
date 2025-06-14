@@ -141,14 +141,14 @@ confirmDelete(materiel: MaterielManquant): void {
     }
 
     filterMateriels(): void {
-        if (!this.allmatmanquant) return;
-        
-        const query = this.searchText.toLowerCase();
+      if (!this.allmatmanquant) return;
+      
+      const query = this.searchText.toLowerCase();
         const filtered = this.allmatmanquant.filter((m: MaterielManquant) =>
-            (m.nom?.toLowerCase().includes(query) || '') ||
-            (m.modele?.toLowerCase().includes(query) || '') ||
-            (m.stock?.toString().includes(query) || '')
-        );
+        (m.nom?.toLowerCase().includes(query) || '') ||
+        (m.modele?.toLowerCase().includes(query) || '') ||
+        (m.stock?.toString().includes(query) || '')
+      );
         this.totalItems = filtered.length;
         this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         this.currentPage = 1;

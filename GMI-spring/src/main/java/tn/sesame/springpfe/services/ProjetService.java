@@ -28,15 +28,9 @@ public class ProjetService {
     private IMaterielRepository matR;
     
 
-    public void assignUserToProject(Long projectId, Long userId, Long managerId) {
+    public String assignUserToProject(Long projectId, Long userId) {
         // Verify if the manager is a CHEF_PROJET
-        User manager = userRepository.findById(managerId)
-                .orElseThrow(() -> new EntityNotFoundException("Manager non trouvé"));
         
-        if (manager.getP() != Profil.CHEF_PROJET) {
-            throw new IllegalStateException("Seul le CHEF_PROJET peut assigner des utilisateurs à des projets");
-        }
-
         // Verify if the user is an EMPLOYE
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé"));
@@ -56,9 +50,9 @@ public class ProjetService {
         // Assign to new project
         user.setProjet(projet);
         projet.getUsers().add(user);
-
-        userRepository.save(user);
-        projetRepository.save(projet);
+        this.userRepository.save(user);
+        this.projetRepository.save(projet);
+        return "true" ;
     }
 
     public void removeUserFromProject(Long projectId, Long userId, Long managerId) {

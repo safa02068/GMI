@@ -18,7 +18,7 @@ interface Intervention {
     demandeur: any;
     materiel: any;
 }
-
+ 
 @Component({
   selector: 'app-gestion-intervention',
   standalone: true,
@@ -42,7 +42,7 @@ export class GestionInterventionComponent {
     totalItems: number = 0;
     totalPages: number = 0;
     Math = Math; // Add Math property for template access
-
+  
     isDeleteConfirmOpen: boolean = false;
     interventionToDelete?: Intervention;
     selectedUserToDelete: any = null;
@@ -62,42 +62,42 @@ export class GestionInterventionComponent {
     };
 
     // Modale modification
-    isModalOpen: boolean = false;
-    selectedIntervention: Intervention = {} as Intervention;
+  isModalOpen: boolean = false;
+  selectedIntervention: Intervention = {} as Intervention;
 
     constructor(
         private interventionService: InterventionService,
         private matService: MaterielService,
-        private userService: UserService
+    private userService: UserService
     ) {
         this.checkUserRoles();
     }
-
+  
     checkUserRoles() {
         const role = localStorage.getItem('role');
         this.isEmployee = role === 'EMPLOYE';
         this.isTechnicien = role === 'TECHNICIEN';
     }
 
-    ngOnInit(): void {
-        this.fetchInterventions();
-    }
-    getUserList() {
-        this.userService.getData().subscribe((data) => {
-            this.userList = data;
-        });
-    }
-    getMaterielList() {
-        this.matService.getMateriels().subscribe((data) => {
-            this.MatList = data;
-            console.log(this.MatList);
-        });
-    }
+  ngOnInit(): void {
+    this.fetchInterventions();
+  }
+  getUserList() {
+    this.userService.getData().subscribe((data) => {
+      this.userList = data;
+    });
+  }
+  getMaterielList() {
+    this.matService.getMateriels().subscribe((data) => {
+      this.MatList = data;
+      console.log(this.MatList);
+    });
+  }
 
-    fetchInterventions(): void {
-        this.interventionService.getInterventions().subscribe((data) => {
-            this.interventions = data;
-            this.filteredInterventions = data;
+  fetchInterventions(): void {
+    this.interventionService.getInterventions().subscribe((data) => {
+      this.interventions = data;
+      this.filteredInterventions = data;
             this.totalItems = data.length;
             this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
             this.updatePagedData();
@@ -121,31 +121,31 @@ export class GestionInterventionComponent {
     onPageChange(page: number) {
         this.currentPage = page;
         this.updatePagedData();
-    }
+  }
 
-    // Ajout
-    openModalAdd(): void {
-        this.getUserList();
-        this.getMaterielList();
-        this.showModalAdd = true;
-        this.newIntervention = {
-            type: '',
-            datederesolution :new Date(),
-            titre: '',
-            email: '', // Added priorite property
-            client: '',
-            description: '',
-            commentaire:'',
-            demandeur: null,
-            materiel: null
-        };
-    }
+  // Ajout
+  openModalAdd(): void {
+    this.getUserList();
+    this.getMaterielList();
+    this.showModalAdd = true;
+    this.newIntervention = {
+      type: '',
+      datederesolution :new Date(),
+      titre: '',
+      email: '', // Added priorite property
+      client: '',
+      description: '',
+      commentaire:'',
+      demandeur: null,
+      materiel: null
+    };
+  }
 
-    closeModalAdd(): void {
-        this.showModalAdd = false;
-    }
+  closeModalAdd(): void {
+    this.showModalAdd = false;
+  }
 
-    addIntervention(): void {
+  addIntervention(): void {
 
 
 let intervention = {
@@ -162,96 +162,96 @@ let intervention = {
     });
 }
 
-    // Modification
-    editIntervention(intervention: Intervention): void {
-        this.getUserList();
-        this.getMaterielList();
-        this.selectedIntervention = { ...intervention };
-        console.log(this.selectedIntervention);
-        this.showModalEdit = true;
-    }
+  // Modification
+  editIntervention(intervention: Intervention): void {
+    this.getUserList();
+    this.getMaterielList();
+    this.selectedIntervention = { ...intervention };
+    console.log(this.selectedIntervention);
+    this.showModalEdit = true;
+  }
 
-    closeModal(): void {
-        this.showModalEdit = false;
-    }
+  closeModal(): void {
+    this.showModalEdit = false;
+  }
 
-    updateIntervention(): void {
-        if (this.selectedIntervention.id !== undefined) {
-            console.log(this.selectedIntervention.id )
-            this.interventionService.updateIntervention(this.selectedIntervention.id, this.selectedIntervention)
-                .subscribe(() => {
-                    this.fetchInterventions();
-                    this.closeModal();
-                });
-        }
+  updateIntervention(): void {
+    if (this.selectedIntervention.id !== undefined) {
+      console.log(this.selectedIntervention.id )
+      this.interventionService.updateIntervention(this.selectedIntervention.id, this.selectedIntervention)
+        .subscribe(() => {
+          this.fetchInterventions();
+          this.closeModal();
+        });
     }
+  }
 
-    // Suppression
-    confirmDelete(intervention: Intervention): void {
-        this.isDeleteConfirmOpen = true;
-        this.interventionToDelete = intervention;
-    }
+  // Suppression
+  confirmDelete(intervention: Intervention): void {
+    this.isDeleteConfirmOpen = true;
+    this.interventionToDelete = intervention;
+  }
 
-    cancelDelete(): void {
-        this.selectedUserToDelete = null;
-        this.isDeleteConfirmOpen = false;
-    }
+  cancelDelete(): void {
+    this.selectedUserToDelete = null;
+    this.isDeleteConfirmOpen = false;
+  }
 
-    confirmDeleteUser(): void {
-        this.confirmDeleteIntervention();
+  confirmDeleteUser(): void {
+    this.confirmDeleteIntervention();
+    this.fetchInterventions();
+    this.cancelDelete();
+  }
+
+  confirmDeleteIntervention(): void {
+    if (!this.interventionToDelete) return;
+    if (this.interventionToDelete.id !== undefined) {
+      this.interventionService.deleteIntervention(this.interventionToDelete.id).subscribe(() => {
         this.fetchInterventions();
         this.cancelDelete();
+      });
     }
+  }
 
-    confirmDeleteIntervention(): void {
-        if (!this.interventionToDelete) return;
-        if (this.interventionToDelete.id !== undefined) {
-            this.interventionService.deleteIntervention(this.interventionToDelete.id).subscribe(() => {
-                this.fetchInterventions();
-                this.cancelDelete();
-            });
-        }
-    }
+  // Filtrage
+  ngOnChanges(): void {
+    this.filterInterventions();
+  }
 
-    // Filtrage
-    ngOnChanges(): void {
-        this.filterInterventions();
-    }
-
-    filterInterventions(): void {
-        if (!this.interventions) return;
-        
-        const query = this.searchText.toLowerCase();
+  filterInterventions(): void {
+    if (!this.interventions) return;
+    
+    const query = this.searchText.toLowerCase();
         const filtered = this.interventions.filter((i: Intervention) =>
-            (i.type?.toLowerCase().includes(query) || '') ||
-            (i.titre?.toLowerCase().includes(query) || '') ||
-            (i.client?.toLowerCase().includes(query) || '') ||
+      (i.type?.toLowerCase().includes(query) || '') ||
+      (i.titre?.toLowerCase().includes(query) || '') ||
+      (i.client?.toLowerCase().includes(query) || '') ||
             (i.email?.toLowerCase().includes(query) || '')
-        );
+    );
         this.totalItems = filtered.length;
         this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         this.currentPage = 1;
         this.filteredInterventions = filtered.slice(0, this.itemsPerPage);
-    }
+  }
 
-    onSearchChange(): void {
-        this.filterInterventions();
-    }
+  onSearchChange(): void {
+    this.filterInterventions();
+  }
 
-    // Fermer le modal de modification
-    closeModalEdit() {
-        this.showModalEdit = false;
-        this.selectedIntervention = {
-            type: '',
-            datederesolution: new Date(),
-            titre: '',
-            email: '',
-            client: '',
-            description: '',
-            
-            commentaire:'',
-            demandeur: {},
-            materiel: {}
-        }; // Réinitialiser l'intervention sélectionnée
-    }
+  // Fermer le modal de modification
+  closeModalEdit() {
+    this.showModalEdit = false;
+    this.selectedIntervention = {
+      type: '',
+      datederesolution: new Date(),
+      titre: '',
+      email: '',
+      client: '',
+      description: '',
+      
+      commentaire:'',
+      demandeur: {},
+      materiel: {}
+    }; // Réinitialiser l'intervention sélectionnée
+  }
 }

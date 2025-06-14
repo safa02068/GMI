@@ -10,7 +10,7 @@
     "serve:ssr:trezo": "node dist/trezo/server/server.mjs"
   },
   "private": true,
- "dependencies": {
+  "dependencies": {
     "@angular/animations": "^18.2.0",
     "@angular/cdk": "^18.2.12",
     "@angular/common": "^18.2.0",
@@ -24,10 +24,13 @@
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.5",
     "@fullcalendar/angular": "^6.1.17",
-    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/core": "^6.1.17",
     "@fullcalendar/daygrid": "^6.1.17",
+    "@fullcalendar/interaction": "^6.1.17",
+    "@fullcalendar/timegrid": "^6.1.17",
     "@iplab/ngx-file-upload": "^18.0.0",
     "apexcharts": "^3.54.1",
+    "bootstrap": "^5.3.6",
     "express": "^4.18.2",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
@@ -38,6 +41,7 @@
     "ngx-scrollbar": "^16.0.0",
     "remixicon": "^4.5.0",
     "rxjs": "~7.8.0",
+    "trezo": "file:",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
     "zone.js": "~0.14.10"

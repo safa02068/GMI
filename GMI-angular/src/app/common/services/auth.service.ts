@@ -11,26 +11,11 @@ export interface User {
   roles: any;
 }
 
-  /*
-    Response body
-    Download
-    {
-      "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJleHAiOjE3NDU2Njc1MzQsImlhdCI6MTc0NTU4MTEzNH0.QXOa_D84ZtNqpwXhz6cETBdWDUyB0xh3dfUbYlsg-M09IoFJPidPdKiQ6SMEjRhas0_a9iwb5Xx3isxZF3FFXg",
-      "type": "Bearer",
-      "message": "Login Succefully",
-      "profil": "ADMIN",
-      "email": "admin@gmail.com",
-      "id": 1
-    }
-  */
 export interface AuthResponse {
    token: string;
    email: string;
    profil: string;
    id: number;
-  //accessToken: string;
-  //refreshToken: string;
- // user: User;
 }
 
 @Injectable({
@@ -38,7 +23,6 @@ export interface AuthResponse {
 })
 export class AuthService {
   private readonly API_URL = environment.apiUrl;
-  //private readonly API_URL = 'http://localhost:8080';
   private userSubject = new BehaviorSubject<User | null>(null);
   private tokenExpirationTimer: any;
   private isBrowser: boolean;
@@ -49,7 +33,6 @@ export class AuthService {
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
-    // Load user from localStorage on service initialization
     if (this.isBrowser) {
       const token = localStorage.getItem('token');
       const email = localStorage.getItem('email');
@@ -74,6 +57,7 @@ export class AuthService {
   }
 
   get isAuthenticated(): boolean {
+    console.log(!!this.currentUser)
     return !!this.currentUser;
   }
 
@@ -110,35 +94,13 @@ export class AuthService {
       );
   }
 
-  logout(): void {
-    // Clear the user state
-    this.userSubject.next(null);
-    
-    // Clear tokens and user data from localStorage
-    if (this.isBrowser) {
-      localStorage.removeItem('user');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-    }
-    
-    // Clear the token refresh timer
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
-    
-    // Call the backend logout endpoint
-    this.http.post(`${this.API_URL}/auth/logout`, {}).subscribe({
-      next: () => {
-        // Navigate to sign-in page after successful logout
-        this.router.navigate(['/authentication/sign-in']);
-      },
-      error: (error) => {
-        console.error('Logout error:', error);
-        // Still navigate to sign-in page even if backend logout fails
-        this.router.navigate(['/authentication/sign-in']);
-      }
-    });
-  }
+  logout(){
+    console.log("//")
+         localStorage.removeItem('token');
+      localStorage.removeItem('email');
+      localStorage.removeItem('role');
+       this.router.navigate(['/authentication']);
+}
 
   refreshToken(): Observable<AuthResponse> {
     if (!this.isBrowser) {
@@ -180,6 +142,7 @@ roles:response.profil
       this.refreshToken().subscribe();
     }, expirationTime);
   }
+
 
   isLoggedIn(): boolean {
     if (!this.isBrowser) return false;

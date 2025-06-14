@@ -121,8 +121,8 @@ export class GestionMaterielComponent {
 
     fetchMateriels(): void {
         this.materielService.getMateriels().subscribe((data) => {
-            this.materiels = data;
-            this.filteredMateriels = data;
+          this.materiels = data;
+          this.filteredMateriels = data;
             this.totalItems = (data as any[]).length;
             this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
             this.updatePagedData();

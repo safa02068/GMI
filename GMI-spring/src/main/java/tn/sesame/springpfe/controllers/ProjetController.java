@@ -94,10 +94,21 @@ public class ProjetController {
             @PathVariable Long userId,
             @RequestParam Long managerId) {
         try {
-            projetService.assignUserToProject(projectId, userId, managerId);
+            projetService.assignUserToProject(projectId, userId);
             return ResponseEntity.ok("Utilisateur affecté au projet avec succès");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    
+    @PostMapping("/affecteruser")
+    public String affecterUser(@RequestParam Long projectId, @RequestParam Long userId) {
+
+        try {
+            projetService.assignUserToProject(projectId, userId);
+            return "Utilisateur affecté au projet avec succès";
+        } catch (Exception e) {
+            return "false" ;
         }
     }
 
