@@ -64,6 +64,11 @@ export class ProjetComponent implements OnInit {
   profil: any;
   pbyemail:any;
   allmat :any;
+  currentPage = 1;
+  itemsPerPage = 10;
+  totalItems = 0;
+  totalPages = 1;
+  Math = Math; // Make Math available in template
 
   constructor(
     private service: ProjetService,
@@ -118,13 +123,20 @@ export class ProjetComponent implements OnInit {
     if (!this.allprojets) return;
     
     const query = this.searchText.toLowerCase();
-    this.filteredProjets = this.allprojets.filter((p: Projet) =>
+    const filtered = this.allprojets.filter((p: Projet) =>
       (p.nom?.toLowerCase().includes(query) || '') ||
       (p.description?.toLowerCase().includes(query) || '')
     );
+    
+    this.totalItems = filtered.length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.filteredProjets = filtered.slice(startIndex, endIndex);
   }
 
   onSearchChange(): void {
+    this.currentPage = 1; // Reset to first page on search
     this.filterProjets();
   }
 
@@ -219,5 +231,32 @@ export class ProjetComponent implements OnInit {
     this.service.addprojet(this.newprojet).subscribe(() => {
       this.closeModaladd();
     });
+  }
+
+  getPageNumbers(): number[] {
+    const pages: number[] = [];
+    const maxPages = 5; // Show max 5 page numbers
+    let startPage = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
+    let endPage = Math.min(this.totalPages, startPage + maxPages - 1);
+
+    if (endPage - startPage + 1 < maxPages) {
+      startPage = Math.max(1, endPage - maxPages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.filterProjets();
+  }
+
+  updateFilteredProjets(): void {
+    this.totalItems = this.allprojets.length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.filterProjets();
   }
 }

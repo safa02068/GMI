@@ -121,7 +121,36 @@
       </tbody>
     </table>
   </div>
-<!-- Pagination tetzed houni  -->
+  <!-- Pagination -->
+  <div class="flex items-center justify-between mt-4">
+    <div class="text-sm text-gray-500 dark:text-gray-400">
+      Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to {{ Math.min(currentPage * itemsPerPage, totalItems) }} of {{ totalItems }} entries
+    </div>
+    <div class="flex items-center space-x-2">
+      <button 
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(currentPage - 1)"
+        class="px-3 py-1 rounded-md border border-gray-300 dark:border-[#172036] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-[#15203c]">
+        Previous
+      </button>
+      <div class="flex items-center space-x-1">
+        <button 
+          *ngFor="let page of getPageNumbers()"
+          (click)="onPageChange(page)"
+          [class.bg-[#516359]]="currentPage === page"
+          [class.text-white]="currentPage === page"
+          class="px-3 py-1 rounded-md border border-gray-300 dark:border-[#172036] hover:bg-gray-100 dark:hover:bg-[#15203c]">
+          {{ page }}
+        </button>
+      </div>
+      <button 
+        [disabled]="currentPage === totalPages"
+        (click)="onPageChange(currentPage + 1)"
+        class="px-3 py-1 rounded-md border border-gray-300 dark:border-[#172036] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-[#15203c]">
+        Next
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- Modal de Confirmation de Suppression -->
@@ -158,9 +187,9 @@
           class="form-input border rounded-md p-2 w-full" />
         <input type="text" [(ngModel)]="newUser.adresse" name="adresse" placeholder="Adresse" required
           class="form-input border rounded-md p-2 w-full" />
-        <input type="number" [(ngModel)]="newUser.tel" name="tel" placeholder="Tel" required
+        <input type="text" [(ngModel)]="newUser.tel" name="tel" placeholder="Tel" required
           class="form-input border rounded-md p-2 w-full" />
-        <input type="number" [(ngModel)]="newUser.cin" name="cin" placeholder="CIN" required
+        <input type="text" [(ngModel)]="newUser.cin" name="cin" placeholder="CIN" required
           class="form-input border rounded-md p-2 w-full" />
         <select [(ngModel)]="newUser.p" name="p" class="form-select border rounded-md p-2 w-full">
           <option value="CHEF_PROJET">CHEF_PROJET</option>

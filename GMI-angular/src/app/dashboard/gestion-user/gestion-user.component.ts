@@ -32,6 +32,11 @@ export class GestionUserComponent implements OnInit {
     isDeleteConfirmOpen = false;
     showModaladd = false;
     searchText = '';
+    currentPage = 1;
+    itemsPerPage = 10;
+    totalItems = 0;
+    totalPages = 1;
+    Math = Math; // Make Math available in template
 
     newUser: User = {
         nom: '',
@@ -55,17 +60,24 @@ export class GestionUserComponent implements OnInit {
             return [];
         }
 
-        const search = this.searchText?.toLowerCase().trim();
-
-        if (!search) {
-            return this.userData; // Si recherche vide → retourne toute la liste
+        if (!this.searchText) {
+            this.totalItems = this.userData.length;
+            this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+            const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+            const endIndex = startIndex + this.itemsPerPage;
+            return this.userData.slice(startIndex, endIndex);
         }
 
-        return this.userData.filter((user: User) =>
-            user.nom?.toLowerCase().includes(search) ||
-            user.prenom?.toLowerCase().includes(search) ||
-            user.email?.toLowerCase().includes(search)
+        const filtered = this.userData.filter((user: User) =>
+            user.nom?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+            user.prenom?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+            user.email?.toLowerCase().includes(this.searchText.toLowerCase())
         );
+        this.totalItems = filtered.length;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        return filtered.slice(startIndex, endIndex);
     }
 
     confirmDelete(user: User) {
@@ -162,6 +174,32 @@ export class GestionUserComponent implements OnInit {
 
     closeModaladd() {
         this.showModaladd = false;
+    }
+
+    getPageNumbers(): number[] {
+        const pages: number[] = [];
+        const maxPages = 5; // Show max 5 page numbers
+        let startPage = Math.max(1, this.currentPage - Math.floor(maxPages / 2));
+        let endPage = Math.min(this.totalPages, startPage + maxPages - 1);
+
+        if (endPage - startPage + 1 < maxPages) {
+            startPage = Math.max(1, endPage - maxPages + 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            pages.push(i);
+        }
+        return pages;
+    }
+
+    onPageChange(page: number): void {
+        this.currentPage = page;
+        this.updateFilteredUsers();
+    }
+
+    updateFilteredUsers(): void {
+        this.totalItems = this.userData.length;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
     }
 }
 
