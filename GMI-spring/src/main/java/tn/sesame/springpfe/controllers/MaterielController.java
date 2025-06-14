@@ -44,6 +44,7 @@ public class MaterielController {
     @PostMapping("/addmateriel")
     public Materiel ajout(@RequestBody Materiel materiel) {
     	materiel.setArchiver(false);
+        materiel.setNom(materiel.getModel());
         return this.matR.save(materiel);
     }
     
@@ -194,26 +195,42 @@ public class MaterielController {
 //        return this.matR.findByEnMaintenanceTrue();
 //    }
 
-@PutMapping("updatematrielmanquant")
+    @PutMapping("updatematrielmanquant")
 
-public String update(Long id , @RequestBody MaterielManquant mat) {
-	System.out.println(id+"/////");
-	System.out.println(mat.getModele()+"*****");
-	MaterielManquant m = this.matMR.findById(id).get();
-	m.setModele(mat.getModele());
-	m.setStock(mat.getStock());
-	m.setNom(mat.getNom());
-	this.imamanqurepos.save(m);
-	return "true" ;
-}
-@DeleteMapping("deletematrielmanquant")
+    public String update(Long id , @RequestBody MaterielManquant mat) {
+        System.out.println(id+"/////");
+        System.out.println(mat.getModele()+"*****");
+        MaterielManquant m = this.matMR.findById(id).get();
+        m.setModele(mat.getModele());
+        m.setStock(mat.getStock());
+        m.setNom(mat.getNom());
+        this.imamanqurepos.save(m);
+        return "true" ;
+    }
 
-public String delete(Long id)  {
-	MaterielManquant m = this.matMR.findById(id).get();
-	this.imamanqurepos.delete(m);
-	return "true" ;
-}
+    @DeleteMapping("deletematrielmanquant")
 
+    public String delete(Long id)  {
+        MaterielManquant m = this.matMR.findById(id).get();
+        this.imamanqurepos.delete(m);
+        return "true" ;
+    }
+
+    @GetMapping("afficherbyprojet")
+    public List<Materiel> allbyprojet(Long idP){
+        System.out.println(idP);
+        Projet p = this.projetRepository.findById(idP).get() ;
+        return this.matR.findByProjet(p); 
+    }
+
+
+    @PostMapping("desafecter")
+    public String desafeceter(Long id) {
+        Materiel m = this.matR.findById(id).get() ;
+        m.setProjet(null);
+        this.matR.save(m);
+        return "true" ;
+    }
 
 
 

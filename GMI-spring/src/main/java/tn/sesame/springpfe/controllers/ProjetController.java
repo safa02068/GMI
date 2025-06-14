@@ -140,18 +140,18 @@ public class ProjetController {
     
     
     
-    //materiel 
-    @Transactional
-    @PreAuthorize("hasAuthority('CHEF_PROJET')")
-    @PostMapping("/{projetId}/affecter-materiel/{materielId}")
-    public Materiel affecterMateriel(@PathVariable long materielId, @PathVariable long projetId) {
-        Materiel materiel = matR.findById(materielId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Materiel non trouvé"));
-        Projet projet = projetR.findById(projetId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projet non trouvé"));
-            
-        materiel.setProjet(projet);
-        return matR.save(materiel);
+    @PostMapping("/affectermateriel")
+    public String affecterMateriel(@RequestParam Long materielId, @RequestParam Long projetId) {
+
+        try {
+            Projet projet = projetR.findById(projetId).get() ;
+            Materiel materiel = matR.findById(materielId).get() ;
+            materiel.setProjet(projet);
+            this.matR.save(materiel);
+            return "Utilisateur affecté au projet avec succès";
+        } catch (Exception e) {
+            return "false" ;
+        }
     }
     
     //permet de assigner si tous les utilisateurs du projet ont accès au matériel
