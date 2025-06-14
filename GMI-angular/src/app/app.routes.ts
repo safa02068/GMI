@@ -38,9 +38,7 @@ export const routes: Routes = [
             { path: 'gestion-materiel', component: GestionMaterielComponent },
             { path: 'gestion-intervention', component: GestionInterventionComponent },
             { path: 'materiel-manquant', component: MatrielsManquantComponent },
-            { path: 'gestion-projet', component: ProjetComponent },
-
-            {
+            { path: 'gestion-projet', component: ProjetComponent },            {
                 path: 'profil',
                 component: AccountSettingsComponent,
                 // canActivate :[AuthGuard,RoleGuard],

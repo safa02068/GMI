@@ -7,8 +7,9 @@
             <input type="text" [(ngModel)]="searchText" (ngModelChange)="onSearchChange()" placeholder="Rechercher un matériel manquant..." 
                 class="border border-gray-300 dark:border-[#172036] rounded-md px-3 py-2 w-full sm:w-auto dark:bg-[#0c1427] dark:text-white" />
             <button type="button" 
-                class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-[#516359] hover:bg-[#516359] hover:text-white" 
-                (click)="openModaladd()">
+                class="rounded-md inline-block transition-all py-[3.5px] px-[17px] border border-gray-100 dark:border-[#172036] hover:border-[#516359] hover:bg-[#516359] hover:text-white disabled:opacity-50 disabled:cursor-not-allowed" 
+                (click)="openModaladd()"
+                [disabled]="!isTechnicien">
                 <i class="ri-add-line text-xl"></i> Ajouter
             </button>
         </div>
@@ -58,6 +59,34 @@
                 </tr>
             </tbody>
         </table>
+        <!-- Pagination Controls -->
+        <div class="flex justify-between items-center mt-4 px-4">
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to {{ Math.min(currentPage * itemsPerPage, totalItems) }} of {{ totalItems }} entries
+            </div>
+            <div class="flex gap-2">
+                <button 
+                    (click)="onPageChange(currentPage - 1)"
+                    [disabled]="currentPage === 1"
+                    class="px-3 py-1 rounded border dark:border-[#172036] disabled:opacity-50 disabled:cursor-not-allowed">
+                    Previous
+                </button>
+                <button 
+                    *ngFor="let page of [].constructor(totalPages); let i = index"
+                    (click)="onPageChange(i + 1)"
+                    [class.bg-[#516359]]="currentPage === i + 1"
+                    [class.text-white]="currentPage === i + 1"
+                    class="px-3 py-1 rounded border dark:border-[#172036]">
+                    {{ i + 1 }}
+                </button>
+                <button 
+                    (click)="onPageChange(currentPage + 1)"
+                    [disabled]="currentPage === totalPages"
+                    class="px-3 py-1 rounded border dark:border-[#172036] disabled:opacity-50 disabled:cursor-not-allowed">
+                    Next
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -35,6 +35,13 @@ export class GestionMaterielComponent {
     filteredMateriels:any;
     searchText: string = '';
   
+    // Pagination properties
+    currentPage: number = 1;
+    itemsPerPage: number = 10;
+    totalItems: number = 0;
+    totalPages: number = 0;
+    Math = Math; // Add Math property for template access
+
     // Pour la modale de modification
     isModalOpen: boolean = false;
     selectedMateriel: Materiel = {} as Materiel;
@@ -60,11 +67,21 @@ export class GestionMaterielComponent {
     // Pour la suppression
     materielToDelete?: Materiel;
   
-    constructor(private materielService: MaterielService) {}
+    isChefProjet: boolean = false;
+  
+    constructor(private materielService: MaterielService) {
+        this.checkUserRole();
+    }
   
     ngOnInit(): void {
       this.fetchMateriels();
     }
+
+    checkUserRole() {
+        const role = localStorage.getItem('role');
+        this.isChefProjet = role === 'CHEF_PROJET';
+    }
+
     cancelDelete() {
         this.selectedUserToDelete = null;
         this.isDeleteConfirmOpen = false;
@@ -104,13 +121,47 @@ export class GestionMaterielComponent {
 
     fetchMateriels(): void {
         this.materielService.getMateriels().subscribe((data) => {
-          this.materiels = data;
-          this.filteredMateriels = data;
-          console.log(this.filteredMateriels)
-           // Initialiser filteredMateriels avec tous les materiels
-        }
-        );
+            this.materiels = data;
+            this.filteredMateriels = data;
+            this.totalItems = data.length;
+            this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+            this.updatePagedData();
+        });
+    }
 
+    updatePagedData() {
+        if (!this.materiels) return;
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        const query = this.searchText.toLowerCase();
+        const filtered = this.materiels.filter((m: Materiel) =>
+            (m.nom?.toLowerCase().includes(query) || '') ||
+            (m.model?.toLowerCase().includes(query) || '') ||
+            (m.marque?.toLowerCase().includes(query) || '') ||
+            (m.stock?.toString().includes(query) || '')
+        );
+        this.filteredMateriels = filtered.slice(startIndex, endIndex);
+    }
+
+    onPageChange(page: number) {
+        this.currentPage = page;
+        this.updatePagedData();
+    }
+
+    filterMateriels(): void {
+        if (!this.materiels) return;
+        
+        const query = this.searchText.toLowerCase();
+        const filtered = this.materiels.filter((m: Materiel) =>
+            (m.nom?.toLowerCase().includes(query) || '') ||
+            (m.model?.toLowerCase().includes(query) || '') ||
+            (m.marque?.toLowerCase().includes(query) || '') ||
+            (m.stock?.toString().includes(query) || '')
+        );
+        this.totalItems = filtered.length;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        this.currentPage = 1;
+        this.filteredMateriels = filtered.slice(0, this.itemsPerPage);
     }
   
     openModaladd(): void {
@@ -165,20 +216,6 @@ export class GestionMaterielComponent {
   
     ngOnChanges(): void {
       this.filterMateriels();
-    }
-  
-    filterMateriels(): void {
-      if (!this.materiels) return;
-      
-      const query = this.searchText.toLowerCase();
-      this.filteredMateriels = this.materiels.filter((m: Materiel) =>
-        (m.nom?.toLowerCase().includes(query) || '') ||
-        (m.model?.toLowerCase().includes(query) || '') ||
-        (m.marque?.toLowerCase().includes(query) || '') ||
-        (m.etat?.toLowerCase().includes(query) || '') ||
-        (m.stock?.toString().includes(query) || '') ||
-        (m.prix?.toString().includes(query) || '')
-      );
     }
   
     onSearchChange(): void {

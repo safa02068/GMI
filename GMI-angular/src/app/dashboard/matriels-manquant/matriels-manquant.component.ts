@@ -25,6 +25,14 @@ allmatmanquant:any  ;
     selectedMateriel: MaterielManquant = {} as MaterielManquant;
     isDeleteConfirmOpen: boolean = false;
     materielToDelete?: MaterielManquant;
+    isTechnicien: boolean = false;
+
+    // Pagination properties
+    currentPage: number = 1;
+    itemsPerPage: number = 10;
+    totalItems: number = 0;
+    totalPages: number = 0;
+    Math = Math;
 
     newMaterielmanq: MaterielManquant = {
         nom: '',
@@ -34,7 +42,9 @@ allmatmanquant:any  ;
       };
           selectedUserToDelete: any = null;
 
-  constructor(private service : MatrielManquantsService ){}
+  constructor(private service : MatrielManquantsService ) {
+    this.checkUserRole();
+  }
 ngOnInit(){
 this.getall()
 }
@@ -63,9 +73,11 @@ this.getall()
 
   getall(){
     this.service.allmatrielmanquant().subscribe((res)=>{
-    this.allmatmanquant = res ;
+    this.allmatmanquant = res;
     this.filteredMateriels = res;
-    console.log(this.allmatmanquant)
+    this.totalItems = (res as any[]).length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.updatePagedData();
   })
 
   }
@@ -110,18 +122,45 @@ confirmDelete(materiel: MaterielManquant): void {
       });
     }
 
+    updatePagedData() {
+        if (!this.allmatmanquant) return;
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        const query = this.searchText.toLowerCase();
+        const filtered = this.allmatmanquant.filter((m: MaterielManquant) =>
+            (m.nom?.toLowerCase().includes(query) || '') ||
+            (m.modele?.toLowerCase().includes(query) || '') ||
+            (m.stock?.toString().includes(query) || '')
+        );
+        this.filteredMateriels = filtered.slice(startIndex, endIndex);
+    }
+
+    onPageChange(page: number) {
+        this.currentPage = page;
+        this.updatePagedData();
+    }
+
     filterMateriels(): void {
-      if (!this.allmatmanquant) return;
-      
-      const query = this.searchText.toLowerCase();
-      this.filteredMateriels = this.allmatmanquant.filter((m: MaterielManquant) =>
-        (m.nom?.toLowerCase().includes(query) || '') ||
-        (m.modele?.toLowerCase().includes(query) || '') ||
-        (m.stock?.toString().includes(query) || '')
-      );
+        if (!this.allmatmanquant) return;
+        
+        const query = this.searchText.toLowerCase();
+        const filtered = this.allmatmanquant.filter((m: MaterielManquant) =>
+            (m.nom?.toLowerCase().includes(query) || '') ||
+            (m.modele?.toLowerCase().includes(query) || '') ||
+            (m.stock?.toString().includes(query) || '')
+        );
+        this.totalItems = filtered.length;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        this.currentPage = 1;
+        this.filteredMateriels = filtered.slice(0, this.itemsPerPage);
     }
 
     onSearchChange(): void {
       this.filterMateriels();
+    }
+
+    checkUserRole() {
+        const role = localStorage.getItem('role');
+        this.isTechnicien = role === 'TECHNICIEN';
     }
 }

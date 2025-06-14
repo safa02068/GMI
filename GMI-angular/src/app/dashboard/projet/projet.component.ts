@@ -17,7 +17,7 @@ export interface Projet {
 @Component({
   selector: 'app-projet',
   standalone: true,
-  imports: [RouterLink,ReactiveFormsModule, FormsModule, FormsModule, CommonModule],
+  imports: [RouterLink, ReactiveFormsModule, FormsModule, FormsModule, CommonModule],
   templateUrl: './projet.component.html',
   styleUrl: './projet.component.scss'
 })
