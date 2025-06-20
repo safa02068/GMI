@@ -159,9 +159,9 @@ public class ProjetController {
             Materiel materiel = matR.findById(materielId).get() ;
             materiel.setProjet(projet);
             this.matR.save(materiel);
-            return "Utilisateur affecté au projet avec succès";
+            return "materiel affecté au projet avec succès";
         } catch (Exception e) {
-            return "false" ;
+            return "le matériel n'est pas affecter" ;
         }
     }
     

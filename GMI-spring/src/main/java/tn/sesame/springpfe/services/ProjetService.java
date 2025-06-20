@@ -29,7 +29,7 @@ public class ProjetService {
     
 
     public String assignUserToProject(Long projectId, Long userId) {
-        // Verify if the manager is a CHEF_PROJET
+        
         
         // Verify if the user is an EMPLOYE
         User user = userRepository.findById(userId)

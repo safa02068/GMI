@@ -121,15 +121,7 @@ public class UserControllers {
 
 
 
-//    //archive user
-//	@PreAuthorize("hasAuthority('ADMIN')")
-//    @PostMapping("/archiver")
-//    public String archiver(Long id) {
-//        User u =this.userR.findById(id).get();
-//        u.setArchiver(true);
-//        this.userR.saveAndFlush(u);
-//        return "true";
-//    }
+
 
 
 
