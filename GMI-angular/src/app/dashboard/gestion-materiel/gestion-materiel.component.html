@@ -119,16 +119,31 @@
         </div>
         <form (ngSubmit)="addMateriel()" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" [(ngModel)]="newMateriel.nom" name="nom" placeholder="Nom" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="text" [(ngModel)]="newMateriel.model" name="model" placeholder="Modèle" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="number" [(ngModel)]="newMateriel.stock" name="stock" placeholder="Stock" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="number" [(ngModel)]="newMateriel.prix" name="prix" placeholder="Prix" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="date" [(ngModel)]="newMateriel.date_ajout" name="date_ajout" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <div>
+                    <label for="nom" class="block mb-1 font-medium">Nom</label>
+                    <input type="text" [(ngModel)]="newMateriel.nom" name="nom" id="nom" placeholder="Nom" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="model" class="block mb-1 font-medium">Modèle</label>
+                    <input type="text" [(ngModel)]="newMateriel.model" name="model" id="model" placeholder="Modèle" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="stock" class="block mb-1 font-medium">Stock</label>
+                    <input type="number" [(ngModel)]="newMateriel.stock" name="stock" id="stock" placeholder="Stock" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="prix" class="block mb-1 font-medium">Prix</label>
+                    <input type="number" [(ngModel)]="newMateriel.prix" name="prix" id="prix" placeholder="Prix" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="date_ajout" class="block mb-1 font-medium">Date d'ajout</label>
+                    <input type="date" [(ngModel)]="newMateriel.date_ajout" name="date_ajout" id="date_ajout" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
             </div>
 
             <div class="flex justify-end space-x-2 pt-4">
@@ -154,16 +169,31 @@
         </div>
         <form (ngSubmit)="updateMateriel()" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" [(ngModel)]="selectedMateriel.nom" name="nom" placeholder="Nom" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="text" [(ngModel)]="selectedMateriel.model" name="model" placeholder="Modèle" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="number" [(ngModel)]="selectedMateriel.stock" name="stock" placeholder="Stock" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="number" [(ngModel)]="selectedMateriel.prix" name="prix" placeholder="Prix" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="date" [(ngModel)]="selectedMateriel.date_ajout" name="date_ajout" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <div>
+                    <label for="nom-edit" class="block mb-1 font-medium">Nom</label>
+                    <input type="text" [(ngModel)]="selectedMateriel.nom" name="nom" id="nom-edit" placeholder="Nom" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="model-edit" class="block mb-1 font-medium">Modèle</label>
+                    <input type="text" [(ngModel)]="selectedMateriel.model" name="model" id="model-edit" placeholder="Modèle" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="stock-edit" class="block mb-1 font-medium">Stock</label>
+                    <input type="number" [(ngModel)]="selectedMateriel.stock" name="stock" id="stock-edit" placeholder="Stock" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="prix-edit" class="block mb-1 font-medium">Prix</label>
+                    <input type="number" [(ngModel)]="selectedMateriel.prix" name="prix" id="prix-edit" placeholder="Prix" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="date_ajout-edit" class="block mb-1 font-medium">Date d'ajout</label>
+                    <input type="date" [(ngModel)]="selectedMateriel.date_ajout" name="date_ajout" id="date_ajout-edit" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
             </div>
 
             <div class="flex justify-end space-x-2 pt-4">

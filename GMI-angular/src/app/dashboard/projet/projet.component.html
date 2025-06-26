@@ -150,15 +150,26 @@
         </div>
         <form (ngSubmit)="addProject()" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" [(ngModel)]="newprojet.nom" name="nom" placeholder="Nom" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="text" [(ngModel)]="newprojet.description" name="description" placeholder="Description"
-                    required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="date" [(ngModel)]="newprojet.date_debut" name="date_debut" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                <input type="date" [(ngModel)]="newprojet.date_fin" name="date_fin" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                <div>
+                    <label for="nom" class="block mb-1 font-medium">Nom</label>
+                    <input type="text" [(ngModel)]="newprojet.nom" name="nom" id="nom" placeholder="Nom" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="description" class="block mb-1 font-medium">Description</label>
+                    <input type="text" [(ngModel)]="newprojet.description" name="description" id="description" placeholder="Description" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="date_debut" class="block mb-1 font-medium">Date Début</label>
+                    <input type="date" [(ngModel)]="newprojet.date_debut" name="date_debut" id="date_debut" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="date_fin" class="block mb-1 font-medium">Date Fin</label>
+                    <input type="date" [(ngModel)]="newprojet.date_fin" name="date_fin" id="date_fin" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
             </div>
 
             <div class="flex justify-end space-x-2 pt-4">

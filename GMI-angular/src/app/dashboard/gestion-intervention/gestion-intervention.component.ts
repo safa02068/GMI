@@ -129,16 +129,21 @@ export class GestionInterventionComponent {
     this.getMaterielList();
     this.showModalAdd = true;
     this.newIntervention = {
-      type: '',
+      type: 'Maintenance',
       datederesolution :new Date(),
       titre: '',
-      email: '', // Added priorite property
+      email: '',
       client: '',
       description: '',
       commentaire:'',
       demandeur: null,
       materiel: null
     };
+    setTimeout(() => {
+      if (this.MatList && this.MatList.length > 0) {
+        this.newIntervention.materiel = this.MatList[0];
+      }
+    }, 300);
   }
 
   closeModalAdd(): void {
@@ -167,6 +172,11 @@ let intervention = {
     this.getUserList();
     this.getMaterielList();
     this.selectedIntervention = { ...intervention };
+    setTimeout(() => {
+      if (this.MatList && this.MatList.length > 0) {
+        this.selectedIntervention.materiel = this.MatList[0];
+      }
+    }, 300);
     console.log(this.selectedIntervention);
     this.showModalEdit = true;
   }

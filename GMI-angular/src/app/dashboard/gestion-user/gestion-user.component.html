@@ -177,25 +177,42 @@
     </div>
     <form (ngSubmit)="saveUser()" class="space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input type="text" [(ngModel)]="newUser.nom" name="nom" placeholder="Nom" required
-          class="form-input border rounded-md p-2 w-full" />
-        <input type="text" [(ngModel)]="newUser.prenom" name="prenom" placeholder="Prénom" required
-          class="form-input border rounded-md p-2 w-full" />
-        <input type="email" [(ngModel)]="newUser.email" name="email" placeholder="Email" required
-          class="form-input border rounded-md p-2 w-full" />
-        <input type="password" [(ngModel)]="newUser.password" name="password" placeholder="Mot de passe" required
-          class="form-input border rounded-md p-2 w-full" />
-        <input type="text" [(ngModel)]="newUser.adresse" name="adresse" placeholder="Adresse" required
-          class="form-input border rounded-md p-2 w-full" />
-        <input type="text" [(ngModel)]="newUser.tel" name="tel" placeholder="Tel" required
-          class="form-input border rounded-md p-2 w-full" />
-        <input type="text" [(ngModel)]="newUser.cin" name="cin" placeholder="CIN" required
-          class="form-input border rounded-md p-2 w-full" />
-        <select [(ngModel)]="newUser.p" name="p" class="form-select border rounded-md p-2 w-full">
-          <option value="CHEF_PROJET">CHEF_PROJET</option>
-          <option value="EMPLOYE">EMPLOYE</option>
-          <option value="TECHNICIEN">TECHNICIEN</option>
-        </select>
+        <div>
+          <label for="nom" class="block mb-1 font-medium">Nom</label>
+          <input type="text" [(ngModel)]="newUser.nom" name="nom" id="nom" placeholder="Nom" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="prenom" class="block mb-1 font-medium">Prénom</label>
+          <input type="text" [(ngModel)]="newUser.prenom" name="prenom" id="prenom" placeholder="Prénom" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="email" class="block mb-1 font-medium">Email</label>
+          <input type="email" [(ngModel)]="newUser.email" name="email" id="email" placeholder="Email" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="password" class="block mb-1 font-medium">Mot de passe</label>
+          <input type="password" [(ngModel)]="newUser.password" name="password" id="password" placeholder="Mot de passe" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="adresse" class="block mb-1 font-medium">Adresse</label>
+          <input type="text" [(ngModel)]="newUser.adresse" name="adresse" id="adresse" placeholder="Adresse" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="tel" class="block mb-1 font-medium">Téléphone</label>
+          <input type="text" [(ngModel)]="newUser.tel" name="tel" id="tel" placeholder="Tel" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="cin" class="block mb-1 font-medium">CIN</label>
+          <input type="text" [(ngModel)]="newUser.cin" name="cin" id="cin" placeholder="CIN" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="p" class="block mb-1 font-medium">Rôle</label>
+          <select [(ngModel)]="newUser.p" name="p" id="p" class="form-select border rounded-md p-2 w-full">
+            <option value="CHEF_PROJET">CHEF_PROJET</option>
+            <option value="EMPLOYE">EMPLOYE</option>
+            <option value="TECHNICIEN">TECHNICIEN</option>
+          </select>
+        </div>
       </div>
 
       <div class="flex justify-end space-x-2 pt-4">
@@ -228,29 +245,38 @@
 
     <form (ngSubmit)="update()" class="space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input type="text" [(ngModel)]="selectedUser.nom" name="nom" placeholder="Nom" required
-          class="form-input border rounded-md p-2 w-full" />
-
-        <input type="text" [(ngModel)]="selectedUser.prenom" name="prenom" placeholder="Prénom" required
-          class="form-input border rounded-md p-2 w-full" />
-
-        <input type="email" [(ngModel)]="selectedUser.email" name="email" placeholder="Email" required
-          class="form-input border rounded-md p-2 w-full" />
-
-        <input type="text" [(ngModel)]="selectedUser.tel" name="tel" placeholder="Téléphone" required
-          class="form-input border rounded-md p-2 w-full" />
-
-        <input type="text" [(ngModel)]="selectedUser.adresse" name="adresse" placeholder="Adresse" required
-          class="form-input border rounded-md p-2 w-full" />
-
-        <input type="text" [(ngModel)]="selectedUser.cin" name="cin" placeholder="CIN" required
-          class="form-input border rounded-md p-2 w-full" />
-
-        <select [(ngModel)]="selectedUser.p" name="p" class="form-select border rounded-md p-2 w-full">
-          <option value="CHEF_PROJET">CHEF_PROJET</option>
-          <option value="EMPLOYE">EMPLOYE</option>
-          <option value="TECHNICIEN">TECHNICIEN</option>
-        </select>
+        <div>
+          <label for="nom-edit" class="block mb-1 font-medium">Nom</label>
+          <input type="text" [(ngModel)]="selectedUser.nom" name="nom" id="nom-edit" placeholder="Nom" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="prenom-edit" class="block mb-1 font-medium">Prénom</label>
+          <input type="text" [(ngModel)]="selectedUser.prenom" name="prenom" id="prenom-edit" placeholder="Prénom" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="email-edit" class="block mb-1 font-medium">Email</label>
+          <input type="email" [(ngModel)]="selectedUser.email" name="email" id="email-edit" placeholder="Email" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="tel-edit" class="block mb-1 font-medium">Téléphone</label>
+          <input type="text" [(ngModel)]="selectedUser.tel" name="tel" id="tel-edit" placeholder="Téléphone" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="adresse-edit" class="block mb-1 font-medium">Adresse</label>
+          <input type="text" [(ngModel)]="selectedUser.adresse" name="adresse" id="adresse-edit" placeholder="Adresse" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="cin-edit" class="block mb-1 font-medium">CIN</label>
+          <input type="text" [(ngModel)]="selectedUser.cin" name="cin" id="cin-edit" placeholder="CIN" required class="form-input border rounded-md p-2 w-full" />
+        </div>
+        <div>
+          <label for="p-edit" class="block mb-1 font-medium">Rôle</label>
+          <select [(ngModel)]="selectedUser.p" name="p" id="p-edit" class="form-select border rounded-md p-2 w-full">
+            <option value="CHEF_PROJET">CHEF_PROJET</option>
+            <option value="EMPLOYE">EMPLOYE</option>
+            <option value="TECHNICIEN">TECHNICIEN</option>
+          </select>
+        </div>
       </div>
 
       <div class="flex justify-end space-x-2 pt-4">

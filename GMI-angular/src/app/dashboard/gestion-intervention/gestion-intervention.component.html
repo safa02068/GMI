@@ -127,31 +127,42 @@
         </div>
         <form (ngSubmit)="addIntervention()" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" [(ngModel)]="newIntervention.titre" name="titre" placeholder="Titre de l'intervention" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                
-                <select [(ngModel)]="newIntervention.type" name="type" required
-                    class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
-                    <option value="Maintenance">Maintenance</option>
-                    <option value="Installation">Installation</option>
-                    <option value="Support">Support</option>
-                </select>
-
-                <input type="date" [(ngModel)]="newIntervention.datederesolution" name="datederesolution" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                
-                <input type="text" [(ngModel)]="newIntervention.commentaire" name="commentaire" placeholder="Commentaire" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-
+                <div>
+                    <label for="titre" class="block mb-1 font-medium">Titre de l'intervention</label>
+                    <input type="text" [(ngModel)]="newIntervention.titre" name="titre" id="titre" placeholder="Titre de l'intervention" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="type" class="block mb-1 font-medium">Type</label>
+                    <select [(ngModel)]="newIntervention.type" name="type" id="type" required
+                        class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Installation">Installation</option>
+                        <option value="Support">Support</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="datederesolution" class="block mb-1 font-medium">Date de résolution</label>
+                    <input type="date" [(ngModel)]="newIntervention.datederesolution" name="datederesolution" id="datederesolution" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="commentaire" class="block mb-1 font-medium">Commentaire</label>
+                    <input type="text" [(ngModel)]="newIntervention.commentaire" name="commentaire" id="commentaire" placeholder="Commentaire" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
                 <div class="md:col-span-2">
-                    <textarea [(ngModel)]="newIntervention.description" name="description" placeholder="Détails de l'intervention"
+                    <label for="description" class="block mb-1 font-medium">Détails de l'intervention</label>
+                    <textarea [(ngModel)]="newIntervention.description" name="description" id="description" placeholder="Détails de l'intervention"
                         class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036] h-24"></textarea>
                 </div>
-
-                <select [(ngModel)]="newIntervention.materiel" name="materiel" required
-                    class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
-                    <option *ngFor="let materiel of MatList" [ngValue]="materiel">{{ materiel.model }}</option>
-                </select>
+                <div class="md:col-span-2">
+                    <label for="materiel" class="block mb-1 font-medium">Matériel</label>
+                    <select [(ngModel)]="newIntervention.materiel" name="materiel" id="materiel" required
+                        class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
+                        <option *ngFor="let materiel of MatList" [ngValue]="materiel">{{ materiel.model }}</option>
+                    </select>
+                </div>
             </div>
 
             <div class="flex justify-end space-x-2 pt-4">
@@ -177,31 +188,42 @@
         </div>
         <form (ngSubmit)="updateIntervention()" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" [(ngModel)]="selectedIntervention.titre" name="titre" placeholder="Titre de l'intervention" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                
-                <select [(ngModel)]="selectedIntervention.type" name="type" required
-                    class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
-                    <option value="Maintenance">Maintenance</option>
-                    <option value="Installation">Installation</option>
-                    <option value="Support">Support</option>
-                </select>
-
-                <input type="date" [(ngModel)]="selectedIntervention.datederesolution" name="datederesolution" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-                
-                <input type="text" [(ngModel)]="selectedIntervention.commentaire" name="commentaire" placeholder="Commentaire" required
-                    class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
-
+                <div>
+                    <label for="titre-edit" class="block mb-1 font-medium">Titre de l'intervention</label>
+                    <input type="text" [(ngModel)]="selectedIntervention.titre" name="titre" id="titre-edit" placeholder="Titre de l'intervention" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="type-edit" class="block mb-1 font-medium">Type</label>
+                    <select [(ngModel)]="selectedIntervention.type" name="type" id="type-edit" required
+                        class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Installation">Installation</option>
+                        <option value="Support">Support</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="datederesolution-edit" class="block mb-1 font-medium">Date de résolution</label>
+                    <input type="date" [(ngModel)]="selectedIntervention.datederesolution" name="datederesolution" id="datederesolution-edit" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
+                <div>
+                    <label for="commentaire-edit" class="block mb-1 font-medium">Commentaire</label>
+                    <input type="text" [(ngModel)]="selectedIntervention.commentaire" name="commentaire" id="commentaire-edit" placeholder="Commentaire" required
+                        class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]" />
+                </div>
                 <div class="md:col-span-2">
-                    <textarea [(ngModel)]="selectedIntervention.description" name="description" placeholder="Détails de l'intervention"
+                    <label for="description-edit" class="block mb-1 font-medium">Détails de l'intervention</label>
+                    <textarea [(ngModel)]="selectedIntervention.description" name="description" id="description-edit" placeholder="Détails de l'intervention"
                         class="form-input border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036] h-24"></textarea>
                 </div>
-
-                <select [(ngModel)]="selectedIntervention.materiel" name="materiel" required
-                    class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
-                    <option *ngFor="let materiel of MatList" [ngValue]="materiel">{{ materiel.model }}</option>
-                </select>
+                <div class="md:col-span-2">
+                    <label for="materiel-edit" class="block mb-1 font-medium">Matériel</label>
+                    <select [(ngModel)]="selectedIntervention.materiel" name="materiel" id="materiel-edit" required
+                        class="form-select border rounded-md p-2 w-full dark:bg-[#0c1427] dark:text-white dark:border-[#172036]">
+                        <option *ngFor="let materiel of MatList" [ngValue]="materiel">{{ materiel.model }}</option>
+                    </select>
+                </div>
             </div>
 
             <div class="flex justify-end space-x-2 pt-4">
