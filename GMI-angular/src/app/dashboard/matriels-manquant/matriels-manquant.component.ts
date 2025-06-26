@@ -5,186 +5,206 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MatrielManquantsService } from '../../services/materiels-manquant.service';
 export interface MaterielManquant {
-    id?: number;
-    nom?: any;  
-   modele?: any; 
-     stock?: any;  }
+  id?: number;
+  nom?: any;
+  modele?: any;
+  stock?: any;
+}
 @Component({
   selector: 'app-matriels-manquant',
-      standalone: true,
-    imports: [RouterLink, FormsModule, CommonModule],
+  standalone: true,
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './matriels-manquant.component.html',
   styleUrl: './matriels-manquant.component.scss'
 })
 export class MatrielsManquantComponent {
-allmatmanquant:any  ; 
+  allmatmanquant: any;
   filteredMateriels: any;
   searchText: string = '';
   showModaladd: boolean = false;
-      isModalOpen: boolean = false;
-    selectedMateriel: MaterielManquant = {} as MaterielManquant;
-    isDeleteConfirmOpen: boolean = false;
-    materielToDelete?: MaterielManquant;
-    isTechnicien: boolean = false;
+  isModalOpen: boolean = false;
+  selectedMateriel: MaterielManquant = {} as MaterielManquant;
+  isDeleteConfirmOpen: boolean = false;
+  materielToDelete?: MaterielManquant;
+  isTechnicien: boolean = false;
 
-    // Pagination properties
-    currentPage: number = 1;
-    itemsPerPage: number = 10;
-    totalItems: number = 0;
-    totalPages: number = 0;
-    Math = Math;
+  // Pagination properties
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
+  totalPages: number = 0;
+  Math = Math;
 
-    newMaterielmanq: MaterielManquant = {
-        nom: '',
-        modele: '',
-        stock: '',
+  newMaterielmanq: MaterielManquant = {
+    nom: '',
+    modele: '',
+    stock: '',
 
-      };
-          selectedUserToDelete: any = null;
+  };
+  selectedUserToDelete: any = null;
 
-    alertShow: boolean = false;
-    alertType: 'success' | 'error' = 'success';
-    alertMessage: string = '';
+  alertShow: boolean = false;
+  alertType: 'success' | 'error' = 'success';
+  alertMessage: string = '';
 
-  constructor(private service : MatrielManquantsService ) {
+  constructor(private service: MatrielManquantsService) {
     this.checkUserRole();
   }
-ngOnInit(){
-this.getall()
-}
-  
-      confirmDeleteUser() {
-          this.confirmDeleteMateriel();
-          this.getall();
-          this.cancelDelete();
+  ngOnInit() {
+    this.getall()
+  }
 
-      }
-    editMateriel(materiel: MaterielManquant): void {
-      this.selectedMateriel = { ...materiel };
-      this.isModalOpen = true;
-    }
-      updateMateriel(): void {
-        if (!this.selectedMateriel.nom || !this.selectedMateriel.modele || !this.selectedMateriel.stock ||
-            this.selectedMateriel.nom.trim() === '' || this.selectedMateriel.modele.trim() === '' || String(this.selectedMateriel.stock).trim() === '') {
-          this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
-          return;
-        }
-        if (this.selectedMateriel.id !== undefined) {
-          this.service.updatemat(this.selectedMateriel.id, this.selectedMateriel).subscribe(() => {
-            this.getall();
-            this.closeModal();
-            this.showAlert('Matériel manquant mis à jour avec succès', 'success');
-          });
-        } else {
-          console.error('Selected Materiel ID is undefined');
-        }
-      }
-
-  getall(){
-    this.service.allmatrielmanquant().subscribe((res)=>{
-    this.allmatmanquant = res;
-    this.filteredMateriels = res;
-    this.totalItems = (res as any[]).length;
-    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-    this.updatePagedData();
-  })
+  confirmDeleteUser() {
+    this.confirmDeleteMateriel();
+    this.getall();
+    this.cancelDelete();
 
   }
-      cancelDelete() {
-        this.selectedUserToDelete = null;
-        this.isDeleteConfirmOpen = false;
-      }
-confirmDelete(materiel: MaterielManquant): void {
-      this.isDeleteConfirmOpen = true;
-      this.materielToDelete = materiel;
+  editMateriel(materiel: MaterielManquant): void {
+    this.selectedMateriel = { ...materiel };
+    this.isModalOpen = true;
+  }
+  updateMateriel(): void {
+    if (!this.selectedMateriel.nom || !this.selectedMateriel.modele || !this.selectedMateriel.stock ||
+      this.selectedMateriel.nom.trim() === '' || this.selectedMateriel.modele.trim() === '' || String(this.selectedMateriel.stock).trim() === '') {
+      this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+      return;
     }
-  
-    confirmDeleteMateriel(): void {
-      if (!this.materielToDelete) return;
-      if (this.materielToDelete?.id !== undefined) {
-        this.service.deletemat(this.materielToDelete.id).subscribe(() => {
-       window.location.reload()
-        });
-      }
-    }   
-  
-   closeModal(): void {
-      this.isModalOpen = false;
+    if (this.selectedMateriel.id !== undefined) {
+      this.service.updatemat(this.selectedMateriel.id, this.selectedMateriel).subscribe({
+        next: () => {
+          this.getall();
+          this.closeModal();
+          this.showAlert('Matériel manquant mis à jour avec succès', 'success');
+        },
+        error: (error) => {
+          if (error.status === 400 && error.error && typeof error.error === 'string' && error.error.includes('existe')) {
+            this.showAlert('Un matériel manquant avec ce nom existe déjà', 'error');
+          } else {
+            this.showAlert('Erreur lors de la mise à jour du matériel manquant', 'error');
+          }
+        }
+      });
+    } else {
+      console.error('Selected Materiel ID is undefined');
     }
-  openModaladd(): void {
-      this.showModaladd = true;
-      this.newMaterielmanq = {
-        nom: '',
-        modele: '',
-        stock: '',
-       
-      };
-    }
-       closeModaladd(): void {
-      this.showModaladd = false;
-    }
+  }
 
-    addMaterielman(){
-      if (!this.newMaterielmanq.nom || !this.newMaterielmanq.modele || !this.newMaterielmanq.stock ||
-          this.newMaterielmanq.nom.trim() === '' || this.newMaterielmanq.modele.trim() === '' || String(this.newMaterielmanq.stock).trim() === '') {
-        this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
-        return;
-      }
-      this.service.ajoutmat(this.newMaterielmanq).subscribe(() => {
+  getall() {
+    this.service.allmatrielmanquant().subscribe((res) => {
+      this.allmatmanquant = res;
+      this.filteredMateriels = res;
+      this.totalItems = (res as any[]).length;
+      this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+      this.updatePagedData();
+    })
+
+  }
+  cancelDelete() {
+    this.selectedUserToDelete = null;
+    this.isDeleteConfirmOpen = false;
+  }
+  confirmDelete(materiel: MaterielManquant): void {
+    this.isDeleteConfirmOpen = true;
+    this.materielToDelete = materiel;
+  }
+
+  confirmDeleteMateriel(): void {
+    if (!this.materielToDelete) return;
+    if (this.materielToDelete?.id !== undefined) {
+      this.service.deletemat(this.materielToDelete.id).subscribe(() => {
+        window.location.reload()
+      });
+    }
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
+  openModaladd(): void {
+    this.showModaladd = true;
+    this.newMaterielmanq = {
+      nom: '',
+      modele: '',
+      stock: '',
+
+    };
+  }
+  
+  closeModaladd(): void {
+    this.showModaladd = false;
+  }
+
+  addMaterielman() {
+    if (!this.newMaterielmanq.nom || !this.newMaterielmanq.modele || !this.newMaterielmanq.stock ||
+      this.newMaterielmanq.nom.trim() === '' || this.newMaterielmanq.modele.trim() === '' || String(this.newMaterielmanq.stock).trim() === '') {
+      this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+      return;
+    }
+    this.service.ajoutmat(this.newMaterielmanq).subscribe({
+      next: () => {
         this.getall();
         this.closeModaladd();
         this.showAlert('Matériel manquant ajouté avec succès', 'success');
-      });
-    }
+      },
+      error: (error) => {
+        if (error.status === 400 && error.error && typeof error.error === 'string' && error.error.includes('existe')) {
+          this.showAlert('Un matériel manquant avec ce nom existe déjà', 'error');
+        } else {
+          this.showAlert('Erreur lors de l\'ajout du matériel manquant', 'error');
+        }
+      }
+    });
+  }
 
-    updatePagedData() {
-        if (!this.allmatmanquant) return;
-        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-        const endIndex = startIndex + this.itemsPerPage;
-        const query = this.searchText.toLowerCase();
-        const filtered = this.allmatmanquant.filter((m: MaterielManquant) =>
-            (m.nom?.toLowerCase().includes(query) || '') ||
-            (m.modele?.toLowerCase().includes(query) || '') ||
-            (m.stock?.toString().includes(query) || '')
-        );
-        this.filteredMateriels = filtered.slice(startIndex, endIndex);
-    }
+  updatePagedData() {
+    if (!this.allmatmanquant) return;
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const query = this.searchText.toLowerCase();
+    const filtered = this.allmatmanquant.filter((m: MaterielManquant) =>
+      (m.nom?.toLowerCase().includes(query) || '') ||
+      (m.modele?.toLowerCase().includes(query) || '') ||
+      (m.stock?.toString().includes(query) || '')
+    );
+    this.filteredMateriels = filtered.slice(startIndex, endIndex);
+  }
 
-    onPageChange(page: number) {
-        this.currentPage = page;
-        this.updatePagedData();
-    }
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.updatePagedData();
+  }
 
-    filterMateriels(): void {
-      if (!this.allmatmanquant) return;
-      
-      const query = this.searchText.toLowerCase();
-        const filtered = this.allmatmanquant.filter((m: MaterielManquant) =>
-        (m.nom?.toLowerCase().includes(query) || '') ||
-        (m.modele?.toLowerCase().includes(query) || '') ||
-        (m.stock?.toString().includes(query) || '')
-      );
-        this.totalItems = filtered.length;
-        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-        this.currentPage = 1;
-        this.filteredMateriels = filtered.slice(0, this.itemsPerPage);
-    }
+  filterMateriels(): void {
+    if (!this.allmatmanquant) return;
 
-    onSearchChange(): void {
-      this.filterMateriels();
-    }
+    const query = this.searchText.toLowerCase();
+    const filtered = this.allmatmanquant.filter((m: MaterielManquant) =>
+      (m.nom?.toLowerCase().includes(query) || '') ||
+      (m.modele?.toLowerCase().includes(query) || '') ||
+      (m.stock?.toString().includes(query) || '')
+    );
+    this.totalItems = filtered.length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.currentPage = 1;
+    this.filteredMateriels = filtered.slice(0, this.itemsPerPage);
+  }
 
-    checkUserRole() {
-        const role = localStorage.getItem('role');
-        this.isTechnicien = role === 'TECHNICIEN';
-    }
+  onSearchChange(): void {
+    this.filterMateriels();
+  }
 
-    showAlert(message: string, type: 'success' | 'error') {
-      this.alertMessage = message;
-      this.alertType = type;
-      this.alertShow = true;
-      setTimeout(() => {
-        this.alertShow = false;
-      }, 3000);
-    }
+  checkUserRole() {
+    const role = localStorage.getItem('role');
+    this.isTechnicien = role === 'TECHNICIEN';
+  }
+
+  showAlert(message: string, type: 'success' | 'error') {
+    this.alertMessage = message;
+    this.alertType = type;
+    this.alertShow = true;
+    setTimeout(() => {
+      this.alertShow = false;
+    }, 3000);
+  }
 }
