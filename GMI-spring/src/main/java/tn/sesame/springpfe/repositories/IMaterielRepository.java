@@ -20,7 +20,7 @@ public interface IMaterielRepository extends JpaRepository<Materiel, Long> {
 //    List<Materiel> findByEnMaintenanceTrue();
 //
 //    List<Materiel> findByIsDamagedTrue();
-    List<Materiel> findByModel(String model);
+    List<Materiel> findByNom(String nom);
 
     List<Materiel> findByProjetId(Long projetId);
     

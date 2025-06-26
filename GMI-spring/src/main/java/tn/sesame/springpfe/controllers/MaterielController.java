@@ -43,13 +43,13 @@ public class MaterielController {
     @Transactional
     @PostMapping("/addmateriel")
     public Materiel ajout(@RequestBody Materiel materiel) {
-        String modelLower = materiel.getModel().toLowerCase();
-        boolean exists = matR.findByModel(modelLower).stream().anyMatch(m -> m.getModel().toLowerCase().equals(modelLower));
+        String nomLower = materiel.getNom().toLowerCase();
+        boolean exists = matR.findByNom(nomLower).stream().anyMatch(m -> m.getNom().toLowerCase().equals(nomLower));
         if (exists) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Un materiel avec ce nom existe déja");
         }
         materiel.setArchiver(false);
-        materiel.setNom(materiel.getModel());
+        materiel.setNom(materiel.getNom());
         return this.matR.save(materiel);
     }
     
