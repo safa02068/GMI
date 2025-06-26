@@ -42,6 +42,10 @@ allmatmanquant:any  ;
       };
           selectedUserToDelete: any = null;
 
+    alertShow: boolean = false;
+    alertType: 'success' | 'error' = 'success';
+    alertMessage: string = '';
+
   constructor(private service : MatrielManquantsService ) {
     this.checkUserRole();
   }
@@ -60,11 +64,16 @@ this.getall()
       this.isModalOpen = true;
     }
       updateMateriel(): void {
+        if (!this.selectedMateriel.nom || !this.selectedMateriel.modele || !this.selectedMateriel.stock ||
+            this.selectedMateriel.nom.trim() === '' || this.selectedMateriel.modele.trim() === '' || String(this.selectedMateriel.stock).trim() === '') {
+          this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+          return;
+        }
         if (this.selectedMateriel.id !== undefined) {
-       
           this.service.updatemat(this.selectedMateriel.id, this.selectedMateriel).subscribe(() => {
-            this.getall(); // Récupérer la liste des matériels mise à jour
-            this.closeModal(); // Fermer la modale
+            this.getall();
+            this.closeModal();
+            this.showAlert('Matériel manquant mis à jour avec succès', 'success');
           });
         } else {
           console.error('Selected Materiel ID is undefined');
@@ -116,9 +125,15 @@ confirmDelete(materiel: MaterielManquant): void {
     }
 
     addMaterielman(){
+      if (!this.newMaterielmanq.nom || !this.newMaterielmanq.modele || !this.newMaterielmanq.stock ||
+          this.newMaterielmanq.nom.trim() === '' || this.newMaterielmanq.modele.trim() === '' || String(this.newMaterielmanq.stock).trim() === '') {
+        this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+        return;
+      }
       this.service.ajoutmat(this.newMaterielmanq).subscribe(() => {
         this.getall();
         this.closeModaladd();
+        this.showAlert('Matériel manquant ajouté avec succès', 'success');
       });
     }
 
@@ -162,5 +177,14 @@ confirmDelete(materiel: MaterielManquant): void {
     checkUserRole() {
         const role = localStorage.getItem('role');
         this.isTechnicien = role === 'TECHNICIEN';
+    }
+
+    showAlert(message: string, type: 'success' | 'error') {
+      this.alertMessage = message;
+      this.alertType = type;
+      this.alertShow = true;
+      setTimeout(() => {
+        this.alertShow = false;
+      }, 3000);
     }
 }

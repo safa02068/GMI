@@ -43,6 +43,11 @@ public class ProjetController {
     //@PreAuthorize("hasAuthority('CHEF_PROJET')")
     @PostMapping("/addprojet")
     public Projet ajout(@RequestBody Projet projet) {
+        String nomLower = projet.getNom().toLowerCase();
+        Projet existing = projetR.findByNom(nomLower);
+        if (existing != null && existing.getNom().toLowerCase().equals(nomLower)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Un projet avec ce nom existe déja");
+        }
         projet.setArchiver(false);
         return projetR.save(projet);
     }

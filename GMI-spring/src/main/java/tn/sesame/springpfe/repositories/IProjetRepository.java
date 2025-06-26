@@ -11,4 +11,6 @@ import java.util.List;
 public interface IProjetRepository extends JpaRepository<Projet, Long> {
 
     List<Projet> findByArchiverIsFalse();
-   }
+
+    Projet findByNom(String nom);
+}

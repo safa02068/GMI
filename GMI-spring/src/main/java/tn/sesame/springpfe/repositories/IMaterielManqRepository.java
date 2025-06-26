@@ -7,4 +7,6 @@ import tn.sesame.springpfe.entities.MaterielManquant;
 
 public interface IMaterielManqRepository  extends JpaRepository<MaterielManquant, Long>  {
 
+    MaterielManquant findByNom(String nom);
+
 }

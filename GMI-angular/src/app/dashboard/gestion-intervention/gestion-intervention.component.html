@@ -253,3 +253,11 @@
         </div>
     </div>
 </div>
+
+<!-- Alert message-->
+<div *ngIf="alertShow" [ngClass]="{
+    'bg-success-500': alertType === 'success',
+    'bg-danger-500': alertType === 'error'
+}" class="fixed top-4 right-4 p-4 rounded-md text-white z-50">
+    {{ alertMessage }}
+</div>

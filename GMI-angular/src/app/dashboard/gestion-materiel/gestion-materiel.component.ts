@@ -69,6 +69,10 @@ export class GestionMaterielComponent {
   
     isChefProjet: boolean = false;
   
+    alertShow: boolean = false;
+    alertType: 'success' | 'error' = 'success';
+    alertMessage: string = '';
+  
     constructor(private materielService: MaterielService) {
         this.checkUserRole();
     }
@@ -94,11 +98,26 @@ export class GestionMaterielComponent {
 
       }
       updateMateriel(): void {
-        // Appeler le service pour mettre à jour le matériel
+        // Validation
+        if (!this.selectedMateriel.nom || !this.selectedMateriel.model || !this.selectedMateriel.stock || !this.selectedMateriel.prix || !this.selectedMateriel.date_ajout ||
+            this.selectedMateriel.nom.trim() === '' || this.selectedMateriel.model.trim() === '' || String(this.selectedMateriel.stock).trim() === '' || String(this.selectedMateriel.prix).trim() === '' || String(this.selectedMateriel.date_ajout).trim() === '') {
+          this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+          return;
+        }
         if (this.selectedMateriel.id !== undefined) {
-          this.materielService.updateMateriel(this.selectedMateriel.id, this.selectedMateriel).subscribe(() => {
-            this.fetchMateriels(); // Récupérer la liste des matériels mise à jour
-            this.closeModal(); // Fermer la modale
+          this.materielService.updateMateriel(this.selectedMateriel.id, this.selectedMateriel).subscribe({
+            next: () => {
+              this.fetchMateriels();
+              this.closeModal();
+              this.showAlert('Matériel mis à jour avec succès', 'success');
+            },
+            error: (error) => {
+              if (error.status === 400 && error.error && typeof error.error === 'string' && error.error.includes('existe')) {
+                this.showAlert('Un matériel avec ce nom existe déjà', 'error');
+              } else {
+                this.showAlert('Erreur lors de la mise à jour du matériel', 'error');
+              }
+            }
           });
         } else {
           console.error('Selected Materiel ID is undefined');
@@ -183,10 +202,25 @@ export class GestionMaterielComponent {
     }
   
     addMateriel(): void {
-      console.log(this.newMateriel)
-      this.materielService.addMateriel(this.newMateriel).subscribe(() => {
-        this.fetchMateriels();
-        this.closeModaladd();
+      // Validation
+      if (!this.newMateriel.nom || !this.newMateriel.model || !this.newMateriel.stock || !this.newMateriel.prix || !this.newMateriel.date_ajout ||
+          this.newMateriel.nom.trim() === '' || this.newMateriel.model.trim() === '' || String(this.newMateriel.stock).trim() === '' || String(this.newMateriel.prix).trim() === '' || String(this.newMateriel.date_ajout).trim() === '') {
+        this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+        return;
+      }
+      this.materielService.addMateriel(this.newMateriel).subscribe({
+        next: () => {
+          this.fetchMateriels();
+          this.closeModaladd();
+          this.showAlert('Matériel ajouté avec succès', 'success');
+        },
+        error: (error) => {
+          if (error.status === 400 && error.error && typeof error.error === 'string' && error.error.includes('existe')) {
+            this.showAlert('Un matériel avec ce nom existe déjà', 'error');
+          } else {
+            this.showAlert('Erreur lors de l\'ajout du matériel', 'error');
+          }
+        }
       });
     }
   
@@ -220,5 +254,14 @@ export class GestionMaterielComponent {
   
     onSearchChange(): void {
       this.filterMateriels();
+    }
+
+    showAlert(message: string, type: 'success' | 'error') {
+      this.alertMessage = message;
+      this.alertType = type;
+      this.alertShow = true;
+      setTimeout(() => {
+        this.alertShow = false;
+      }, 3000);
     }
 }

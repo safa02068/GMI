@@ -43,7 +43,12 @@ public class MaterielController {
     @Transactional
     @PostMapping("/addmateriel")
     public Materiel ajout(@RequestBody Materiel materiel) {
-    	materiel.setArchiver(false);
+        String modelLower = materiel.getModel().toLowerCase();
+        boolean exists = matR.findByModel(modelLower).stream().anyMatch(m -> m.getModel().toLowerCase().equals(modelLower));
+        if (exists) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Un materiel avec ce nom existe déja");
+        }
+        materiel.setArchiver(false);
         materiel.setNom(materiel.getModel());
         return this.matR.save(materiel);
     }
@@ -98,7 +103,12 @@ public class MaterielController {
     @PreAuthorize("hasAuthority('TECHNICIEN')")
     @PostMapping("/addmaterielmanquant")
     public MaterielManquant addmaterielmanquant(@RequestBody MaterielManquant materielmanquant) {
-    	return this.matMR.save(materielmanquant);
+        String nomLower = materielmanquant.getNom().toLowerCase();
+        MaterielManquant existing = matMR.findByNom(nomLower);
+        if (existing != null && existing.getNom().toLowerCase().equals(nomLower)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "MaterielManquant with this name already exists");
+        }
+        return this.matMR.save(materielmanquant);
     }
     
     
@@ -139,8 +149,13 @@ public class MaterielController {
     
     @PostMapping("ajoutmatmanquant")
     public String ajout(@RequestBody MaterielManquant matman ) {
-    	 this.imamanqurepos.save(matman); 
-    	 return "true" ; 
+        String nomLower = matman.getNom().toLowerCase();
+        MaterielManquant existing = imamanqurepos.findByNom(nomLower);
+        if (existing != null && existing.getNom().toLowerCase().equals(nomLower)) {
+            return "duplicate";
+        }
+        this.imamanqurepos.save(matman); 
+        return "true" ; 
     }
     
     

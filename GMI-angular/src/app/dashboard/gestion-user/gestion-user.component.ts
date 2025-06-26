@@ -37,6 +37,9 @@ export class GestionUserComponent implements OnInit {
     totalItems = 0;
     totalPages = 1;
     Math = Math; // Make Math available in template
+    alertShow: boolean = false;
+    alertType: 'success' | 'error' = 'success';
+    alertMessage: string = '';
 
     newUser: User = {
         nom: '',
@@ -111,16 +114,17 @@ export class GestionUserComponent implements OnInit {
     }
 
     saveUser() {
-        if (!this.newUser.nom || !this.newUser.prenom || !this.newUser.email || !this.newUser.password) {
+        // Validation
+        if (!this.newUser.nom || !this.newUser.prenom || !this.newUser.email || !this.newUser.password || !this.newUser.adresse || !this.newUser.tel || !this.newUser.cin ||
+            this.newUser.nom.trim() === '' || this.newUser.prenom.trim() === '' || this.newUser.email.trim() === '' || this.newUser.password.trim() === '' || this.newUser.adresse.trim() === '' || this.newUser.tel.trim() === '' || this.newUser.cin.trim() === '') {
+            this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
             return;
         }
-
         this.ws.addUser(this.newUser).subscribe(
             (response) => {
-                console.log('User added successfully:', response);
                 this.getUserData();
                 this.closeModaladd();
-                // Reset the form
+                this.showAlert('Utilisateur ajouté avec succès', 'success');
                 this.newUser = {
                     nom: '',
                     prenom: '',
@@ -133,7 +137,11 @@ export class GestionUserComponent implements OnInit {
                 };
             },
             (error) => {
-                console.error('Error adding user:', error);
+                if (error.status === 400 && error.error && typeof error.error === 'string' && error.error.includes('existe')) {
+                    this.showAlert('Un utilisateur avec cet email ou ce nom existe déjà', 'error');
+                } else {
+                    this.showAlert('Erreur lors de l\'ajout de l\'utilisateur', 'error');
+                }
             }
         );
     }
@@ -144,11 +152,24 @@ export class GestionUserComponent implements OnInit {
     }
 
     update() {
+        // Validation
+        if (!this.selectedUser.nom || !this.selectedUser.prenom || !this.selectedUser.email || !this.selectedUser.adresse || !this.selectedUser.tel || !this.selectedUser.cin ||
+            this.selectedUser.nom.trim() === '' || this.selectedUser.prenom.trim() === '' || this.selectedUser.email.trim() === '' || this.selectedUser.adresse.trim() === '' || this.selectedUser.tel.trim() === '' || this.selectedUser.cin.trim() === '') {
+            this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+            return;
+        }
         this.ws.modifierUser(this.selectedUser).subscribe(
             (response) => {
-                console.log('User modified successfully:', response);
                 this.getUserData();
                 this.closeModal();
+                this.showAlert('Utilisateur modifié avec succès', 'success');
+            },
+            (error) => {
+                if (error.status === 400 && error.error && typeof error.error === 'string' && error.error.includes('existe')) {
+                    this.showAlert('Un utilisateur avec cet email ou ce nom existe déjà', 'error');
+                } else {
+                    this.showAlert('Erreur lors de la modification de l\'utilisateur', 'error');
+                }
             }
         );
     }
@@ -200,6 +221,15 @@ export class GestionUserComponent implements OnInit {
     updateFilteredUsers(): void {
         this.totalItems = this.userData.length;
         this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    }
+
+    showAlert(message: string, type: 'success' | 'error') {
+        this.alertMessage = message;
+        this.alertType = type;
+        this.alertShow = true;
+        setTimeout(() => {
+            this.alertShow = false;
+        }, 3000);
     }
 }
 

@@ -69,6 +69,9 @@ export class ProjetComponent implements OnInit {
   totalItems = 0;
   totalPages = 1;
   Math = Math; // Make Math available in template
+  alertShow: boolean = false;
+  alertType: 'success' | 'error' = 'success';
+  alertMessage: string = '';
 
   constructor(
     private service: ProjetService,
@@ -228,8 +231,24 @@ export class ProjetComponent implements OnInit {
   }
 
   addProject() {
-    this.service.addprojet(this.newprojet).subscribe(() => {
-      this.closeModaladd();
+    // Validation
+    if (!this.newprojet.nom || !this.newprojet.description || !this.newprojet.date_debut || !this.newprojet.date_fin ||
+        this.newprojet.nom.trim() === '' || this.newprojet.description.trim() === '' || String(this.newprojet.date_debut).trim() === '' || String(this.newprojet.date_fin).trim() === '') {
+      this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+      return;
+    }
+    this.service.addprojet(this.newprojet).subscribe({
+      next: () => {
+        this.closeModaladd();
+        this.showAlert('Projet ajouté avec succès', 'success');
+      },
+      error: (error) => {
+        if (error.status === 400 && error.error && typeof error.error === 'string' && error.error.includes('existe')) {
+          this.showAlert('Un projet avec ce nom existe déjà', 'error');
+        } else {
+          this.showAlert('Erreur lors de l\'ajout du projet', 'error');
+        }
+      }
     });
   }
 
@@ -258,5 +277,14 @@ export class ProjetComponent implements OnInit {
     this.totalItems = this.allprojets.length;
     this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
     this.filterProjets();
+  }
+
+  showAlert(message: string, type: 'success' | 'error') {
+    this.alertMessage = message;
+    this.alertType = type;
+    this.alertShow = true;
+    setTimeout(() => {
+      this.alertShow = false;
+    }, 3000);
   }
 }

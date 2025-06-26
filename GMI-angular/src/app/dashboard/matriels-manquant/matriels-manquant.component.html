@@ -46,12 +46,12 @@
                     </td>
                     <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[17px] md:ltr:first:pl-[25px] md:rtl:first:pr-[25px] ltr:first:pr-0 rtl:first:pl-0 border-b border-gray-100 dark:border-[#172036]">
                         <div class="flex items-center gap-[9px]">
-                            <button id="customTooltip" type="button" data-text="Modifier"
-                                class="text-gray-500 dark:text-gray-400 leading-none custom-tooltip" (click)="editMateriel(materiel)">
+                            <button id="customTooltip" type="button" data-text="Modifier" [disabled]="!isTechnicien"
+                                class="text-gray-500 dark:text-gray-400 leading-none custom-tooltip disabled:opacity-50 disabled:cursor-not-allowed" (click)="editMateriel(materiel)">
                                 <i class="material-symbols-outlined !text-md">edit</i>
                             </button>
-                            <button id="customTooltip" type="button" data-text="Supprimer"
-                                class="text-danger-500 leading-none custom-tooltip" (click)="confirmDelete(materiel)">
+                            <button id="customTooltip" type="button" data-text="Supprimer" [disabled]="!isTechnicien"
+                                class="text-danger-500 leading-none custom-tooltip disabled:opacity-50 disabled:cursor-not-allowed" (click)="confirmDelete(materiel)">
                                 <i class="material-symbols-outlined !text-md">delete</i>
                             </button>
                         </div>
@@ -182,4 +182,12 @@
             <button class="bg-[#548B56] text-white px-4 py-2 rounded hover:bg-[#41743f]" (click)="cancelDelete()">Non</button>
         </div>
     </div>
+</div>
+
+<!-- Alert message-->
+<div *ngIf="alertShow" [ngClass]="{
+    'bg-success-500': alertType === 'success',
+    'bg-danger-500': alertType === 'error'
+}" class="fixed top-4 right-4 p-4 rounded-md text-white z-50">
+    {{ alertMessage }}
 </div>

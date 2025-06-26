@@ -65,6 +65,10 @@ export class GestionInterventionComponent {
   isModalOpen: boolean = false;
   selectedIntervention: Intervention = {} as Intervention;
 
+    alertShow: boolean = false;
+    alertType: 'success' | 'error' = 'success';
+    alertMessage: string = '';
+
     constructor(
         private interventionService: InterventionService,
         private matService: MaterielService,
@@ -151,21 +155,34 @@ export class GestionInterventionComponent {
   }
 
   addIntervention(): void {
-
-
-let intervention = {
-  "titre":this.newIntervention.titre,
-  "description":this.newIntervention.description,
-  "datederesolution":this.newIntervention.datederesolution ,
-  "type": this.newIntervention.type,
-  "commentaire":this.newIntervention.commentaire
-}
-
-   this.interventionService.ajoutintervention(intervention,this.newIntervention.materiel.id,localStorage.getItem("email")).subscribe(() => {
-   this.fetchInterventions();
-      this.closeModalAdd();
+    // Validation
+    if (!this.newIntervention.titre || !this.newIntervention.type || !this.newIntervention.datederesolution || !this.newIntervention.commentaire || !this.newIntervention.materiel ||
+        this.newIntervention.titre.trim() === '' || this.newIntervention.type.trim() === '' || String(this.newIntervention.datederesolution).trim() === '' || this.newIntervention.commentaire.trim() === '' || !this.newIntervention.materiel.id) {
+      this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+      return;
+    }
+    let intervention = {
+      "titre":this.newIntervention.titre,
+      "description":this.newIntervention.description,
+      "datederesolution":this.newIntervention.datederesolution ,
+      "type": this.newIntervention.type,
+      "commentaire":this.newIntervention.commentaire
+    }
+    this.interventionService.ajoutintervention(intervention,this.newIntervention.materiel.id,localStorage.getItem("email")).subscribe({
+      next: () => {
+        this.fetchInterventions();
+        this.closeModalAdd();
+        this.showAlert('Intervention ajoutée avec succès', 'success');
+      },
+      error: (error) => {
+        if (error.status === 400 && error.error && typeof error.error === 'string' && error.error.includes('existe')) {
+          this.showAlert('Une intervention avec ce titre existe déjà', 'error');
+        } else {
+          this.showAlert('Erreur lors de l\'ajout de l\'intervention', 'error');
+        }
+      }
     });
-}
+  }
 
   // Modification
   editIntervention(intervention: Intervention): void {
@@ -186,12 +203,27 @@ let intervention = {
   }
 
   updateIntervention(): void {
+    // Validation
+    if (!this.selectedIntervention.titre || !this.selectedIntervention.type || !this.selectedIntervention.datederesolution || !this.selectedIntervention.commentaire || !this.selectedIntervention.materiel ||
+        this.selectedIntervention.titre.trim() === '' || this.selectedIntervention.type.trim() === '' || String(this.selectedIntervention.datederesolution).trim() === '' || this.selectedIntervention.commentaire.trim() === '' || !this.selectedIntervention.materiel.id) {
+      this.showAlert('Veuillez remplir tous les champs obligatoires.', 'error');
+      return;
+    }
     if (this.selectedIntervention.id !== undefined) {
-      console.log(this.selectedIntervention.id )
       this.interventionService.updateIntervention(this.selectedIntervention.id, this.selectedIntervention)
-        .subscribe(() => {
-          this.fetchInterventions();
-          this.closeModal();
+        .subscribe({
+          next: () => {
+            this.fetchInterventions();
+            this.closeModal();
+            this.showAlert('Intervention modifiée avec succès', 'success');
+          },
+          error: (error) => {
+            if (error.status === 400 && error.error && typeof error.error === 'string' && error.error.includes('existe')) {
+              this.showAlert('Une intervention avec ce titre existe déjà', 'error');
+            } else {
+              this.showAlert('Erreur lors de la modification de l\'intervention', 'error');
+            }
+          }
         });
     }
   }
@@ -263,5 +295,14 @@ let intervention = {
       demandeur: {},
       materiel: {}
     }; // Réinitialiser l'intervention sélectionnée
+  }
+
+  showAlert(message: string, type: 'success' | 'error') {
+    this.alertMessage = message;
+    this.alertType = type;
+    this.alertShow = true;
+    setTimeout(() => {
+      this.alertShow = false;
+    }, 3000);
   }
 }
