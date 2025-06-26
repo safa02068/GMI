@@ -21,7 +21,8 @@ public interface IMaterielRepository extends JpaRepository<Materiel, Long> {
 //
 //    List<Materiel> findByIsDamagedTrue();
     List<Materiel> findByNom(String nom);
-
+    List<Materiel> findByModel(String modele);
+ 
     List<Materiel> findByProjetId(Long projetId);
     
     @Query("SELECT m FROM Materiel m WHERE m.projet.id IN (SELECT p.id FROM Projet p JOIN p.users u WHERE u.id = :userId) AND m.allProjectUsersAccess = true")
